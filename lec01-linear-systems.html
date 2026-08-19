@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture 1: Vectors, Matrices, and Systems of Linear Equations</title>
+<style>
+  :root {
+    --ink: #1a1a24; --paper: #fdfdfa; --accent: #1d4ed8;
+    --accent-soft: #eff4ff; --rule: #d8d8d2; --def: #0e7490;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Georgia", "STIX Two Text", serif;
+    font-size: 17px; line-height: 1.65;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 6rem; }
+  h1 { font-size: 1.7rem; margin: 0 0 .2rem; }
+  .byline { margin: .1rem 0 1.1rem; color: #4a5568; font-size: 1.02rem; }
+  .coursename { color: #666; font-variant: small-caps; letter-spacing: .06em; }
+  h2 { font-size: 1.25rem; margin-top: 2.2rem; }
+  p { margin: .8rem 0; text-align: justify; hyphens: auto; }
+  .thmblock {
+    margin: 1.3rem 0; padding: .8rem 1.05rem .55rem;
+    border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+    border-radius: 6px; background: #fff;
+  }
+  .thmblock.definition, .thmblock.example, .thmblock.remark
+    { border-left-color: var(--def); }
+  .thmhead { display: flex; align-items: baseline; gap: .4rem; }
+  .env-kind { font-weight: 700; font-style: normal; }
+  .env-name { color: #555; }
+  .thmblock.theorem .thmbody, .thmblock.lemma .thmbody,
+  .thmblock.proposition .thmbody, .thmblock.corollary .thmbody
+    { font-style: italic; }
+  .thmbody .imath, .thmbody .dmath { font-style: normal; }
+  .permalink { margin-left: auto; color: #c5c5bd; cursor: help;
+    font-size: .85em; }
+  .kref {
+    color: var(--accent); text-decoration: none; cursor: pointer;
+    border-bottom: 1.5px dotted var(--accent); font-style: inherit;
+  }
+  .kref:hover { background: var(--accent-soft); }
+  .kref.extern { border-bottom-style: solid; }
+  .kref.extern::after { content: "\2197"; font-size: .7em;
+    vertical-align: super; margin-left: .1em; }
+  .kref.open { background: var(--accent-soft); border-bottom-style: solid; }
+  .knowl {
+    display: block; margin: .55rem 0 .8rem; padding: .7rem .95rem;
+    border: 1px dashed var(--accent); border-radius: 6px;
+    background: var(--accent-soft); font-style: normal; text-align: left;
+    animation: knowlin .18s ease-out;
+  }
+  @keyframes knowlin { from { opacity: 0; transform: translateY(-4px); }
+                       to { opacity: 1; transform: none; } }
+  .knowl .thmhead { margin-bottom: .2rem; }
+  .proof { margin: -.6rem 0 1.3rem; padding-left: .35rem; }
+  .thmblock + .proof { margin-top: -.9rem; }
+  .proof-toggle {
+    font: inherit; font-size: .95em; font-style: italic; cursor: pointer;
+    border: none; background: none; color: var(--ink); padding: .25rem 0;
+  }
+  .proof-toggle .tri { display: inline-block; color: var(--accent);
+    transition: transform .15s; font-style: normal; }
+  .proof-toggle[aria-expanded="true"] .tri { transform: rotate(90deg); }
+  .proof-body { border-left: 2px solid var(--rule);
+    padding: .05rem 0 .05rem 1rem; margin: .2rem 0 0 .2rem; }
+  .qed { float: right; }
+  .dmath { display: block; overflow-x: auto; padding: .3rem 0;
+    text-align: center; }
+  @font-face {
+    font-family: "Latin Modern Math";
+    src: url("fonts/latinmodern-math.otf") format("opentype");
+  }
+  math { font-size: 1.06em;
+    font-family: "Latin Modern Math", "STIX Two Math", math; }
+  .dmath math { font-size: 1.1em; }
+  .intuition {
+    margin: 1.3rem 0; padding: .75rem 1.05rem;
+    background: #fbf6e9; border: 1px solid #e8dcbe; border-radius: 6px;
+  }
+  .intuition-head { font-weight: 700; color: #8a6d1d; font-size: .92em;
+    letter-spacing: .03em; margin-bottom: .25rem; }
+  .intuition p:last-child { margin-bottom: .1rem; }
+  .exercise { margin: 1.3rem 0; padding: .8rem 1.05rem;
+    border: 1px solid #cfe3cf; border-left: 4px solid #2e7d32;
+    border-radius: 6px; background: #fbfdfb; }
+  .exhead { font-weight: 700; margin-bottom: .2rem; }
+  .extag { font-size: .72em; font-weight: 600; color: #2e7d32;
+    background: #e7f2e7; border-radius: 10px; padding: .12rem .55rem;
+    vertical-align: middle; letter-spacing: .04em; }
+  .extag.written { color: #7a5b12; background: #f6ecd4; }
+  .exanswer { margin: .5rem 0 .2rem; }
+  .exinput { font: inherit; padding: .15rem .4rem; border: 1px solid #bbb;
+    border-radius: 4px; }
+  .excheck { font: inherit; font-size: .9em; padding: .2rem .7rem;
+    border: 1px solid #2e7d32; background: #fff; color: #2e7d32;
+    border-radius: 4px; cursor: pointer; }
+  .excheck:hover { background: #e7f2e7; }
+  .exfb.good { color: #2e7d32; font-weight: 600; }
+  .exfb.bad { color: #b3261e; font-weight: 600; }
+  .exfb.neutral { color: #555; }
+  .exchoices { list-style: none; padding-left: .2rem; }
+  .exchoices li { margin: .35rem 0; }
+  .hint-toggle { font: inherit; font-size: .9em; border: none;
+    background: none; color: var(--accent); cursor: pointer;
+    padding: .2rem 0; }
+  .hint-body { border-left: 2px solid var(--rule);
+    padding: .05rem 0 .05rem 1rem; margin-top: .2rem; }
+  .exwritten { color: #555; font-size: .95em; margin-top: .4rem; }
+  .fig { margin: 1.4rem 0; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .fig figcaption { font-size: .9em; color: #555; margin-top: .35rem; }
+  .idx { columns: 2; font-size: .95em; }
+  .idx li { margin: .15rem 0; }
+  footer { margin-top: 3.5rem; border-top: 1px solid var(--rule);
+    padding-top: 1rem; color: #777; font-size: .85em; }
+  .hint { background: var(--accent-soft); border-radius: 6px;
+    padding: .6rem .9rem; font-size: .92em; color: #33415c; }
+  ol li, ul li { margin: .3rem 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="coursename">Linear Algebra &mdash; Lecture 1</div>
+  <h1>Lecture 1: Vectors, Matrices, and Systems of Linear Equations</h1>
+  <p class="byline">Shuhong Gao &nbsp;&middot;&nbsp; Clemson University</p>
+  <p class="hint">These notes are interactive: click any
+  <a class="kref" href="#" onclick="return false"
+     style="pointer-events:none">dotted&nbsp;term</a> to unfold its exact
+  definition or statement in place, click <em>&#9656; Proof</em> to expand
+  a proof, and try the exercises &mdash; answers are checked instantly.</p>
+  <h2>1.1 &nbsp;Vectors and their operations</h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Linear algebra is built out of one kind of object: lists of numbers. A
+point in the plane, a force in space, a week of daily temperatures, a
+signal sampled at <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> instants — each is naturally a list, and each is
+naturally drawn as an arrow when it has two or three entries. We begin
+with the arithmetic of such lists; by the end of this lecture they will
+carry entire systems of equations.</p></div>
+<div class="thmblock definition" id="def:vector-ops"><div class="thmhead"><span class="env-kind">Definition 1.1</span> <span class="env-name">(Vectors in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span>; addition and scalar multiplication)</span><span class="permalink" title="label: def:vector-ops">&#182;</span></div><div class="thmbody"><p><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span> denotes the set of all <strong>column vectors</strong> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span>
+real entries. For
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>𝐯</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>v</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="2.0em"></mspace><mrow><mtext mathvariant="normal">in </mtext><mspace width="0.333em"></mspace></mrow><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_n \end{pmatrix},
+  \qquad
+  \mathbf{v} = \begin{pmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{pmatrix}
+  \qquad\text{in } \mathbb{R}^n</annotation></semantics></math></span>
+and a scalar <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">c \in \mathbb{R}</annotation></semantics></math></span>, define <strong>vector addition</strong> and
+<strong>scalar multiplication</strong> entrywise:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>1</mn></msub><mo>+</mo><msub><mi>v</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mi>n</mi></msub><mo>+</mo><msub><mi>v</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>c</mi><mspace width="0.167em"></mspace><mi>𝐮</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>c</mi><mspace width="0.167em"></mspace><msub><mi>u</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>c</mi><mspace width="0.167em"></mspace><msub><mi>u</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{v} =
+  \begin{pmatrix} u_1 + v_1 \\ \vdots \\ u_n + v_n \end{pmatrix},
+  \qquad
+  c\,\mathbf{u} =
+  \begin{pmatrix} c\,u_1 \\ \vdots \\ c\,u_n \end{pmatrix}.</annotation></semantics></math></span>
+We write <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟎</mn><annotation encoding="application/x-tex">\mathbf{0}</annotation></semantics></math></span> for the <strong>zero vector</strong> (all entries <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span>)
+and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>𝐮</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">-\mathbf{u} = (-1)\mathbf{u}</annotation></semantics></math></span>.</p></div></div>
+<div class="thmblock definition" id="def:row-vector"><div class="thmhead"><span class="env-kind">Definition 1.2</span> <span class="env-name">(Row vectors and the transpose)</span><span class="permalink" title="label: def:row-vector">&#182;</span></div><div class="thmbody"><p>A <strong>row vector</strong> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> real entries is a list written
+horizontally,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐚</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathbf{a} = \begin{pmatrix} a_1 &amp; a_2 &amp; \cdots &amp; a_n \end{pmatrix},</annotation></semantics></math></span>
+and it is added and scaled entrywise, exactly as for columns. The
+<strong>transpose</strong> operation turns one shape into the other: for a
+column vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math></span> and a row vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐚</mi><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math></span> as above,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐮</mi><mi>T</mi></msup><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathbf{u}^{T}
+  = \begin{pmatrix} u_1 \\ u_2 \\ \vdots \\ u_n \end{pmatrix}^{T}
+  = \begin{pmatrix} u_1 &amp; u_2 &amp; \cdots &amp; u_n \end{pmatrix},</annotation></semantics></math></span>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐚</mi><mi>T</mi></msup><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}^{T}
+  = \begin{pmatrix} a_1 &amp; a_2 &amp; \cdots &amp; a_n \end{pmatrix}^{T}
+  = \begin{pmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{pmatrix}.</annotation></semantics></math></span>
+So <em>the transpose of a column vector is a row vector, and the
+transpose of a row vector is a column vector</em>; the entries are
+unchanged, only the shape is. Applying the operation twice returns the
+original vector:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝐮</mi><mi>T</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><mi>𝐮</mi><mo>,</mo><mspace width="2.0em"></mspace><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝐚</mi><mi>T</mi></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><mi>𝐚</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">(\mathbf{u}^{T})^{T} = \mathbf{u},
+  \qquad
+  (\mathbf{a}^{T})^{T} = \mathbf{a}.</annotation></semantics></math></span>
+Transposing also respects the two vector operations:
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><msup><mi>𝐮</mi><mi>T</mi></msup><mo>+</mo><msup><mi>𝐯</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">(\mathbf{u} + \mathbf{v})^{T} = \mathbf{u}^{T} + \mathbf{v}^{T}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mspace width="0.167em"></mspace><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><mi>c</mi><mspace width="0.167em"></mspace><msup><mi>𝐮</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">(c\,\mathbf{u})^{T} = c\,\mathbf{u}^{T}</annotation></semantics></math></span>, since both sides are formed
+from the same entries.</p></div></div>
+<div class="thmblock definition" id="def:vector-equality"><div class="thmhead"><span class="env-kind">Definition 1.3</span> <span class="env-name">(Equality of vectors)</span><span class="permalink" title="label: def:vector-equality">&#182;</span></div><div class="thmbody"><p>Two vectors are <strong>equal</strong> when they have the same shape, the same
+number of entries, and every pair of corresponding entries is equal.
+That is, for column vectors <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>,</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">\mathbf{u}, \mathbf{v}</annotation></semantics></math></span>,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mi>𝐯</mi><mspace width="1.0em"></mspace><mo>⇔</mo><mspace width="1.0em"></mspace><msub><mi>u</mi><mi>i</mi></msub><mo>=</mo><msub><mi>v</mi><mi>i</mi></msub><mspace width="0.222em"></mspace><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> for </mtext><mspace width="0.333em"></mspace></mrow><mi>i</mi><mo>=</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{v}
+  \quad\Longleftrightarrow\quad
+  u_i = v_i \ \text{ for } i = 1, 2, \dots, n,</annotation></semantics></math></span>
+and likewise for two row vectors. In particular vectors of different
+lengths are never equal: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 \end{pmatrix}^{T}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 &amp; 0 \end{pmatrix}^{T}</annotation></semantics></math></span> are different vectors,
+one in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^2</annotation></semantics></math></span> and one in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span>. And <em>a row vector
+is never equal to a column vector</em>, no matter what its entries are:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.278em"></mspace><mo>≠</mo><mspace width="0.278em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 &amp; 3 \end{pmatrix}
+  \;\neq\;
+  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} ,</annotation></semantics></math></span>
+because the two sides have different shapes. They are related by the
+transpose, not by equality: the left-hand side is the transpose of the
+right-hand side.</p></div></div>
+<div class="thmblock remark" id="rem:equality-strategy"><div class="thmhead"><span class="env-kind">Remark 1.4</span><span class="permalink" title="label: rem:equality-strategy">&#182;</span></div><div class="thmbody"><p>This is a small definition with a large consequence for proofs. Every
+identity between vectors in this course — and there will be many —
+is proved the same way: show that the two sides have the same shape and
+size, then compare the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entries. That single move reduces a
+statement about vectors to a statement about real numbers, where
+ordinary arithmetic finishes the job.</p></div></div>
+<div class="thmblock remark" id="rem:column-notation"><div class="thmhead"><span class="env-kind">Remark 1.5</span> <span class="env-name">(Notation: columns written sideways)</span><span class="permalink" title="label: rem:column-notation">&#182;</span></div><div class="thmbody"><p>Shape matters: a column vector and a row vector with the same entries
+are <a class="kref" data-ref="def:vector-equality" href="#def:vector-equality">never equal</a>, and in this course “vector” with no
+qualifier always means a <em>column</em> vector — that is what
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span> consists of, and columns are what matrices will act on.
+Rows will reappear shortly as the rows of a matrix.</p><p>Since tall columns are awkward inside a line of text, we use
+<a class="kref" data-ref="def:row-vector" href="#def:row-vector">the transpose</a> to write them sideways:
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>u</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \begin{pmatrix} u_1 &amp; u_2 &amp; \cdots &amp; u_n \end{pmatrix}^{T}</annotation></semantics></math></span>
+denotes the column vector with entries <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>u</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">u_1, \dots, u_n</annotation></semantics></math></span>. So
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 0 &amp; 1 \end{pmatrix}^{T}</annotation></semantics></math></span> is a column of height
+three, written on one line to save space. Displayed formulas keep the
+honest column shape.</p></div></div>
+<figure class="fig"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="301.521951pt" height="249.84pt" viewBox="0 0 301.521951 249.84" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-22T21:26:03.423709</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M -0 249.84 
+L 301.521951 249.84 
+L 301.521951 0 
+L -0 0 
+L -0 249.84 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 242.64 
+L 294.321951 242.64 
+L 294.321951 7.2 
+L 7.2 7.2 
+L 7.2 242.64 
+z
+" style="fill: none"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 7.2 208.185366 
+L 294.321951 208.185366 
+" clip-path="url(#p1c01a90d2d)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 41.654634 242.64 
+L 41.654634 7.2 
+" clip-path="url(#p1c01a90d2d)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
+   <g id="matplotlib.axis_2"/>
+   <g id="line2d_3">
+    <path d="M 190.958049 167.988293 
+L 242.64 47.397073 
+" clip-path="url(#p1c01a90d2d)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #b3261e; stroke-width: 1.1"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 93.336585 87.594146 
+L 242.64 47.397073 
+" clip-path="url(#p1c01a90d2d)" style="fill: none; stroke-dasharray: 4.4,3.3; stroke-dashoffset: 0; stroke: #1d4ed8; stroke-width: 1.1"/>
+   </g>
+   <g id="text_1">
+    <!-- $\mathbf{u}$ -->
+    <g style="fill: #1d4ed8" transform="translate(123.771512 204.45278)">
+     <text>
+      <tspan x="0" y="-0.890625" style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; fill: #1d4ed8">u</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $\mathbf{v}$ -->
+    <g style="fill: #b3261e" transform="translate(45.674341 147.889756)">
+     <text>
+      <tspan x="0" y="-0.890625" style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; fill: #b3261e">v</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- $\mathbf{u} + \mathbf{v}$ -->
+    <g style="fill: #1a1a24" transform="translate(149.038244 115.387551)">
+     <text>
+      <tspan x="0" y="-0.84375" style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; fill: #1a1a24">u</tspan>
+      <tspan x="25.212891" y="-0.84375" style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; fill: #1a1a24">v</tspan>
+      <tspan x="11.787598" y="-0.84375" style="font-size: 13px; font-family: 'DejaVu Sans'; fill: #1a1a24">+</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- $\mathbf{0}$ -->
+    <g transform="translate(45.100098 232.30361)">
+     <text>
+      <tspan x="0" y="-0.828125" style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'">0</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 43.581982 207.666464 
+Q 116.305289 188.087113 186.977372 169.060013 
+" style="fill: none; stroke: #1d4ed8; stroke-width: 1.9; stroke-linecap: round"/>
+    <path d="M 182.156721 168.079542 
+L 186.977372 169.060013 
+L 183.300604 172.328251 
+z
+" style="fill: #1d4ed8; stroke: #1d4ed8; stroke-width: 1.9; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 42.441661 206.34897 
+Q 67.49539 147.89027 91.712329 91.384077 
+" style="fill: none; stroke: #b3261e; stroke-width: 1.9; stroke-linecap: round"/>
+    <path d="M 87.956965 94.561693 
+L 91.712329 91.384077 
+L 92.001203 96.294938 
+z
+" style="fill: #b3261e; stroke: #b3261e; stroke-width: 1.9; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 43.215632 206.936568 
+Q 142.147293 127.791239 239.420182 49.972927 
+" style="fill: none; stroke: #1a1a24; stroke-width: 1.9; stroke-linecap: round"/>
+    <path d="M 234.61003 51.003674 
+L 239.420182 49.972927 
+L 237.358689 54.439497 
+z
+" style="fill: #1a1a24; stroke: #1a1a24; stroke-width: 1.9; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_5">
+    <defs>
+     <path id="mc379fef23d" d="M 0 2 
+C 0.530406 2 1.03916 1.789267 1.414214 1.414214 
+C 1.789267 1.03916 2 0.530406 2 0 
+C 2 -0.530406 1.789267 -1.03916 1.414214 -1.414214 
+C 1.03916 -1.789267 0.530406 -2 0 -2 
+C -0.530406 -2 -1.03916 -1.789267 -1.414214 -1.414214 
+C -1.789267 -1.03916 -2 -0.530406 -2 0 
+C -2 0.530406 -1.789267 1.03916 -1.414214 1.414214 
+C -1.03916 1.789267 -0.530406 2 0 2 
+z
+" style="stroke: #1a1a24"/>
+    </defs>
+    <g clip-path="url(#p1c01a90d2d)">
+     <use xlink:href="#mc379fef23d" x="41.654634" y="208.185366" style="fill: #1a1a24; stroke: #1a1a24"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1c01a90d2d">
+   <rect x="7.2" y="7.2" width="287.121951" height="235.44"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Vector addition in the plane: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐯</mi><annotation encoding="application/x-tex">\mathbf{v}</annotation></semantics></math></span> span a parallelogram, and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{v}</annotation></semantics></math></span> is its diagonal from the origin.</figcaption></figure>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>The picture explains the definition. Adding entrywise is exactly the
+parallelogram rule: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐯</mi><annotation encoding="application/x-tex">\mathbf{v}</annotation></semantics></math></span> span a parallelogram
+(the dashed sides are parallel copies of the two arrows), and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{v}</annotation></semantics></math></span> is the diagonal from the origin —
+two displacements performed in succession. Multiplying by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span> stretches
+an arrow by the factor <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">|</mo><mi>c</mi><mo stretchy="true" form="postfix">|</mo></mrow><annotation encoding="application/x-tex">|c|</annotation></semantics></math></span>, flipping it when <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c &lt; 0</annotation></semantics></math></span>. Every algebraic
+rule below is obvious in this picture; the point of the proof is that
+the entrywise formulas really do behave like the picture, in every
+dimension.</p></div>
+<div class="thmblock theorem" id="thm:vector-props"><div class="thmhead"><span class="env-kind">Theorem 1.6</span> <span class="env-name">(Algebraic properties of vector operations)</span><span class="permalink" title="label: thm:vector-props">&#182;</span></div><div class="thmbody"><p>For all <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>,</mo><mi>𝐯</mi><mo>,</mo><mi>𝐰</mi><mo>∈</mo><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u}, \mathbf{v}, \mathbf{w} \in \mathbb{R}^n</annotation></semantics></math></span> and all
+scalars <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>,</mo><mi>d</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">c, d \in \mathbb{R}</annotation></semantics></math></span>:
+<ol><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo>=</mo><mi>𝐯</mi><mo>+</mo><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mi>𝐰</mi><mo>=</mo><mi>𝐮</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐯</mi><mo>+</mo><mi>𝐰</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(\mathbf{u} + \mathbf{v}) + \mathbf{w} = \mathbf{u} + (\mathbf{v} + \mathbf{w})</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mn>𝟎</mn><mo>=</mo><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{0} = \mathbf{u}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>𝟎</mn></mrow><annotation encoding="application/x-tex">\mathbf{u} + (-\mathbf{u}) = \mathbf{0}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>c</mi><mi>𝐮</mi><mo>+</mo><mi>c</mi><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">c(\mathbf{u} + \mathbf{v}) = c\mathbf{u} + c\mathbf{v}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo>+</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐮</mi><mo>=</mo><mi>c</mi><mi>𝐮</mi><mo>+</mo><mi>d</mi><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">(c + d)\mathbf{u} = c\mathbf{u} + d\mathbf{u}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">c(d\mathbf{u}) = (cd)\mathbf{u}</annotation></semantics></math></span>;</li><li><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mspace width="0.167em"></mspace><mi>𝐮</mi><mo>=</mo><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">1\,\mathbf{u} = \mathbf{u}</annotation></semantics></math></span>.</li></ol></p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>Each identity is checked one entry at a time, where it reduces to a
+familiar rule of arithmetic in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℝ</mi><annotation encoding="application/x-tex">\mathbb{R}</annotation></semantics></math></span>. We prove (1) and (5); the
+others are entirely similar and are left as exercises. (1) The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th
+entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">\mathbf{u}+\mathbf{v}</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mi>i</mi></msub><mo>+</mo><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">u_i + v_i</annotation></semantics></math></span> and the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐯</mi><mo>+</mo><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">\mathbf{v}+\mathbf{u}</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mi>i</mi></msub><mo>+</mo><msub><mi>u</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">v_i + u_i</annotation></semantics></math></span>; these are equal because addition
+of real numbers is commutative, so the two vectors have equal entries
+and are therefore <a class="kref" data-ref="def:vector-equality" href="#def:vector-equality">equal</a>. (5) The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c(\mathbf{u}+\mathbf{v})</annotation></semantics></math></span> is
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>u</mi><mi>i</mi></msub><mo>+</mo><msub><mi>v</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c(u_i + v_i)</annotation></semantics></math></span>, while the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>𝐮</mi><mo>+</mo><mi>c</mi><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">c\mathbf{u} + c\mathbf{v}</annotation></semantics></math></span> is
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><msub><mi>u</mi><mi>i</mi></msub><mo>+</mo><mi>c</mi><msub><mi>v</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">c u_i + c v_i</annotation></semantics></math></span>; these agree by the distributive law for real numbers.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock remark" id="rem:vector-space"><div class="thmhead"><span class="env-kind">Remark 1.7</span><span class="permalink" title="label: rem:vector-space">&#182;</span></div><div class="thmbody"><p>Any collection of objects with an addition and a scalar multiplication
+obeying these eight rules is called a <em>vector space</em>. Later in the
+course we will meet vector spaces whose “vectors” are matrices,
+polynomials, or signals; every result we prove using only these eight
+rules will transfer to them for free. For now, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span> is our
+home.</p></div></div>
+<div class="exercise" id="exr:v1-arith" data-type="numeric" data-answer="-2" data-tol="0.001"><div class="exhead">Exercise 1.1 <span class="extag">auto-check</span></div><div class="exbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \begin{pmatrix} 3 &amp; 1 \end{pmatrix}^{T}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐯</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{v} = \begin{pmatrix} 1 &amp; 4 \end{pmatrix}^{T}</annotation></semantics></math></span>, and set
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐰</mi><mo>=</mo><mn>2</mn><mi>𝐮</mi><mo>−</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">\mathbf{w} = 2\mathbf{u} - \mathbf{v}</annotation></semantics></math></span>. What is the <em>second</em>
+entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐰</mi><annotation encoding="application/x-tex">\mathbf{w}</annotation></semantics></math></span>?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Entrywise: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn><msub><mi>u</mi><mn>2</mn></msub><mo>−</mo><msub><mi>v</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn><mo>⋅</mo><mn>1</mn><mo>−</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">w_2 = 2 u_2 - v_2 = 2 \cdot 1 - 4</annotation></semantics></math></span>.</p></div></div></div>
+<div class="exercise" id="exr:v1-props" data-type="multichoice"><div class="exhead">Exercise 1.2 <span class="extag">auto-check</span></div><div class="exbody"><p>Which of the following identities is <em>not</em> always true?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:v1-props"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo>=</mo><mi>𝐯</mi><mo>+</mo><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v1-props"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mo>+</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>𝐮</mi><mo>=</mo><mi>c</mi><mi>𝐮</mi><mo>+</mo><mi>d</mi><mi>𝐮</mi></mrow><annotation encoding="application/x-tex">(c + d)\mathbf{u} = c\mathbf{u} + d\mathbf{u}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v1-props" data-correct="1"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>c</mi><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">c(\mathbf{u} + \mathbf{v}) = c\mathbf{u} + \mathbf{v}</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Compare with rule (5) of
+<a class="kref" data-ref="thm:vector-props" href="#thm:vector-props">the properties theorem</a>: the scalar must
+multiply <em>both</em> summands. Test with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">c = 2</annotation></semantics></math></span>,
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mi>𝐯</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{v} = \begin{pmatrix} 1 &amp; 0 \end{pmatrix}^{T}</annotation></semantics></math></span>.</p></div></div></div>
+<div class="exercise" id="exr:v1-transpose" data-type="multichoice"><div class="exhead">Exercise 1.3 <span class="extag">auto-check</span></div><div class="exbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐚</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{a} = \begin{pmatrix} 2 &amp; -1 &amp; 5 \end{pmatrix}</annotation></semantics></math></span>. Which
+statement is correct?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:v1-transpose" data-correct="1"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐚</mi><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math></span> is a row vector and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐚</mi><mi>T</mi></msup><annotation encoding="application/x-tex">\mathbf{a}^{T}</annotation></semantics></math></span> is a column vector in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v1-transpose"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐚</mi><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math></span> is a column vector in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v1-transpose"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐚</mi><mi>T</mi></msup><annotation encoding="application/x-tex">\mathbf{a}^{T}</annotation></semantics></math></span> is again a row vector</label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Transposing swaps the shape and leaves the entries alone; see
+<a class="kref" data-ref="def:row-vector" href="#def:row-vector">the definition of the transpose</a>.</p></div></div></div>
+<div class="exercise" id="exr:v1-equality" data-type="multichoice"><div class="exhead">Exercise 1.4 <span class="extag">auto-check</span></div><div class="exbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \begin{pmatrix} 4 &amp; -1 &amp; 5 \end{pmatrix}^{T}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐚</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{a} = \begin{pmatrix} 4 &amp; -1 &amp; 5 \end{pmatrix}</annotation></semantics></math></span>. Which
+statement is correct?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:v1-equality" data-correct="1"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>≠</mo><mi>𝐚</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} \neq \mathbf{a}</annotation></semantics></math></span>, but <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><msup><mi>𝐚</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{a}^{T}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v1-equality"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mi>𝐚</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{a}</annotation></semantics></math></span>, since they have the same entries</label></li><li><label><input type="radio" name="exr:v1-equality"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>≠</mo><mi>𝐚</mi></mrow><annotation encoding="application/x-tex">\mathbf{u} \neq \mathbf{a}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>≠</mo><msup><mi>𝐚</mi><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \neq \mathbf{a}^{T}</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Equal entries are not enough: equal vectors must also have the
+same shape. See <a class="kref" data-ref="def:vector-equality" href="#def:vector-equality">the definition of equality</a>.</p></div></div></div>
+<h2>1.2 &nbsp;Matrices and the product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span></h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Multiplying two vectors is less obvious than adding them. The product
+that linear algebra runs on pairs a <em>row</em> with a <em>column</em> of
+the same length and produces a single <em>number</em> — think of a row
+of unit prices times a column of quantities: the total bill. Stacking
+several rows into a matrix then gives a product of a matrix with a
+column vector, and that product will turn out to have a second reading
+that powers the whole subject.</p></div>
+<div class="thmblock definition" id="def:rowcol"><div class="thmhead"><span class="env-kind">Definition 1.8</span> <span class="env-name">(Row–column product)</span><span class="permalink" title="label: def:rowcol">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐚</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{a} = \begin{pmatrix} a_1 &amp; a_2 &amp; \cdots &amp; a_n \end{pmatrix}</annotation></semantics></math></span>
+be a <a class="kref" data-ref="def:row-vector" href="#def:row-vector">row vector</a> of length <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span>. The
+<strong>row–column product</strong> of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐚</mi><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math></span> with a column vector
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>∈</mo><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{x} \in \mathbb{R}^n</annotation></semantics></math></span> of the same length is the <em>scalar</em>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐚</mi><mspace width="0.167em"></mspace><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>1</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msub><mi>a</mi><mn>1</mn></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>2</mn></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbf{a}\,\mathbf{x}
+  = \begin{pmatrix} a_1 &amp; a_2 &amp; \cdots &amp; a_n \end{pmatrix}
+    \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix}
+  = a_1 x_1 + a_2 x_2 + \cdots + a_n x_n .</annotation></semantics></math></span></p></div></div>
+<div class="thmblock example" id="ex:rowcol-compute"><div class="thmhead"><span class="env-kind">Example 1.9</span><span class="permalink" title="label: ex:rowcol-compute">&#182;</span></div><div class="thmbody"><p><span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>1</mn><mo>⋅</mo><mn>4</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>2</mn><mo>=</mo><mn>8</mn><mi>.</mi></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 &amp; 3 \end{pmatrix}
+  \begin{pmatrix} 4 \\ -1 \\ 2 \end{pmatrix}
+  = 1 \cdot 4 + 2 \cdot (-1) + 3 \cdot 2 = 8 .</annotation></semantics></math></span>
+Price-times-quantity: if the row holds unit prices and the column holds
+quantities, the product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8</mn><annotation encoding="application/x-tex">8</annotation></semantics></math></span> is the total cost. Note the output is a
+single number, not a vector.</p></div></div>
+<div class="thmblock definition" id="def:matrix"><div class="thmhead"><span class="env-kind">Definition 1.10</span> <span class="env-name">(Matrix; the matrix–vector product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>)</span><span class="permalink" title="label: def:matrix">&#182;</span></div><div class="thmbody"><p>An <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m \times n</annotation></semantics></math></span> <strong>matrix</strong> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is a rectangular array of numbers
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">a_{ij}</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math></span> rows and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> columns. Its rows
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐫</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>𝐫</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{r}_1, \dots, \mathbf{r}_m</annotation></semantics></math></span> are row vectors of length <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span>; its
+columns <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐚</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>𝐚</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{a}_1, \dots, \mathbf{a}_n</annotation></semantics></math></span> are vectors in
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>m</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^m</annotation></semantics></math></span>. For <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>∈</mo><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{x} \in \mathbb{R}^n</annotation></semantics></math></span>, the
+<strong>matrix–vector product</strong> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> is the column vector in
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>m</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^m</annotation></semantics></math></span> whose <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry is the
+<a class="kref" data-ref="def:rowcol" href="#def:rowcol">row–column product</a> of the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th row with
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span>:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>𝐫</mi><mn>1</mn></msub><mspace width="0.167em"></mspace><mi>𝐱</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>𝐫</mi><mn>2</mn></msub><mspace width="0.167em"></mspace><mi>𝐱</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>𝐫</mi><mi>m</mi></msub><mspace width="0.167em"></mspace><mi>𝐱</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mtext mathvariant="normal">i.e.</mtext><mspace width="2.0em"></mspace><msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>𝐱</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>i</mi></msub><mo>=</mo><msub><mi>a</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><msub><mi>x</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} =
+  \begin{pmatrix}
+    \mathbf{r}_1\,\mathbf{x} \\ \mathbf{r}_2\,\mathbf{x} \\ \vdots \\ \mathbf{r}_m\,\mathbf{x}
+  \end{pmatrix},
+  \qquad\text{i.e.}\qquad
+  (A\mathbf{x})_i = a_{i1}x_1 + a_{i2}x_2 + \cdots + a_{in}x_n .</annotation></semantics></math></span></p></div></div>
+<div class="thmblock definition" id="def:lincomb"><div class="thmhead"><span class="env-kind">Definition 1.11</span> <span class="env-name">(Linear combination)</span><span class="permalink" title="label: def:lincomb">&#182;</span></div><div class="thmbody"><p>A <strong>linear combination</strong> of the vectors
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐯</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>𝐯</mi><mi>p</mi></msub><mo>∈</mo><msup><mi>ℝ</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{v}_1, \dots, \mathbf{v}_p \in \mathbb{R}^m</annotation></semantics></math></span> with
+<strong>weights</strong> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>c</mi><mi>p</mi></msub><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">c_1, \dots, c_p \in \mathbb{R}</annotation></semantics></math></span> is the vector
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mn>1</mn></msub><msub><mi>𝐯</mi><mn>1</mn></msub><mo>+</mo><msub><mi>c</mi><mn>2</mn></msub><msub><mi>𝐯</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>c</mi><mi>p</mi></msub><msub><mi>𝐯</mi><mi>p</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2 + \cdots + c_p \mathbf{v}_p .</annotation></semantics></math></span></p></div></div>
+<div class="thmblock theorem" id="thm:ax-columns"><div class="thmhead"><span class="env-kind">Theorem 1.12</span> <span class="env-name">(Column view of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>)</span><span class="permalink" title="label: thm:ax-columns">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> be an <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m \times n</annotation></semantics></math></span> matrix with columns
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐚</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>𝐚</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{a}_1, \dots, \mathbf{a}_n</annotation></semantics></math></span>. For every
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>∈</mo><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{x} \in \mathbb{R}^n</annotation></semantics></math></span>,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>𝐚</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><msub><mi>𝐚</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><msub><mi>𝐚</mi><mi>n</mi></msub><mo>:</mo></mrow><annotation encoding="application/x-tex">A\mathbf{x}
+  = x_1 \mathbf{a}_1 + x_2 \mathbf{a}_2 + \cdots + x_n \mathbf{a}_n :</annotation></semantics></math></span>
+the product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> is the <a class="kref" data-ref="def:lincomb" href="#def:lincomb">linear combination</a>
+of the columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> with weights <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, \dots, x_n</annotation></semantics></math></span>.</p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>Compare <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entries. By <a class="kref" data-ref="def:matrix" href="#def:matrix">the definition</a>, the
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">a_{i1}x_1 + \cdots + a_{in}x_n</annotation></semantics></math></span>. The
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><msub><mi>𝐚</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><msub><mi>𝐚</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1\mathbf{a}_1 + \cdots + x_n\mathbf{a}_n</annotation></semantics></math></span> is
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><msub><mi>a</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">x_1 a_{i1} + \cdots + x_n a_{in}</annotation></semantics></math></span> — the same sum, reordered using
+the <a class="kref" data-ref="thm:vector-props" href="#thm:vector-props">algebraic properties</a> of vector
+operations. Since all <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math></span> entries agree, the two vectors are equal.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock example" id="ex:ax-twoways"><div class="thmhead"><span class="env-kind">Example 1.13</span> <span class="env-name">(One product, two computations)</span><span class="permalink" title="label: ex:ax-twoways">&#182;</span></div><div class="thmbody"><p>Let
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} 1 &amp; 2 \\ 0 &amp; -1 \\ 3 &amp; 1 \end{pmatrix}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{x} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}</annotation></semantics></math></span>.
+<em>Row view:</em> each entry is a row–column product,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mn>1</mn><mo>⋅</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} =
+  \begin{pmatrix} 1\cdot 2 + 2\cdot 1 \\ 0\cdot 2 + (-1)\cdot 1 \\ 3\cdot 2 + 1\cdot 1 \end{pmatrix}
+  = \begin{pmatrix} 4 \\ -1 \\ 7 \end{pmatrix}.</annotation></semantics></math></span>
+<em>Column view:</em> the same answer as a blend of the columns,
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mn>2</mn><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mn>1</mn><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>7</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}
+  = 2 \begin{pmatrix} 1 \\ 0 \\ 3 \end{pmatrix}
+  + 1 \begin{pmatrix} 2 \\ -1 \\ 1 \end{pmatrix}
+  = \begin{pmatrix} 4 \\ -1 \\ 7 \end{pmatrix}.</annotation></semantics></math></span>
+Rows for computing, columns for understanding — we will use both
+readings constantly.</p></div></div>
+<div class="thmblock theorem" id="thm:linearity"><div class="thmhead"><span class="env-kind">Theorem 1.14</span> <span class="env-name">(Linearity of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span>)</span><span class="permalink" title="label: thm:linearity">&#182;</span></div><div class="thmbody"><p>For every <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m \times n</annotation></semantics></math></span> matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span>, all
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>,</mo><mi>𝐯</mi><mo>∈</mo><msup><mi>ℝ</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{u}, \mathbf{v} \in \mathbb{R}^n</annotation></semantics></math></span>, and every scalar
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">c \in \mathbb{R}</annotation></semantics></math></span>:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>A</mi><mi>𝐮</mi><mo>+</mo><mi>A</mi><mi>𝐯</mi><mspace width="2.0em"></mspace><mtext mathvariant="normal">and</mtext><mspace width="2.0em"></mspace><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mspace width="0.167em"></mspace><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>c</mi><mspace width="0.167em"></mspace><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">A(\mathbf{u} + \mathbf{v}) = A\mathbf{u} + A\mathbf{v}
+  \qquad\text{and}\qquad
+  A(c\,\mathbf{u}) = c\,(A\mathbf{u}).</annotation></semantics></math></span></p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>Compare <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entries. The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐮</mi><mo>+</mo><mi>𝐯</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A(\mathbf{u}+\mathbf{v})</annotation></semantics></math></span>
+is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>j</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>u</mi><mi>j</mi></msub><mo>+</mo><msub><mi>v</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\sum_{j} a_{ij}(u_j + v_j)</annotation></semantics></math></span>, which by the distributive law equals
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>j</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>u</mi><mi>j</mi></msub><mo>+</mo><msub><mo>∑</mo><mi>j</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>v</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\sum_j a_{ij}u_j + \sum_j a_{ij}v_j</annotation></semantics></math></span> — the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐮</mi><mo>+</mo><mi>A</mi><mi>𝐯</mi></mrow><annotation encoding="application/x-tex">A\mathbf{u} + A\mathbf{v}</annotation></semantics></math></span>. Similarly the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A(c\mathbf{u})</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∑</mo><mi>j</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>c</mi><mspace width="0.167em"></mspace><msub><mi>u</mi><mi>j</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>c</mi><msub><mo>∑</mo><mi>j</mi></msub><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><msub><mi>u</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">\sum_j a_{ij}(c\,u_j) = c\sum_j a_{ij}u_j</annotation></semantics></math></span>, the
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">c(A\mathbf{u})</annotation></semantics></math></span>.</p><span class="qed">&#9633;</span></div></div>
+<div class="exercise" id="exr:v2-rowcol" data-type="numeric" data-answer="4" data-tol="0.001"><div class="exhead">Exercise 1.5 <span class="extag">auto-check</span></div><div class="exbody"><p>Compute the row–column product
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 2 &amp; -1 &amp; 3 \end{pmatrix}
+\begin{pmatrix} 1 \\ 4 \\ 2 \end{pmatrix}</annotation></semantics></math></span>.</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><mn>4</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \cdot 1 + (-1)\cdot 4 + 3 \cdot 2</annotation></semantics></math></span>.</p></div></div></div>
+<div class="exercise" id="exr:v3-ax" data-type="numeric" data-answer="5" data-tol="0.001"><div class="exhead">Exercise 1.6 <span class="extag">auto-check</span></div><div class="exbody"><p>For
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} 1 &amp; 2 &amp; 0 \\ 0 &amp; -1 &amp; 3 \\ 3 &amp; 1 &amp; -2 \end{pmatrix}</annotation></semantics></math></span>
+and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{x} = \begin{pmatrix} 2 &amp; 1 &amp; 1 \end{pmatrix}^{T}</annotation></semantics></math></span>, what is
+the <em>third</em> entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Row–column product of the third row with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span>:
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>⋅</mo><mn>2</mn><mo>+</mo><mn>1</mn><mo>⋅</mo><mn>1</mn><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">3 \cdot 2 + 1 \cdot 1 + (-2) \cdot 1</annotation></semantics></math></span>.</p></div></div></div>
+<div class="exercise" id="exr:v3-lincomb" data-type="multichoice"><div class="exhead">Exercise 1.7 <span class="extag">auto-check</span></div><div class="exbody"><p>By <a class="kref" data-ref="thm:ax-columns" href="#thm:ax-columns">the column view</a>, the product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>
+equals:</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:v3-lincomb" data-correct="1"> The linear combination of the <em>columns</em> of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> with weights
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, \dots, x_n</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v3-lincomb"> The linear combination of the <em>rows</em> of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> with weights
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, \dots, x_n</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:v3-lincomb"> The vector of products of the entries of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p><span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><msub><mi>x</mi><mn>1</mn></msub><msub><mi>𝐚</mi><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>x</mi><mi>n</mi></msub><msub><mi>𝐚</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A\mathbf{x} = x_1\mathbf{a}_1 + \cdots + x_n\mathbf{a}_n</annotation></semantics></math></span>, where
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐚</mi><mi>j</mi></msub><annotation encoding="application/x-tex">\mathbf{a}_j</annotation></semantics></math></span> is the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math></span>-th column.</p></div></div></div>
+<h2>1.3 &nbsp;Systems of linear equations and their solutions</h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Almost every quantitative problem in engineering ends, after modeling, in
+the same place: several unknown quantities constrained by several
+conditions that must hold <em>simultaneously</em> — currents in a circuit
+obeying Kirchhoff's laws, forces balancing in a truss, concentrations in
+mixing tanks. When each condition is a <em>linear</em> relation among the
+unknowns, we get a system of linear equations. The rest of this lecture
+introduces those systems — and shows that the vector language of the
+first two sections was built precisely for them.</p></div>
+<div class="thmblock definition" id="def:linear-system"><div class="thmhead"><span class="env-kind">Definition 1.15</span> <span class="env-name">(Linear equation, linear system)</span><span class="permalink" title="label: def:linear-system">&#182;</span></div><div class="thmbody"><p>A <strong>linear equation</strong> in the variables <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1, \dots, x_n</annotation></semantics></math></span> is an
+equation of the form
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>2</mn></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mi>n</mi></msub><msub><mi>x</mi><mi>n</mi></msub><mo>=</mo><mi>b</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b,</annotation></semantics></math></span>
+where the <strong>coefficients</strong> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>a</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">a_1, \dots, a_n</annotation></semantics></math></span> and the right-hand side
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>b</mi><annotation encoding="application/x-tex">b</annotation></semantics></math></span> are real numbers. A <strong>system of linear equations</strong> (or
+<strong>linear system</strong>) is a finite collection of linear equations in the
+same variables. (Note the left-hand side is exactly a
+<a class="kref" data-ref="def:rowcol" href="#def:rowcol">row–column product</a>: the row of coefficients times
+the column of unknowns.)</p></div></div>
+<div class="thmblock definition" id="def:solution-set"><div class="thmhead"><span class="env-kind">Definition 1.16</span> <span class="env-name">(Solution, solution set)</span><span class="permalink" title="label: def:solution-set">&#182;</span></div><div class="thmbody"><p>A <strong>solution</strong> of a linear system in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>x</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">x_1,\dots,x_n</annotation></semantics></math></span> is a list
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>s</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(s_1, \dots, s_n)</annotation></semantics></math></span> of numbers that makes <em>every</em> equation of the
+system true when we substitute <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><msub><mi>s</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">x_i = s_i</annotation></semantics></math></span>. The <strong>solution set</strong> is
+the set of all solutions. A system is <strong>consistent</strong> if it has at
+least one solution, and <strong>inconsistent</strong> if it has none.</p></div></div>
+<div class="thmblock example" id="ex:three-cases"><div class="thmhead"><span class="env-kind">Example 1.17</span> <span class="env-name">(Three systems in two variables)</span><span class="permalink" title="label: ex:three-cases">&#182;</span></div><div class="thmbody"><p>Each equation in two variables describes a line in the plane, and a
+solution of a system is a point lying on <em>all</em> of its lines.
+Consider the three systems
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">(i)</mtext><mspace width="0.278em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>4</mn></mtd></mtr></mtable></mrow><mspace width="2.0em"></mspace><mtext mathvariant="normal">(ii)</mtext><mspace width="0.278em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></mtd></mtr></mtable></mrow><mspace width="2.0em"></mspace><mtext mathvariant="normal">(iii)</mtext><mspace width="0.278em"></mspace><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="left" style="text-align: left"><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="left" style="text-align: left"><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>2</mn></mtd></mtr></mtable></mrow></mrow><annotation encoding="application/x-tex">\text{(i)}\;
+  \begin{cases} x_1 - x_2 = -1 \\ 2x_1 + x_2 = 4 \end{cases}
+  \qquad
+  \text{(ii)}\;
+  \begin{cases} x_1 - x_2 = -1 \\ x_1 - x_2 = 1 \end{cases}
+  \qquad
+  \text{(iii)}\;
+  \begin{cases} x_1 - x_2 = -1 \\ 2x_1 - 2x_2 = -2 \end{cases}</annotation></semantics></math></span>
+In (i) the two lines cross at exactly one point: adding the equations
+gives <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3x_1 = 3</annotation></semantics></math></span>, so <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_1 = 1</annotation></semantics></math></span> and then <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">x_2 = 2</annotation></semantics></math></span>; the unique solution is
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1, 2)</annotation></semantics></math></span>. In (ii) the lines are parallel and distinct — no point lies
+on both, since <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1 - x_2</annotation></semantics></math></span> cannot equal <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span> at once — so the
+system is inconsistent. In (iii) the second equation is twice the first:
+both describe the <em>same</em> line, and every point <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo>,</mo><mspace width="0.167em"></mspace><mi>t</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(t,\, t+1)</annotation></semantics></math></span> with
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">t \in \mathbb{R}</annotation></semantics></math></span> is a solution — infinitely many.</p></div></div>
+<figure class="fig"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="681.84pt" height="213.778906pt" viewBox="0 0 681.84 213.778906" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-22T21:26:03.515388</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 213.778906 
+L 681.84 213.778906 
+L 681.84 0 
+L 0 0 
+L 0 213.778906 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 198.900781 
+L 215.013333 198.900781 
+L 215.013333 23.558281 
+L 7.2 23.558281 
+L 7.2 198.900781 
+z
+" style="fill: none"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 7.2 159.935781 
+L 215.013333 159.935781 
+" clip-path="url(#p87392f0702)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 111.106667 198.900781 
+L 111.106667 23.558281 
+" clip-path="url(#p87392f0702)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="text_1">
+     <!-- $x_1$ -->
+     <g transform="translate(105.756667 204.499219)">
+      <text>
+       <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+       <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">1</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2"/>
+   <g id="line2d_3">
+    <path d="M 23.792708 214.778906 
+L 215.013333 23.558281 
+" clip-path="url(#p87392f0702)" style="fill: none; stroke: #1d4ed8; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 95.580443 -1 
+L 203.469896 214.778906 
+" clip-path="url(#p87392f0702)" style="fill: none; stroke: #b3261e; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_2">
+    <!-- $x_2$ -->
+    <g transform="translate(12.070625 33.299531)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+      <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <!-- $(1,\ 2)$ -->
+    <g transform="translate(151.5775 90.994115)">
+     <text>
+      <tspan x="0" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'">(</tspan>
+      <tspan x="3.901367" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'">1</tspan>
+      <tspan x="10.263672" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'">,</tspan>
+      <tspan x="18.637663" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'">2</tspan>
+      <tspan x="24.999968" y="-0.40625" style="font-size: 10px; font-family: 'DejaVu Sans'">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 11px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="111.106667" y="15.558281" transform="rotate(-0 111.106667 15.558281)">one solution</text>
+   </g>
+   <g id="line2d_5">
+    <defs>
+     <path id="m1f2ff2eaf6" d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" style="stroke: #1a1a24"/>
+    </defs>
+    <g clip-path="url(#p87392f0702)">
+     <use xlink:href="#m1f2ff2eaf6" x="143.5775" y="94.994115" style="fill: #1a1a24; stroke: #1a1a24"/>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_3">
+    <path d="M 237.013333 198.900781 
+L 444.826667 198.900781 
+L 444.826667 23.558281 
+L 237.013333 23.558281 
+L 237.013333 198.900781 
+z
+" style="fill: none"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 237.013333 159.935781 
+L 444.826667 159.935781 
+" clip-path="url(#p5124041dae)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 340.92 198.900781 
+L 340.92 23.558281 
+" clip-path="url(#p5124041dae)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="text_5">
+     <!-- $x_1$ -->
+     <g transform="translate(335.57 204.499219)">
+      <text>
+       <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+       <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">1</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4"/>
+   <g id="line2d_8">
+    <path d="M 253.606042 214.778906 
+L 444.826667 23.558281 
+" clip-path="url(#p5124041dae)" style="fill: none; stroke: #1d4ed8; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_9">
+    <path d="M 318.547708 214.778906 
+L 444.826667 88.499948 
+" clip-path="url(#p5124041dae)" style="fill: none; stroke: #b3261e; stroke-width: 1.8; stroke-linecap: square"/>
+   </g>
+   <g id="text_6">
+    <!-- $x_2$ -->
+    <g transform="translate(241.883958 33.299531)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+      <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="340.92" y="15.558281" transform="rotate(-0 340.92 15.558281)">no solution</text>
+   </g>
+  </g>
+  <g id="axes_3">
+   <g id="patch_4">
+    <path d="M 466.826667 198.900781 
+L 674.64 198.900781 
+L 674.64 23.558281 
+L 466.826667 23.558281 
+L 466.826667 198.900781 
+z
+" style="fill: none"/>
+   </g>
+   <g id="line2d_10">
+    <path d="M 466.826667 159.935781 
+L 674.64 159.935781 
+" clip-path="url(#pa1a6d41b71)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_11">
+    <path d="M 570.733333 198.900781 
+L 570.733333 23.558281 
+" clip-path="url(#pa1a6d41b71)" style="fill: none; stroke: #b5b5af; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_5">
+    <g id="text_8">
+     <!-- $x_1$ -->
+     <g transform="translate(565.383333 204.499219)">
+      <text>
+       <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+       <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">1</tspan>
+      </text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_6"/>
+   <g id="line2d_12">
+    <path d="M 483.419375 214.778906 
+L 674.64 23.558281 
+" clip-path="url(#pa1a6d41b71)" style="fill: none; stroke: #1d4ed8; stroke-opacity: 0.35; stroke-width: 3.6; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_13">
+    <path d="M 483.419375 214.778906 
+L 674.64 23.558281 
+" clip-path="url(#pa1a6d41b71)" style="fill: none; stroke-dasharray: 5.6,4.2; stroke-dashoffset: 0; stroke: #b3261e; stroke-width: 1.4"/>
+   </g>
+   <g id="text_9">
+    <!-- $x_2$ -->
+    <g transform="translate(471.697292 33.299531)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'">x</tspan>
+      <tspan x="5.917969" y="1.109375" style="font-size: 7px; font-family: 'DejaVu Sans'">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 11px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="570.733333" y="15.558281" transform="rotate(-0 570.733333 15.558281)">infinitely many solutions</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p87392f0702">
+   <rect x="7.2" y="23.558281" width="207.813333" height="175.3425"/>
+  </clipPath>
+  <clipPath id="p5124041dae">
+   <rect x="237.013333" y="23.558281" width="207.813333" height="175.3425"/>
+  </clipPath>
+  <clipPath id="pa1a6d41b71">
+   <rect x="466.826667" y="23.558281" width="207.813333" height="175.3425"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>The three possible pictures for two equations in two variables: lines that cross once, parallel lines, and the same line twice.</figcaption></figure>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>The three pictures above are not just examples — they are a preview of
+a general fact we will prove next week: <em>every</em> linear system,
+in any number of variables, has either exactly one solution, no solution,
+or infinitely many. A linear system can never have exactly two solutions,
+or exactly five. Keep the pictures in mind as the geometric reason.</p></div>
+<h2>1.4 &nbsp;Equivalent systems and elementary operations</h2>
+<div class="thmblock definition" id="def:equivalent"><div class="thmhead"><span class="env-kind">Definition 1.18</span> <span class="env-name">(Equivalent systems)</span><span class="permalink" title="label: def:equivalent">&#182;</span></div><div class="thmbody"><p>Two linear systems in the same variables are <strong>equivalent</strong> if they
+have the same solution set.</p></div></div>
+<p>How do we <em>show</em> two systems are equivalent? Comparing solution sets
+directly is hopeless when we cannot yet compute them. The practical route
+is to transform one system into the other by simple steps that are
+guaranteed not to change the solution set.</p>
+<div class="thmblock definition" id="def:elementary-ops"><div class="thmhead"><span class="env-kind">Definition 1.19</span> <span class="env-name">(Elementary operations)</span><span class="permalink" title="label: def:elementary-ops">&#182;</span></div><div class="thmbody"><p>The <strong>elementary operations</strong> on a linear system are:
+<ol><li>(Swap) interchange the positions of two equations;</li><li>(Scale) multiply one equation by a <em>nonzero</em> constant <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span>;</li><li>(Replace) add a multiple of one equation to <em>another</em>
+        equation.</li></ol></p></div></div>
+<div class="thmblock theorem" id="thm:elementary-equiv"><div class="thmhead"><span class="env-kind">Theorem 1.20</span> <span class="env-name">(Elementary operations preserve the solution set)</span><span class="permalink" title="label: thm:elementary-equiv">&#182;</span></div><div class="thmbody"><p>If a linear system is obtained from another by one elementary operation,
+then the two systems are <a class="kref" data-ref="def:equivalent" href="#def:equivalent">equivalent</a>. Consequently,
+any chain of elementary operations produces an equivalent system.</p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>First we check that every solution of the old system is a solution of the
+new one. A swap does not change the equations at all, only their order.
+For a scale, if <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>s</mi><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>s</mi><mi>n</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(s_1,\dots,s_n)</annotation></semantics></math></span> satisfies an equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>E</mi><annotation encoding="application/x-tex">E</annotation></semantics></math></span>, then it
+satisfies <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>E</mi></mrow><annotation encoding="application/x-tex">cE</annotation></semantics></math></span>, because multiplying both sides of a true numerical
+equality by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span> keeps it true. For a replace, if the numbers <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>i</mi></msub><annotation encoding="application/x-tex">s_i</annotation></semantics></math></span>
+satisfy equations <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>E</mi><mi>i</mi></msub><annotation encoding="application/x-tex">E_i</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>E</mi><mi>j</mi></msub><annotation encoding="application/x-tex">E_j</annotation></semantics></math></span>, then they satisfy <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>E</mi><mi>j</mi></msub><mo>+</mo><mi>c</mi><msub><mi>E</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">E_j + cE_i</annotation></semantics></math></span>, since
+we are adding equal numbers to equal numbers; the other equations are
+untouched.</p><p>Now the key point: each elementary operation is <em>undone</em> by an
+elementary operation of the same type — a swap by the same swap, a
+scale by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span> by a scale by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>c</mi></mrow><annotation encoding="application/x-tex">1/c</annotation></semantics></math></span> (this is where <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c \neq 0</annotation></semantics></math></span> is essential),
+and adding <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></span> times equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span> by adding <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">-c</annotation></semantics></math></span> times equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>. So
+the argument of the first paragraph also runs backwards: every solution
+of the new system is a solution of the old. The two solution sets contain
+each other, hence are equal. The statement about chains follows by
+applying this result once per step.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock remark" id="rem:why-nonzero"><div class="thmhead"><span class="env-kind">Remark 1.21</span><span class="permalink" title="label: rem:why-nonzero">&#182;</span></div><div class="thmbody"><p>The proof shows exactly why multiplying an equation by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span> is forbidden:
+that step is not reversible. It erases an equation — turning it into
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">0 = 0</annotation></semantics></math></span> — and can enlarge the solution set.</p></div></div>
+<div class="exercise" id="exr:s1-solve" data-type="numeric" data-answer="2" data-tol="0.001"><div class="exhead">Exercise 1.8 <span class="extag">auto-check</span></div><div class="exbody"><p>Consider the system <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">x_1 + 2x_2 = 4</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><mn>3</mn><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\;3x_1 - x_2 = 5</annotation></semantics></math></span>. Find the value
+of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span> in its unique solution.</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Add twice the second equation to the first to eliminate <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math></span>, or
+solve the second equation for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>2</mn></msub><annotation encoding="application/x-tex">x_2</annotation></semantics></math></span> and substitute.</p></div></div></div>
+<div class="exercise" id="exr:s1-ops" data-type="multichoice"><div class="exhead">Exercise 1.9 <span class="extag">auto-check</span></div><div class="exbody"><p>Which of the following operations can <em>change</em> the solution set of a
+linear system?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:s1-ops"> Interchanging two equations</label></li><li><label><input type="radio" name="exr:s1-ops"> Adding <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>5</mn><annotation encoding="application/x-tex">5</annotation></semantics></math></span> times equation 1 to equation 2</label></li><li><label><input type="radio" name="exr:s1-ops" data-correct="1"> Multiplying the first equation by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>The scale operation in
+<a class="kref" data-ref="thm:elementary-equiv" href="#thm:elementary-equiv">the theorem on elementary operations</a> allows
+multiplying only by a nonzero <em>constant</em>. Multiplying by the
+variable <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span> can create new solutions: in the system of the previous
+exercise, multiplying the first equation by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span> turns it into
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>4</mn><msub><mi>x</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">x_1(x_1 + 2x_2) = 4x_1</annotation></semantics></math></span>, and now <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_1 = 0</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mo>−</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">x_2 = -5</annotation></semantics></math></span> satisfy both
+equations — a new solution that the original system does not have.</p></div></div></div>
+<h2>1.5 &nbsp;The matrix equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span></h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Here is the payoff of Sections 1.1 and 1.2. A system of equations
+carries three ingredients — coefficients, unknowns, right-hand sides
+— and we now have containers for all three: a matrix and two column
+vectors. Packed that way, the whole system, no matter how large,
+collapses into one line: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span>.</p></div>
+<div class="thmblock definition" id="def:coeff-matrix"><div class="thmhead"><span class="env-kind">Definition 1.22</span> <span class="env-name">(Coefficient matrix, augmented matrix, matrix equation)</span><span class="permalink" title="label: def:coeff-matrix">&#182;</span></div><div class="thmbody"><p>Consider the linear system
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>a</mi><mn>11</mn></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>12</mn></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mrow><mn>1</mn><mi>n</mi></mrow></msub><msub><mi>x</mi><mi>n</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>a</mi><mn>21</mn></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mn>22</mn></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mrow><mn>2</mn><mi>n</mi></mrow></msub><msub><mi>x</mi><mi>n</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mspace width="0.278em"></mspace><mspace width="0.278em"></mspace><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>a</mi><mrow><mi>m</mi><mn>1</mn></mrow></msub><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>a</mi><mrow><mi>m</mi><mn>2</mn></mrow></msub><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>a</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub><msub><mi>x</mi><mi>n</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mi>m</mi></msub></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\left\{
+  \begin{aligned}
+    a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n &amp;= b_1 \\
+    a_{21}x_1 + a_{22}x_2 + \cdots + a_{2n}x_n &amp;= b_2 \\
+    &amp;\;\;\vdots \\
+    a_{m1}x_1 + a_{m2}x_2 + \cdots + a_{mn}x_n &amp;= b_m
+  \end{aligned}
+  \right.</annotation></semantics></math></span>
+Collect its coefficients, its unknowns, and its right-hand sides into
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>11</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>12</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mn>1</mn><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>21</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mn>22</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mn>2</mn><mi>n</mi></mrow></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mn>1</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mn>2</mn></mrow></msub></mtd><mtd columnalign="center" style="text-align: center"><mi>⋯</mi></mtd><mtd columnalign="center" style="text-align: center"><msub><mi>a</mi><mrow><mi>m</mi><mi>n</mi></mrow></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mi>n</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mi>𝐛</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mi>m</mi></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix}
+    a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1n} \\
+    a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2n} \\
+    \vdots &amp; \vdots &amp;        &amp; \vdots \\
+    a_{m1} &amp; a_{m2} &amp; \cdots &amp; a_{mn}
+  \end{pmatrix},
+  \qquad
+  \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix},
+  \qquad
+  \mathbf{b} = \begin{pmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{pmatrix}.</annotation></semantics></math></span>
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is the <strong>coefficient matrix</strong> of the system; <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span> are the column vectors of unknowns and of right-hand
+sides. Since the left-hand side of the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th equation is exactly the
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th entry of the <a class="kref" data-ref="def:matrix" href="#def:matrix">matrix–vector product</a>
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>, the system asks precisely for those <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> with
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b},</annotation></semantics></math></span>
+called the <strong>matrix equation</strong> of the system. Finally, the
+<strong>augmented matrix</strong> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>A</mi><mo>∣</mo><mi>𝐛</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,A \mid \mathbf{b}\,)</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> with the
+column <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span> attached as an extra last column.</p></div></div>
+<div class="thmblock proposition" id="prop:matrix-eq"><div class="thmhead"><span class="env-kind">Proposition 1.23</span><span class="permalink" title="label: prop:matrix-eq">&#182;</span></div><div class="thmbody"><p>A vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐬</mi><annotation encoding="application/x-tex">\mathbf{s}</annotation></semantics></math></span> is a solution of the linear system if and only if
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐬</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{s} = \mathbf{b}</annotation></semantics></math></span>. In particular, the system and the matrix
+equation have the same solution set.</p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>Two column vectors are equal exactly when their entries agree. The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th
+entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐬</mi></mrow><annotation encoding="application/x-tex">A\mathbf{s}</annotation></semantics></math></span> equals <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>i</mi></msub><annotation encoding="application/x-tex">b_i</annotation></semantics></math></span> precisely when <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐬</mi><annotation encoding="application/x-tex">\mathbf{s}</annotation></semantics></math></span> satisfies
+the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>-th equation, by <a class="kref" data-ref="def:matrix" href="#def:matrix">the definition of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span></a>.
+So <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐬</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{s} = \mathbf{b}</annotation></semantics></math></span> holds if and only if all <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math></span> equations hold.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock remark" id="rem:column-reading"><div class="thmhead"><span class="env-kind">Remark 1.24</span><span class="permalink" title="label: rem:column-reading">&#182;</span></div><div class="thmbody"><p>The <a class="kref" data-ref="thm:ax-columns" href="#thm:ax-columns">column view</a> adds a second reading, worth
+saying out loud: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> is solvable exactly when
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span> can be written as a <a class="kref" data-ref="def:lincomb" href="#def:lincomb">linear combination</a>
+of the columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> — the unknowns are the weights. One equation,
+two questions: “which inputs <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> work?” (row reading) and
+“is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span> reachable from the columns?” (column reading).</p></div></div>
+<div class="thmblock definition" id="def:row-ops"><div class="thmhead"><span class="env-kind">Definition 1.25</span> <span class="env-name">(Row operations)</span><span class="permalink" title="label: def:row-ops">&#182;</span></div><div class="thmbody"><p>The <strong>elementary row operations</strong> on a matrix are the mirror images
+of the <a class="kref" data-ref="def:elementary-ops" href="#def:elementary-ops">elementary operations on equations</a>:
+swap two rows, scale a row by a nonzero constant, and add a multiple of
+one row to another row. Two matrices are <strong>row equivalent</strong> if one
+can be turned into the other by a chain of row operations. By
+<a class="kref" data-ref="thm:elementary-equiv" href="#thm:elementary-equiv">the theorem on elementary operations</a>,
+row-equivalent augmented matrices represent equivalent systems.</p></div></div>
+<div class="exercise" id="exr:s3-augmented" data-type="multichoice"><div class="exhead">Exercise 1.10 <span class="extag">auto-check</span></div><div class="exbody"><p>The system <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\;x_1 - 2x_2 = 3</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><mn>4</mn><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mn>5</mn><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\;4x_2 + 5x_3 = -1</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\;2x_1 + x_3 = 0</annotation></semantics></math></span>
+has augmented matrix:</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:s3-augmented" data-correct="1"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; -2 &amp; 0 &amp; 3  \\  0 &amp; 4 &amp; 5 &amp; -1  \\  2 &amp; 0 &amp; 1 &amp; 0 \end{pmatrix}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:s3-augmented"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; -2 &amp; 0 &amp; 3  \\  4 &amp; 5 &amp; 0 &amp; -1  \\  2 &amp; 0 &amp; 1 &amp; 0 \end{pmatrix}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:s3-augmented"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; -2 &amp; 3 &amp; 0  \\  4 &amp; 5 &amp; -1 &amp; 0  \\  2 &amp; 1 &amp; 0 &amp; 0 \end{pmatrix}</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Each column belongs to one variable, in order <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">x_1, x_2, x_3</annotation></semantics></math></span>; a
+variable missing from an equation contributes the coefficient <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span> in its
+column. The right-hand sides go in the last column, after the bar.</p></div></div></div>
+<div class="exercise" id="exr:s3-entry" data-type="numeric" data-answer="5" data-tol="0.001"><div class="exhead">Exercise 1.11 <span class="extag">auto-check</span></div><div class="exbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> be the coefficient matrix of the system in
+<a class="kref" data-ref="exr:s3-augmented" href="#exr:s3-augmented">the previous exercise</a>. What is the entry
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mn>23</mn></msub><annotation encoding="application/x-tex">a_{23}</annotation></semantics></math></span> (row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></span>, column <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span>)?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></span> is the second equation; column <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span> belongs to <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>3</mn></msub><annotation encoding="application/x-tex">x_3</annotation></semantics></math></span>.</p></div></div></div>
+<div class="thmblock remark" id="rem:looking-ahead-l1"><div class="thmhead"><span class="env-kind">Remark 1.26</span> <span class="env-name">(Looking ahead)</span><span class="permalink" title="label: rem:looking-ahead-l1">&#182;</span></div><div class="thmbody"><p>We now have the language: vectors and their arithmetic, the product
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> with its row and column readings, systems and their
+solution sets, three safe operations justified by
+<a class="kref" data-ref="thm:elementary-equiv" href="#thm:elementary-equiv">a theorem</a>, and the compact form
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span>. Next lecture we put it to work: Gaussian
+elimination, the algorithm that reduces any augmented matrix to a
+simple staircase shape from which the entire solution set can be read
+off.</p></div></div>
+  <h2>Index of statements</h2>
+  <ol class="idx"><li><a class="kref" data-ref="def:vector-ops" href="#def:vector-ops">Definition 1.1 (Vectors in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span>; addition and scalar multiplication)</a></li><li><a class="kref" data-ref="def:row-vector" href="#def:row-vector">Definition 1.2 (Row vectors and the transpose)</a></li><li><a class="kref" data-ref="def:vector-equality" href="#def:vector-equality">Definition 1.3 (Equality of vectors)</a></li><li><a class="kref" data-ref="rem:equality-strategy" href="#rem:equality-strategy">Remark 1.4</a></li><li><a class="kref" data-ref="rem:column-notation" href="#rem:column-notation">Remark 1.5 (Notation: columns written sideways)</a></li><li><a class="kref" data-ref="thm:vector-props" href="#thm:vector-props">Theorem 1.6 (Algebraic properties of vector operations)</a></li><li><a class="kref" data-ref="rem:vector-space" href="#rem:vector-space">Remark 1.7</a></li><li><a class="kref" data-ref="def:rowcol" href="#def:rowcol">Definition 1.8 (Row–column product)</a></li><li><a class="kref" data-ref="ex:rowcol-compute" href="#ex:rowcol-compute">Example 1.9</a></li><li><a class="kref" data-ref="def:matrix" href="#def:matrix">Definition 1.10 (Matrix; the matrix–vector product <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="def:lincomb" href="#def:lincomb">Definition 1.11 (Linear combination)</a></li><li><a class="kref" data-ref="thm:ax-columns" href="#thm:ax-columns">Theorem 1.12 (Column view of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="ex:ax-twoways" href="#ex:ax-twoways">Example 1.13 (One product, two computations)</a></li><li><a class="kref" data-ref="thm:linearity" href="#thm:linearity">Theorem 1.14 (Linearity of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span> in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="def:linear-system" href="#def:linear-system">Definition 1.15 (Linear equation, linear system)</a></li><li><a class="kref" data-ref="def:solution-set" href="#def:solution-set">Definition 1.16 (Solution, solution set)</a></li><li><a class="kref" data-ref="ex:three-cases" href="#ex:three-cases">Example 1.17 (Three systems in two variables)</a></li><li><a class="kref" data-ref="def:equivalent" href="#def:equivalent">Definition 1.18 (Equivalent systems)</a></li><li><a class="kref" data-ref="def:elementary-ops" href="#def:elementary-ops">Definition 1.19 (Elementary operations)</a></li><li><a class="kref" data-ref="thm:elementary-equiv" href="#thm:elementary-equiv">Theorem 1.20 (Elementary operations preserve the solution set)</a></li><li><a class="kref" data-ref="rem:why-nonzero" href="#rem:why-nonzero">Remark 1.21</a></li><li><a class="kref" data-ref="def:coeff-matrix" href="#def:coeff-matrix">Definition 1.22 (Coefficient matrix, augmented matrix, matrix equation)</a></li><li><a class="kref" data-ref="prop:matrix-eq" href="#prop:matrix-eq">Proposition 1.23</a></li><li><a class="kref" data-ref="rem:column-reading" href="#rem:column-reading">Remark 1.24</a></li><li><a class="kref" data-ref="def:row-ops" href="#def:row-ops">Definition 1.25 (Row operations)</a></li><li><a class="kref" data-ref="rem:looking-ahead-l1" href="#rem:looking-ahead-l1">Remark 1.26 (Looking ahead)</a></li></ol>
+  <footer>Generated from the lecture&rsquo;s LaTeX source.
+  Every cross-reference resolves to a stated definition or proved result.</footer>
+</main>
+<script>
+const LABELS = {"def:vector-ops": {"kind": "Definition", "number": "1.1", "name": "Vectors in R^n; addition and scalar multiplication"}, "def:row-vector": {"kind": "Definition", "number": "1.2", "name": "Row vectors and the transpose"}, "def:vector-equality": {"kind": "Definition", "number": "1.3", "name": "Equality of vectors"}, "rem:equality-strategy": {"kind": "Remark", "number": "1.4", "name": ""}, "rem:column-notation": {"kind": "Remark", "number": "1.5", "name": "Notation: columns written sideways"}, "thm:vector-props": {"kind": "Theorem", "number": "1.6", "name": "Algebraic properties of vector operations"}, "rem:vector-space": {"kind": "Remark", "number": "1.7", "name": ""}, "def:rowcol": {"kind": "Definition", "number": "1.8", "name": "Row\u2013column product"}, "ex:rowcol-compute": {"kind": "Example", "number": "1.9", "name": ""}, "def:matrix": {"kind": "Definition", "number": "1.10", "name": "Matrix; the matrix\u2013vector product Ax"}, "def:lincomb": {"kind": "Definition", "number": "1.11", "name": "Linear combination"}, "thm:ax-columns": {"kind": "Theorem", "number": "1.12", "name": "Column view of Ax"}, "ex:ax-twoways": {"kind": "Example", "number": "1.13", "name": "One product, two computations"}, "thm:linearity": {"kind": "Theorem", "number": "1.14", "name": "Linearity of Ax in x"}, "def:linear-system": {"kind": "Definition", "number": "1.15", "name": "Linear equation, linear system"}, "def:solution-set": {"kind": "Definition", "number": "1.16", "name": "Solution, solution set"}, "ex:three-cases": {"kind": "Example", "number": "1.17", "name": "Three systems in two variables"}, "def:equivalent": {"kind": "Definition", "number": "1.18", "name": "Equivalent systems"}, "def:elementary-ops": {"kind": "Definition", "number": "1.19", "name": "Elementary operations"}, "thm:elementary-equiv": {"kind": "Theorem", "number": "1.20", "name": "Elementary operations preserve the solution set"}, "rem:why-nonzero": {"kind": "Remark", "number": "1.21", "name": ""}, "def:coeff-matrix": {"kind": "Definition", "number": "1.22", "name": "Coefficient matrix, augmented matrix, matrix equation"}, "prop:matrix-eq": {"kind": "Proposition", "number": "1.23", "name": ""}, "rem:column-reading": {"kind": "Remark", "number": "1.24", "name": ""}, "def:row-ops": {"kind": "Definition", "number": "1.25", "name": "Row operations"}, "rem:looking-ahead-l1": {"kind": "Remark", "number": "1.26", "name": "Looking ahead"}};
+document.addEventListener("DOMContentLoaded", () => {
+  // proofs
+  document.querySelectorAll(".proof-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const body = btn.parentElement.querySelector(".proof-body");
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      body.hidden = open;
+    });
+  });
+  // exercises
+  document.querySelectorAll(".hint-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const b = btn.parentElement.querySelector(".hint-body");
+      b.hidden = !b.hidden;
+    });
+  });
+  function parseNum(s) {
+    s = s.trim().replace(/\s+/g, "");
+    const frac = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+    if (frac) return parseFloat(frac[1]) / parseFloat(frac[2]);
+    const sq = s.match(/^sqrt\((-?\d+(?:\.\d+)?)\)$/i);
+    if (sq) return Math.sqrt(parseFloat(sq[1]));
+    const v = parseFloat(s);
+    return isNaN(v) ? null : v;
+  }
+  document.querySelectorAll(".excheck").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const ex = btn.closest(".exercise");
+      const fb = ex.querySelector(".exfb");
+      let ok = false;
+      if (ex.dataset.type === "numeric") {
+        const v = parseNum(ex.querySelector(".exinput").value);
+        if (v === null) {
+          fb.textContent =
+            "Enter a number (fractions like 3/4 and sqrt(2) work too).";
+          fb.className = "exfb neutral"; return;
+        }
+        ok = Math.abs(v - parseFloat(ex.dataset.answer))
+             <= parseFloat(ex.dataset.tol || "0.001");
+      } else {
+        const sel = ex.querySelector("input[type=radio]:checked");
+        if (!sel) { fb.textContent = "Select an option first.";
+                    fb.className = "exfb neutral"; return; }
+        ok = sel.hasAttribute("data-correct");
+      }
+      fb.textContent = ok ? "✓ Correct" : "✗ Not quite — try again";
+      fb.className = "exfb " + (ok ? "good" : "bad");
+    });
+  });
+  // knowls
+  document.querySelectorAll("a.kref[data-ref]").forEach(a => {
+    a.addEventListener("click", ev => {
+      ev.preventDefault();
+      const ref = a.dataset.ref;
+      const existing = a._knowl;
+      if (existing) { existing.remove(); a._knowl = null;
+        a.classList.remove("open"); return; }
+      const src = document.getElementById(ref);
+      if (!src) return;
+      const box = document.createElement("span");
+      box.className = "knowl";
+      box.innerHTML = src.querySelector(".thmhead").outerHTML
+                    + src.querySelector(".thmbody").outerHTML;
+      box.querySelectorAll(".permalink").forEach(x => x.remove());
+      box.querySelectorAll("a.kref[data-ref]").forEach(inner => {
+        inner.addEventListener("click", e2 => {
+          e2.preventDefault(); e2.stopPropagation();
+          const t = document.getElementById(inner.dataset.ref);
+          if (t) { t.scrollIntoView({behavior: "smooth", block: "center"});
+                   flash(t); }
+        });
+      });
+      const anchor = a.closest("p, li, .thmbody, h2") || a;
+      if (anchor.tagName === "LI" || anchor.tagName === "P") {
+        anchor.appendChild(box);
+      } else {
+        a.insertAdjacentElement("afterend", box);
+      }
+      a._knowl = box; a.classList.add("open");
+    });
+  });
+  function flash(el) {
+    el.style.transition = "box-shadow .3s";
+    el.style.boxShadow = "0 0 0 3px #93b4f8";
+    setTimeout(() => el.style.boxShadow = "", 900);
+  }
+});
+</script>
+</body>
+</html>

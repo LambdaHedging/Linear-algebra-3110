@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecture 2: Gaussian Elimination and Solution Sets</title>
+<style>
+  :root {
+    --ink: #1a1a24; --paper: #fdfdfa; --accent: #1d4ed8;
+    --accent-soft: #eff4ff; --rule: #d8d8d2; --def: #0e7490;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Georgia", "STIX Two Text", serif;
+    font-size: 17px; line-height: 1.65;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 6rem; }
+  h1 { font-size: 1.7rem; margin: 0 0 .2rem; }
+  .byline { margin: .1rem 0 1.1rem; color: #4a5568; font-size: 1.02rem; }
+  .coursename { color: #666; font-variant: small-caps; letter-spacing: .06em; }
+  h2 { font-size: 1.25rem; margin-top: 2.2rem; }
+  p { margin: .8rem 0; text-align: justify; hyphens: auto; }
+  .thmblock {
+    margin: 1.3rem 0; padding: .8rem 1.05rem .55rem;
+    border: 1px solid var(--rule); border-left: 4px solid var(--accent);
+    border-radius: 6px; background: #fff;
+  }
+  .thmblock.definition, .thmblock.example, .thmblock.remark
+    { border-left-color: var(--def); }
+  .thmhead { display: flex; align-items: baseline; gap: .4rem; }
+  .env-kind { font-weight: 700; font-style: normal; }
+  .env-name { color: #555; }
+  .thmblock.theorem .thmbody, .thmblock.lemma .thmbody,
+  .thmblock.proposition .thmbody, .thmblock.corollary .thmbody
+    { font-style: italic; }
+  .thmbody .imath, .thmbody .dmath { font-style: normal; }
+  .permalink { margin-left: auto; color: #c5c5bd; cursor: help;
+    font-size: .85em; }
+  .kref {
+    color: var(--accent); text-decoration: none; cursor: pointer;
+    border-bottom: 1.5px dotted var(--accent); font-style: inherit;
+  }
+  .kref:hover { background: var(--accent-soft); }
+  .kref.extern { border-bottom-style: solid; }
+  .kref.extern::after { content: "\2197"; font-size: .7em;
+    vertical-align: super; margin-left: .1em; }
+  .kref.open { background: var(--accent-soft); border-bottom-style: solid; }
+  .knowl {
+    display: block; margin: .55rem 0 .8rem; padding: .7rem .95rem;
+    border: 1px dashed var(--accent); border-radius: 6px;
+    background: var(--accent-soft); font-style: normal; text-align: left;
+    animation: knowlin .18s ease-out;
+  }
+  @keyframes knowlin { from { opacity: 0; transform: translateY(-4px); }
+                       to { opacity: 1; transform: none; } }
+  .knowl .thmhead { margin-bottom: .2rem; }
+  .proof { margin: -.6rem 0 1.3rem; padding-left: .35rem; }
+  .thmblock + .proof { margin-top: -.9rem; }
+  .proof-toggle {
+    font: inherit; font-size: .95em; font-style: italic; cursor: pointer;
+    border: none; background: none; color: var(--ink); padding: .25rem 0;
+  }
+  .proof-toggle .tri { display: inline-block; color: var(--accent);
+    transition: transform .15s; font-style: normal; }
+  .proof-toggle[aria-expanded="true"] .tri { transform: rotate(90deg); }
+  .proof-body { border-left: 2px solid var(--rule);
+    padding: .05rem 0 .05rem 1rem; margin: .2rem 0 0 .2rem; }
+  .qed { float: right; }
+  .dmath { display: block; overflow-x: auto; padding: .3rem 0;
+    text-align: center; }
+  @font-face {
+    font-family: "Latin Modern Math";
+    src: url("fonts/latinmodern-math.otf") format("opentype");
+  }
+  math { font-size: 1.06em;
+    font-family: "Latin Modern Math", "STIX Two Math", math; }
+  .dmath math { font-size: 1.1em; }
+  .intuition {
+    margin: 1.3rem 0; padding: .75rem 1.05rem;
+    background: #fbf6e9; border: 1px solid #e8dcbe; border-radius: 6px;
+  }
+  .intuition-head { font-weight: 700; color: #8a6d1d; font-size: .92em;
+    letter-spacing: .03em; margin-bottom: .25rem; }
+  .intuition p:last-child { margin-bottom: .1rem; }
+  .exercise { margin: 1.3rem 0; padding: .8rem 1.05rem;
+    border: 1px solid #cfe3cf; border-left: 4px solid #2e7d32;
+    border-radius: 6px; background: #fbfdfb; }
+  .exhead { font-weight: 700; margin-bottom: .2rem; }
+  .extag { font-size: .72em; font-weight: 600; color: #2e7d32;
+    background: #e7f2e7; border-radius: 10px; padding: .12rem .55rem;
+    vertical-align: middle; letter-spacing: .04em; }
+  .extag.written { color: #7a5b12; background: #f6ecd4; }
+  .exanswer { margin: .5rem 0 .2rem; }
+  .exinput { font: inherit; padding: .15rem .4rem; border: 1px solid #bbb;
+    border-radius: 4px; }
+  .excheck { font: inherit; font-size: .9em; padding: .2rem .7rem;
+    border: 1px solid #2e7d32; background: #fff; color: #2e7d32;
+    border-radius: 4px; cursor: pointer; }
+  .excheck:hover { background: #e7f2e7; }
+  .exfb.good { color: #2e7d32; font-weight: 600; }
+  .exfb.bad { color: #b3261e; font-weight: 600; }
+  .exfb.neutral { color: #555; }
+  .exchoices { list-style: none; padding-left: .2rem; }
+  .exchoices li { margin: .35rem 0; }
+  .hint-toggle { font: inherit; font-size: .9em; border: none;
+    background: none; color: var(--accent); cursor: pointer;
+    padding: .2rem 0; }
+  .hint-body { border-left: 2px solid var(--rule);
+    padding: .05rem 0 .05rem 1rem; margin-top: .2rem; }
+  .exwritten { color: #555; font-size: .95em; margin-top: .4rem; }
+  .fig { margin: 1.4rem 0; text-align: center; }
+  .fig svg { max-width: 100%; height: auto; }
+  .fig figcaption { font-size: .9em; color: #555; margin-top: .35rem; }
+  .idx { columns: 2; font-size: .95em; }
+  .idx li { margin: .15rem 0; }
+  footer { margin-top: 3.5rem; border-top: 1px solid var(--rule);
+    padding-top: 1rem; color: #777; font-size: .85em; }
+  .hint { background: var(--accent-soft); border-radius: 6px;
+    padding: .6rem .9rem; font-size: .92em; color: #33415c; }
+  ol li, ul li { margin: .3rem 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="coursename">Linear Algebra &mdash; Lecture 2</div>
+  <h1>Lecture 2: Gaussian Elimination and Solution Sets</h1>
+  <p class="byline">Shuhong Gao &nbsp;&middot;&nbsp; Clemson University</p>
+  <p class="hint">These notes are interactive: click any
+  <a class="kref" href="#" onclick="return false"
+     style="pointer-events:none">dotted&nbsp;term</a> to unfold its exact
+  definition or statement in place, click <em>&#9656; Proof</em> to expand
+  a proof, and try the exercises &mdash; answers are checked instantly.</p>
+  <h2>2.1 &nbsp;Echelon forms and Gaussian elimination</h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Some systems are effortless: if each equation involves fewer variables
+than the one above it — a triangular, staircase pattern — then the
+solution can be read off with hardly any work. Gaussian elimination is
+the strategy of using <a class="kref extern" href="lec01-linear-systems.html#def:row-ops" title="Definition 1.25 (Row operations) — in another lecture; opens that page">row operations</a> to drive
+<em>any</em> augmented matrix into that staircase shape. This section
+defines the target shape precisely and proves the algorithm always
+reaches it.</p></div>
+<div class="thmblock definition" id="def:echelon"><div class="thmhead"><span class="env-kind">Definition 2.1</span> <span class="env-name">(Row echelon form, reduced row echelon form)</span><span class="permalink" title="label: def:echelon">&#182;</span></div><div class="thmbody"><p>A matrix is in <strong>row echelon form</strong> (REF, “triangular form”) if:
+<ol><li>the first nonzero entry (the <strong>leading entry</strong>) of each
+        nonzero row lies strictly to the right of the leading entry of
+        the row above it;</li><li>all rows consisting entirely of zero (if any) are at the bottom.</li></ol>
+It is in <strong>reduced row echelon form</strong> (RREF) if, in addition:
+<ol><li>every leading entry is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span>;</li><li>each leading <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span> is the only nonzero entry in its column.</li></ol>
+A <strong>pivot position</strong> is a position holding a leading entry of an
+REF of the matrix; a <strong>pivot column</strong> is a column containing a
+pivot position.</p></div></div>
+<figure class="fig"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="574.383852pt" height="199.198125pt" viewBox="0 0 574.383852 199.198125" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-22T21:26:03.644645</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 199.198125 
+L 574.383852 199.198125 
+L 574.383852 0 
+L 0 0 
+L 0 199.198125 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 23.008 74.350125 
+L 46.112 74.350125 
+L 46.112 51.246125 
+L 23.008 51.246125 
+z
+" clip-path="url(#paa0e7007cc)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 53.408 104.750125 
+L 76.512 104.750125 
+L 76.512 81.646125 
+L 53.408 81.646125 
+z
+" clip-path="url(#paa0e7007cc)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 114.208 135.150125 
+L 137.312 135.150125 
+L 137.312 112.046125 
+L 114.208 112.046125 
+z
+" clip-path="url(#paa0e7007cc)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 16.340062 44.832651 
+Q -14.588014 107.942809 16.340733 171.052968 
+" clip-path="url(#paa0e7007cc)" style="fill: none; stroke: #1a1a24; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 204.779938 44.832651 
+Q 235.708014 107.942809 204.779267 171.052968 
+" clip-path="url(#paa0e7007cc)" style="fill: none; stroke: #1a1a24; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 19.36 47.598125 
+L 49.76 47.598125 
+L 49.76 77.998125 
+L 80.16 77.998125 
+L 80.16 108.398125 
+L 140.96 108.398125 
+L 140.96 138.798125 
+L 169.84 138.798125 
+" clip-path="url(#paa0e7007cc)" style="fill: none; stroke-dasharray: 4.8,2.4; stroke-dashoffset: 0; stroke: #b3261e; stroke-width: 1.2"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 171.36 170.718125 
+L 171.36 46.078125 
+" clip-path="url(#paa0e7007cc)" style="fill: none; stroke: #1a1a24; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <!-- $A$ -->
+    <g style="fill: #666666" transform="translate(91.565 179.838125)">
+     <text>
+      <tspan x="0" y="-0.984375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #666666">A</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $\mathbf{b}$ -->
+    <g style="fill: #666666" transform="translate(182.6 179.838125)">
+     <text>
+      <tspan x="0" y="-0.640625" style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; fill: #666666">b</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 15px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="34.56" y="66.937187" transform="rotate(-0 34.56 66.937187)">■</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="64.96" y="66.66125" transform="rotate(-0 64.96 66.66125)">*</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="95.36" y="66.66125" transform="rotate(-0 95.36 66.66125)">*</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="125.76" y="66.66125" transform="rotate(-0 125.76 66.66125)">*</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="156.16" y="66.66125" transform="rotate(-0 156.16 66.66125)">*</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="186.56" y="66.66125" transform="rotate(-0 186.56 66.66125)">*</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="34.56" y="97.06125" transform="rotate(-0 34.56 97.06125)">0</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 15px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="64.96" y="97.337187" transform="rotate(-0 64.96 97.337187)">■</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="95.36" y="97.06125" transform="rotate(-0 95.36 97.06125)">*</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="125.76" y="97.06125" transform="rotate(-0 125.76 97.06125)">*</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="156.16" y="97.06125" transform="rotate(-0 156.16 97.06125)">*</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="186.56" y="97.06125" transform="rotate(-0 186.56 97.06125)">*</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="34.56" y="127.46125" transform="rotate(-0 34.56 127.46125)">0</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="64.96" y="127.46125" transform="rotate(-0 64.96 127.46125)">0</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="95.36" y="127.46125" transform="rotate(-0 95.36 127.46125)">0</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 15px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="125.76" y="127.737187" transform="rotate(-0 125.76 127.737187)">■</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="156.16" y="127.46125" transform="rotate(-0 156.16 127.46125)">*</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="186.56" y="127.46125" transform="rotate(-0 186.56 127.46125)">*</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="34.56" y="157.86125" transform="rotate(-0 34.56 157.86125)">0</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="64.96" y="157.86125" transform="rotate(-0 64.96 157.86125)">0</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="95.36" y="157.86125" transform="rotate(-0 95.36 157.86125)">0</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="125.76" y="157.86125" transform="rotate(-0 125.76 157.86125)">0</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="156.16" y="157.86125" transform="rotate(-0 156.16 157.86125)">0</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="186.56" y="157.86125" transform="rotate(-0 186.56 157.86125)">*</text>
+   </g>
+   <g id="text_27">
+    <text style="font-size: 12px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="118.16" y="16.318125" transform="rotate(-0 118.16 16.318125)">row echelon form</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 361.071852 74.350125 
+L 384.175852 74.350125 
+L 384.175852 51.246125 
+L 361.071852 51.246125 
+z
+" clip-path="url(#p1eeb83bdf0)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 391.471852 104.750125 
+L 414.575852 104.750125 
+L 414.575852 81.646125 
+L 391.471852 81.646125 
+z
+" clip-path="url(#p1eeb83bdf0)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 452.271852 135.150125 
+L 475.375852 135.150125 
+L 475.375852 112.046125 
+L 452.271852 112.046125 
+z
+" clip-path="url(#p1eeb83bdf0)" style="fill: #eff4ff; stroke: #1d4ed8; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 354.403914 44.832651 
+Q 323.475838 107.942809 354.404585 171.052968 
+" clip-path="url(#p1eeb83bdf0)" style="fill: none; stroke: #1a1a24; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 542.843789 44.832651 
+Q 573.771865 107.942809 542.843119 171.052968 
+" clip-path="url(#p1eeb83bdf0)" style="fill: none; stroke: #1a1a24; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 357.423852 47.598125 
+L 387.823852 47.598125 
+L 387.823852 77.998125 
+L 418.223852 77.998125 
+L 418.223852 108.398125 
+L 479.023852 108.398125 
+L 479.023852 138.798125 
+L 507.903852 138.798125 
+" clip-path="url(#p1eeb83bdf0)" style="fill: none; stroke-dasharray: 4.8,2.4; stroke-dashoffset: 0; stroke: #b3261e; stroke-width: 1.2"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 509.423852 170.718125 
+L 509.423852 46.078125 
+" clip-path="url(#p1eeb83bdf0)" style="fill: none; stroke: #1a1a24; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="text_28">
+    <!-- $A$ -->
+    <g style="fill: #666666" transform="translate(429.628852 179.838125)">
+     <text>
+      <tspan x="0" y="-0.984375" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #666666">A</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_29">
+    <!-- $\mathbf{b}$ -->
+    <g style="fill: #666666" transform="translate(520.663852 179.838125)">
+     <text>
+      <tspan x="0" y="-0.640625" style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; fill: #666666">b</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="372.623852" y="66.66125" transform="rotate(-0 372.623852 66.66125)">1</text>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="403.023852" y="66.66125" transform="rotate(-0 403.023852 66.66125)">0</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="433.423852" y="66.66125" transform="rotate(-0 433.423852 66.66125)">*</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="463.823852" y="66.66125" transform="rotate(-0 463.823852 66.66125)">0</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="494.223852" y="66.66125" transform="rotate(-0 494.223852 66.66125)">*</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="524.623852" y="66.66125" transform="rotate(-0 524.623852 66.66125)">*</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="372.623852" y="97.06125" transform="rotate(-0 372.623852 97.06125)">0</text>
+   </g>
+   <g id="text_37">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="403.023852" y="97.06125" transform="rotate(-0 403.023852 97.06125)">1</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="433.423852" y="97.06125" transform="rotate(-0 433.423852 97.06125)">*</text>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="463.823852" y="97.06125" transform="rotate(-0 463.823852 97.06125)">0</text>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="494.223852" y="97.06125" transform="rotate(-0 494.223852 97.06125)">*</text>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="524.623852" y="97.06125" transform="rotate(-0 524.623852 97.06125)">*</text>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="372.623852" y="127.46125" transform="rotate(-0 372.623852 127.46125)">0</text>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="403.023852" y="127.46125" transform="rotate(-0 403.023852 127.46125)">0</text>
+   </g>
+   <g id="text_44">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="433.423852" y="127.46125" transform="rotate(-0 433.423852 127.46125)">0</text>
+   </g>
+   <g id="text_45">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1d4ed8" x="463.823852" y="127.46125" transform="rotate(-0 463.823852 127.46125)">1</text>
+   </g>
+   <g id="text_46">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="494.223852" y="127.46125" transform="rotate(-0 494.223852 127.46125)">*</text>
+   </g>
+   <g id="text_47">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="524.623852" y="127.46125" transform="rotate(-0 524.623852 127.46125)">*</text>
+   </g>
+   <g id="text_48">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="372.623852" y="157.86125" transform="rotate(-0 372.623852 157.86125)">0</text>
+   </g>
+   <g id="text_49">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="403.023852" y="157.86125" transform="rotate(-0 403.023852 157.86125)">0</text>
+   </g>
+   <g id="text_50">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="433.423852" y="157.86125" transform="rotate(-0 433.423852 157.86125)">0</text>
+   </g>
+   <g id="text_51">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="463.823852" y="157.86125" transform="rotate(-0 463.823852 157.86125)">0</text>
+   </g>
+   <g id="text_52">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #9a9a94" x="494.223852" y="157.86125" transform="rotate(-0 494.223852 157.86125)">0</text>
+   </g>
+   <g id="text_53">
+    <text style="font-size: 14px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="524.623852" y="157.86125" transform="rotate(-0 524.623852 157.86125)">*</text>
+   </g>
+   <g id="text_54">
+    <text style="font-size: 12px; font-family: 'DejaVu Serif', 'Bitstream Vera Serif', 'Computer Modern Roman', 'New Century Schoolbook', 'Century Schoolbook L', 'Utopia', 'ITC Bookman', 'Bookman', 'Nimbus Roman No9 L', 'Times New Roman', 'Times', 'Palatino', 'Charter', serif; text-anchor: middle; fill: #1a1a24" x="456.223852" y="16.318125" transform="rotate(-0 456.223852 16.318125)">reduced row echelon form</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="paa0e7007cc">
+   <rect x="7.2" y="26.318125" width="221.92" height="165.68"/>
+  </clipPath>
+  <clipPath id="p1eeb83bdf0">
+   <rect x="345.263852" y="26.318125" width="221.92" height="165.68"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>The two echelon shapes of an augmented matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>A</mi><mo>∣</mo><mi>𝐛</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,A \mid \mathbf{b}\,)</annotation></semantics></math></span>. Shaded entries are pivots: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>◼</mi><annotation encoding="application/x-tex">\blacksquare</annotation></semantics></math></span> stands for any nonzero number, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>*</mo><annotation encoding="application/x-tex">*</annotation></semantics></math></span> for any number; the column right of the vertical rule is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span>. In the reduced form every pivot is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span> and its whole column is otherwise zero. (Looking ahead: the system is consistent exactly when no pivot falls in the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span> column.)</figcaption></figure>
+<div class="thmblock theorem" id="thm:echelon-exists"><div class="thmhead"><span class="env-kind">Theorem 2.2</span> <span class="env-name">(Gaussian elimination)</span><span class="permalink" title="label: thm:echelon-exists">&#182;</span></div><div class="thmbody"><p>Every matrix can be transformed by elementary row operations into row
+echelon form, and further into reduced row echelon form.</p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>We describe the algorithm; it clearly terminates, which proves the
+statement. Find the leftmost nonzero column and swap rows so its top
+entry is nonzero — this is the first pivot. Add suitable multiples of
+the pivot row to the rows below to make every entry below the pivot
+zero. Now ignore the pivot row and repeat the procedure on the remaining
+rows. Since each round consumes at least one row, the process stops, and
+by construction the result satisfies the two echelon conditions. For the
+reduced form: scale each pivot row so its leading entry is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span>, then,
+working from the rightmost pivot to the left, add multiples of each pivot
+row to the rows <em>above</em> it to clear the rest of each pivot column.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock remark" id="rem:rref-unique"><div class="thmhead"><span class="env-kind">Remark 2.3</span><span class="permalink" title="label: rem:rref-unique">&#182;</span></div><div class="thmbody"><p>A matrix has many different row echelon forms, but its <em>reduced</em> row
+echelon form is unique — so the pivot positions do not depend on the
+order of operations. We take this fact on faith today and prove it later
+in the course, once we have the language of linear independence.</p></div></div>
+<div class="thmblock example" id="ex:gauss"><div class="thmhead"><span class="env-kind">Example 2.4</span> <span class="env-name">(Elimination with a unique solution)</span><span class="permalink" title="label: ex:gauss">&#182;</span></div><div class="thmbody"><p>Solve
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\;x_1 + 2x_2 + x_3 = 2</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>5</mn><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mn>3</mn><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\;2x_1 + 5x_2 + 3x_3 = 5</annotation></semantics></math></span>,
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>3</mn><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><mn>3</mn><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">\;x_1 + 3x_2 + 3x_3 = 4</annotation></semantics></math></span>. Working on the augmented matrix:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>4</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>−</mo><msub><mi>R</mi><mn>1</mn></msub></mrow></mtd></mtr></mtable></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub></mrow></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 &amp; 1 &amp; 2 \\  2 &amp; 5 &amp; 3 &amp; 5 \\  1 &amp; 3 &amp; 3 &amp; 4 \end{pmatrix}
+  \xrightarrow{\substack{R_2 - 2R_1 \\ R_3 - R_1}}
+  \begin{pmatrix} 1 &amp; 2 &amp; 1 &amp; 2 \\  0 &amp; 1 &amp; 1 &amp; 1 \\  0 &amp; 1 &amp; 2 &amp; 2 \end{pmatrix}
+  \xrightarrow{R_3 - R_2}
+  \begin{pmatrix} 1 &amp; 2 &amp; 1 &amp; 2 \\  0 &amp; 1 &amp; 1 &amp; 1 \\  0 &amp; 0 &amp; 1 &amp; 1 \end{pmatrix}</annotation></semantics></math></span>
+The matrix is now in <a class="kref" data-ref="def:echelon" href="#def:echelon">row echelon form</a> with three
+pivots. Continue to the <a class="kref" data-ref="def:echelon" href="#def:echelon">reduced row echelon form</a> by
+clearing the entries above each pivot, from the rightmost pivot
+leftward:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mo>→</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>2</mn></msub><mo>−</mo><msub><mi>R</mi><mn>3</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><msub><mi>R</mi><mn>3</mn></msub></mrow></mtd></mtr></mtable></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mrow><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>2</mn></msub></mrow></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\xrightarrow{\substack{R_2 - R_3 \\ R_1 - R_3}}
+  \begin{pmatrix} 1 &amp; 2 &amp; 0 &amp; 1  \\ 
+                  0 &amp; 1 &amp; 0 &amp; 0  \\ 
+                  0 &amp; 0 &amp; 1 &amp; 1 \end{pmatrix}
+  \xrightarrow{R_1 - 2R_2}
+  \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 1  \\ 
+                  0 &amp; 1 &amp; 0 &amp; 0  \\ 
+                  0 &amp; 0 &amp; 1 &amp; 1 \end{pmatrix}</annotation></semantics></math></span>
+Each row of the reduced form names a single variable: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_1 = 1</annotation></semantics></math></span>,
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_2 = 0</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_3 = 1</annotation></semantics></math></span>. The unique solution
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{x} = \begin{pmatrix} 1 &amp; 0 &amp; 1 \end{pmatrix}^{T}</annotation></semantics></math></span> (in the
+<a class="kref extern" href="lec01-linear-systems.html#rem:column-notation" title="Remark 1.5 (Notation: columns written sideways) — in another lecture; opens that page">transpose notation</a>) is read straight off the
+last column; substituting it into all three original equations confirms
+it.</p></div></div>
+<div class="exercise" id="exr:s2-rref" data-type="multichoice"><div class="exhead">Exercise 2.1 <span class="extag">auto-check</span></div><div class="exbody"><p>Which of the following augmented matrices (four variables) is in
+<a class="kref" data-ref="def:echelon" href="#def:echelon">reduced row echelon form</a>?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:s2-rref"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 2 &amp; 0 &amp; 3 &amp; 5  \\  0 &amp; 1 &amp; 4 &amp; 0 &amp; 2  \\  0 &amp; 0 &amp; 0 &amp; 1 &amp; 3 \end{pmatrix}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:s2-rref" data-correct="1"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 0 &amp; 2 &amp; 0 &amp; 4  \\  0 &amp; 1 &amp; -1 &amp; 0 &amp; 3  \\  0 &amp; 0 &amp; 0 &amp; 1 &amp; 2 \end{pmatrix}</annotation></semantics></math></span></label></li><li><label><input type="radio" name="exr:s2-rref"> <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 2 &amp; 1  \\  0 &amp; 0 &amp; 0 &amp; 0 &amp; 0  \\  0 &amp; 1 &amp; 0 &amp; 3 &amp; 2 \end{pmatrix}</annotation></semantics></math></span></label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Check all four conditions: zero rows at the bottom, leading
+entries moving right, leading entries equal to <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span>, and each leading <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span>
+alone in its column. One option violates the zero-row rule; another is
+in echelon form but has a nonzero entry <em>above</em> a pivot.</p></div></div></div>
+<div class="exercise" id="exr:s2-pivots" data-type="numeric" data-answer="3" data-tol="0.001"><div class="exhead">Exercise 2.2 <span class="extag">auto-check</span></div><div class="exbody"><p>How many pivot columns does the augmented matrix
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>6</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 1 &amp; 0 &amp; 2 &amp; 1  \\  0 &amp; 2 &amp; 1 &amp; 0 &amp; 4  \\ 
+                  0 &amp; 0 &amp; 0 &amp; 3 &amp; 6  \\  2 &amp; 2 &amp; 0 &amp; 4 &amp; 2 \end{pmatrix}</annotation></semantics></math></span>
+(four variables) have?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>The last row is twice the first, so <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mn>4</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">R_4 - 2R_1</annotation></semantics></math></span> makes it zero.
+Where are the leading entries of the three remaining rows?</p></div></div></div>
+<h2>2.2 &nbsp;Solution sets: parametric form</h2>
+<div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Once the staircase is reached, the variables split into two kinds: those
+that sit on pivots, which the equations determine, and the rest, which
+are genuinely free — dials we may set to any values whatsoever, each
+setting producing exactly one solution. Describing the solution set
+means expressing the pivot variables in terms of the dials.</p></div>
+<div class="thmblock definition" id="def:free-var"><div class="thmhead"><span class="env-kind">Definition 2.5</span> <span class="env-name">(Basic and free variables)</span><span class="permalink" title="label: def:free-var">&#182;</span></div><div class="thmbody"><p>Suppose the augmented matrix of a consistent system has been brought to
+<a class="kref" data-ref="def:echelon" href="#def:echelon">row echelon form</a>. The variables corresponding to
+pivot columns of the coefficient matrix are called <strong>basic
+variables</strong>; all other variables are <strong>free variables</strong>.</p></div></div>
+<div class="thmblock example" id="ex:parametric"><div class="thmhead"><span class="env-kind">Example 2.6</span> <span class="env-name">(Parametric form and parametric vector form)</span><span class="permalink" title="label: ex:parametric">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">b_1, b_2, b_3</annotation></semantics></math></span> be any constants and consider the system
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">{</mo><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mn>4</mn></msub><mo>+</mo><msub><mi>x</mi><mn>5</mn></msub><mo>+</mo><msub><mi>x</mi><mn>6</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>3</mn></msub><mo>−</mo><msub><mi>x</mi><mn>4</mn></msub><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>5</mn></msub><mo>+</mo><msub><mi>x</mi><mn>6</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>5</mn></msub><mo>+</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\left\{
+  \begin{aligned}
+    x_1 + x_2 + x_3 + x_4 + x_5 + x_6 &amp;= b_1 \\
+    x_3 - x_4 + 2x_5 + x_6 &amp;= b_2 \\
+    x_5 + 3x_6 &amp;= b_3
+  \end{aligned}
+  \right.</annotation></semantics></math></span>
+The augmented matrix is already in echelon form, with pivots in columns
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>5</mn><annotation encoding="application/x-tex">5</annotation></semantics></math></span>: the basic variables are <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>3</mn></msub><mo>,</mo><msub><mi>x</mi><mn>5</mn></msub></mrow><annotation encoding="application/x-tex">x_1, x_3, x_5</annotation></semantics></math></span>, and the
+remaining variables <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>6</mn></msub></mrow><annotation encoding="application/x-tex">x_2, x_4, x_6</annotation></semantics></math></span> are free — six columns, three
+pivots, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mo>−</mo><mn>3</mn><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">6 - 3 = 3</annotation></semantics></math></span> free variables. The echelon form tells us
+<em>which</em> variables are free; to read off <em>all</em> the solutions,
+continue to the <a class="kref" data-ref="def:echelon" href="#def:echelon">reduced row echelon form</a> by
+clearing the entries above each pivot, working from the rightmost pivot
+leftward:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><msub><mi>R</mi><mn>3</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>3</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>1</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub></mrow></mtd></mtr></mtable></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>1</mn></msub><mo>−</mo><msub><mi>b</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; b_1  \\ 
+                  0 &amp; 0 &amp; 1 &amp; -1 &amp; 2 &amp; 1 &amp; b_2  \\ 
+                  0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 3 &amp; b_3 \end{pmatrix}
+  \xrightarrow{\substack{R_1 - R_3 \\ R_2 - 2R_3 \\ R_1 - R_2}}
+  \begin{pmatrix} 1 &amp; 1 &amp; 0 &amp; 2 &amp; 0 &amp; 3 &amp; b_1 - b_2 + b_3  \\ 
+                  0 &amp; 0 &amp; 1 &amp; -1 &amp; 0 &amp; -5 &amp; b_2 - 2b_3  \\ 
+                  0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 3 &amp; b_3 \end{pmatrix}</annotation></semantics></math></span>
+In the reduced form each pivot row contains exactly <em>one</em> basic
+variable, so every basic variable is expressed directly in terms of the
+free ones — nothing left to solve. Solving each pivot row for its
+basic variable gives the <strong>parametric form</strong>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>1</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>1</mn></msub><mo>−</mo><msub><mi>b</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>3</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>x</mi><mn>4</mn></msub><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>3</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>b</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mn>4</mn></msub><mo>+</mo><mn>5</mn><msub><mi>x</mi><mn>6</mn></msub><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>x</mi><mn>5</mn></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>b</mi><mn>3</mn></msub><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{aligned}
+    x_1 &amp;= b_1 - b_2 + b_3 - x_2 - 2x_4 - 3x_6, \\
+    x_3 &amp;= b_2 - 2b_3 + x_4 + 5x_6, \\
+    x_5 &amp;= b_3 - 3x_6,
+  \end{aligned}</annotation></semantics></math></span>
+with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>6</mn></msub><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">x_2, x_4, x_6 \in \mathbb{R}</annotation></semantics></math></span> arbitrary. There is no need to
+rename the free variables: they are already names, and every choice of
+the three numbers <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>6</mn></msub></mrow><annotation encoding="application/x-tex">x_2, x_4, x_6</annotation></semantics></math></span> produces exactly one solution.</p><p>To get the <strong>parametric vector form</strong>, first assemble the solution
+into a single column, using the parametric form for the basic entries
+and the free variables themselves for the rest:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>1</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>4</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>5</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>6</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>1</mn></msub><mo>−</mo><msub><mi>b</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>3</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>x</mi><mn>4</mn></msub><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>b</mi><mn>3</mn></msub><mo>+</mo><msub><mi>x</mi><mn>4</mn></msub><mo>+</mo><mn>5</mn><msub><mi>x</mi><mn>6</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>4</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>3</mn></msub><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>x</mi><mn>6</mn></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">\mathbf{x} =
+  \begin{pmatrix} x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5 \\ x_6 \end{pmatrix}
+  =
+  \begin{pmatrix}
+    b_1 - b_2 + b_3 - x_2 - 2x_4 - 3x_6 \\
+    x_2 \\
+    b_2 - 2b_3 + x_4 + 5x_6 \\
+    x_4 \\
+    b_3 - 3x_6 \\
+    x_6
+  \end{pmatrix}.</annotation></semantics></math></span>
+Now split that one column into the constant part plus the part carried
+by each free variable:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>1</mn></msub><mo>−</mo><msub><mi>b</mi><mn>2</mn></msub><mo>+</mo><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>b</mi><mn>3</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>x</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>x</mi><mn>6</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathbf{x} =
+  \begin{pmatrix} b_1 - b_2 + b_3 \\ 0 \\ b_2 - 2b_3 \\ 0 \\ b_3 \\ 0 \end{pmatrix}
+  + x_2 \begin{pmatrix} -1 \\ 1 \\ 0 \\ 0 \\ 0 \\ 0 \end{pmatrix}
+  + x_4 \begin{pmatrix} -2 \\ 0 \\ 1 \\ 1 \\ 0 \\ 0 \end{pmatrix}
+  + x_6 \begin{pmatrix} -3 \\ 0 \\ 5 \\ 0 \\ -3 \\ 1 \end{pmatrix},</annotation></semantics></math></span>
+again with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>6</mn></msub><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">x_2, x_4, x_6 \in \mathbb{R}</annotation></semantics></math></span> arbitrary.
+Every solution appears exactly once as <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>,</mo><msub><mi>x</mi><mn>4</mn></msub><mo>,</mo><msub><mi>x</mi><mn>6</mn></msub></mrow><annotation encoding="application/x-tex">x_2, x_4, x_6</annotation></semantics></math></span> range over
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℝ</mi><annotation encoding="application/x-tex">\mathbb{R}</annotation></semantics></math></span>: one particular solution built from the constants, plus one
+direction vector <em>per free variable</em>. Geometrically the solution
+set is a three-dimensional flat sheet inside <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mn>6</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^6</annotation></semantics></math></span>. Note also
+that this works for <em>every</em> choice of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mn>1</mn></msub><mo>,</mo><msub><mi>b</mi><mn>2</mn></msub><mo>,</mo><msub><mi>b</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">b_1, b_2, b_3</annotation></semantics></math></span> — each row
+carries a pivot, a fact whose meaning is part of the theorem below.</p></div></div>
+<div class="thmblock remark" id="rem:backward-substitution"><div class="thmhead"><span class="env-kind">Remark 2.7</span> <span class="env-name">(Backward substitution)</span><span class="permalink" title="label: rem:backward-substitution">&#182;</span></div><div class="thmbody"><p>There is an alternative to reducing all the way to the reduced form:
+<strong>backward substitution</strong> directly from the echelon form. In
+<a class="kref" data-ref="ex:parametric" href="#ex:parametric">the example above</a>, solve the last equation for
+its basic variable <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>5</mn></msub><annotation encoding="application/x-tex">x_5</annotation></semantics></math></span>, substitute the result into the equation above
+it and solve for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>3</mn></msub><annotation encoding="application/x-tex">x_3</annotation></semantics></math></span>, then substitute both into the first equation
+and solve for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span> — working upward, one equation at a time. It
+produces the same answer.</p><p>Use it only on <em>small</em> systems worked by hand. For anything
+larger, the <a class="kref" data-ref="def:echelon" href="#def:echelon">reduced row echelon form</a> is the
+organized way to extract the complete solution set: each pivot row
+hands you one basic variable already expressed in the free ones, with
+no chain of substitutions to carry along and no opportunity to lose a
+term along the way.</p></div></div>
+<div class="exercise" id="exr:s3-parametric" data-type="numeric" data-answer="3" data-tol="0.001"><div class="exhead">Exercise 2.3 <span class="extag">auto-check</span></div><div class="exbody"><p>In <a class="kref" data-ref="ex:parametric" href="#ex:parametric">the parametric example</a>, take <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>b</mi><mn>3</mn></msub><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">b_3 = 6</annotation></semantics></math></span> and
+choose the free variables <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_2 = 0</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>4</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x_4 = 0</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>6</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_6 = 1</annotation></semantics></math></span>. What is the
+value of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>5</mn></msub><annotation encoding="application/x-tex">x_5</annotation></semantics></math></span> in the resulting solution?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>From the parametric form, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>5</mn></msub><mo>=</mo><msub><mi>b</mi><mn>3</mn></msub><mo>−</mo><mn>3</mn><msub><mi>x</mi><mn>6</mn></msub></mrow><annotation encoding="application/x-tex">x_5 = b_3 - 3x_6</annotation></semantics></math></span>.</p></div></div></div>
+<h2>2.3 &nbsp;Existence and uniqueness</h2>
+<div class="thmblock theorem" id="thm:existence-uniqueness"><div class="thmhead"><span class="env-kind">Theorem 2.8</span> <span class="env-name">(Existence and uniqueness)</span><span class="permalink" title="label: thm:existence-uniqueness">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> be the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">m \times n</annotation></semantics></math></span> coefficient matrix of a linear system, and
+bring the augmented matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>A</mi><mo>∣</mo><mi>𝐛</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,A \mid \mathbf{b}\,)</annotation></semantics></math></span> to
+<a class="kref" data-ref="def:echelon" href="#def:echelon">row echelon form</a>. Then:
+<ol><li>(Existence) The system is consistent if and only if the echelon
+        form has <em>no</em> row of the shape
+        <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mi>⋯</mi><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mo>∣</mo><mi>c</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \;\, 0 \;\, \cdots \;\, 0 \mid c\,)</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c \neq 0</annotation></semantics></math></span> — that
+        is, if and only if the last (augmented) column is not a pivot
+        column.</li><li>(Uniqueness) A consistent system has a <em>unique</em> solution if
+        and only if every column of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is a pivot column; otherwise it
+        has infinitely many solutions.</li><li>(Counting) The number of <a class="kref" data-ref="def:free-var" href="#def:free-var">free variables</a>
+        equals <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> minus the number of pivots, i.e.
+        <span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>#</mi><mo stretchy="false" form="prefix">{</mo><mtext mathvariant="normal">free variables</mtext><mo stretchy="false" form="postfix">}</mo><mo>=</mo><mi>#</mi><mo stretchy="false" form="prefix">{</mo><mrow><mtext mathvariant="normal">columns of </mtext><mspace width="0.333em"></mspace></mrow><mi>A</mi><mo stretchy="false" form="postfix">}</mo><mo>−</mo><mi>#</mi><mo stretchy="false" form="prefix">{</mo><mtext mathvariant="normal">pivots</mtext><mo stretchy="false" form="postfix">}</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">\#\{\text{free variables}\}
+          = \#\{\text{columns of } A\} - \#\{\text{pivots}\}.</annotation></semantics></math></span></li><li>(Existence for every right-hand side) If every <em>row</em> of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span>
+        contains a pivot position, then <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> is
+        consistent for <em>every</em> choice of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span>.</li></ol>
+Consequently, every linear system has no solution, exactly one solution,
+or infinitely many solutions.</p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>(1) A row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mi>⋯</mi><mn>0</mn><mo>∣</mo><mi>c</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \cdots 0 \mid c\,)</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c \neq 0</annotation></semantics></math></span> represents the
+equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>=</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">0 = c</annotation></semantics></math></span>, which no choice of variables satisfies, so the system
+is inconsistent; and by <a class="kref extern" href="lec01-linear-systems.html#thm:elementary-equiv" title="Theorem 1.20 (Elementary operations preserve the solution set) — in another lecture; opens that page">the equivalence
+theorem</a> the original system is inconsistent too. Conversely, if no such
+row appears, back-substitution constructs a solution: work upward
+through the nonzero rows, assigning each free variable an arbitrary
+value (say <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span>) and solving each pivot row for its basic variable in
+terms of already-determined variables. This produces a solution, so the
+system is consistent.</p><p>(2) Suppose the system is consistent. If every column of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is a pivot
+column, there are no free variables, and back-substitution determines
+each variable uniquely from the rows beneath it — there are no choices
+anywhere, so there is exactly one solution. If some column of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is not
+a pivot column, its variable is free, and the construction in (1)
+produces a different solution for each of its infinitely many possible
+values — so the solution is not unique, and in fact there are
+infinitely many.</p><p>(3) The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> variables correspond to the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math></span> columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span>. In an
+echelon form the pivots occupy distinct columns, and by
+<a class="kref" data-ref="def:free-var" href="#def:free-var">definition</a> the pivot columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> name the basic
+variables while all remaining columns name free variables. Hence
+exactly <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>−</mo><mi>#</mi><mo stretchy="false" form="prefix">{</mo><mtext mathvariant="normal">pivots</mtext><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">n - \#\{\text{pivots}\}</annotation></semantics></math></span> variables are free.</p><p>(4) Row-reduce <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> alone to an echelon form <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math></span>; applying the same row
+operations to <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>A</mi><mo>∣</mo><mi>𝐛</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,A \mid \mathbf{b}\,)</annotation></semantics></math></span> yields
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>U</mi><mo>∣</mo><mi>𝐛</mi><mi>′</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,U \mid \mathbf{b}&#39;\,)</annotation></semantics></math></span>, which is again in echelon form. Since every
+row of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> contains a pivot position, every row of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>U</mi><annotation encoding="application/x-tex">U</annotation></semantics></math></span> is nonzero, so no
+row of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>U</mi><mo>∣</mo><mi>𝐛</mi><mi>′</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,U \mid \mathbf{b}&#39;\,)</annotation></semantics></math></span> can have the forbidden shape
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mi>⋯</mi><mn>0</mn><mo>∣</mo><mi>c</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \cdots 0 \mid c\,)</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c \neq 0</annotation></semantics></math></span>. By part (1) the system is
+consistent — and this argument never used the entries of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span>,
+so it holds for every right-hand side.</p><p>The final statement follows from (1) and (2): the three cases —
+inconsistent, consistent with every column of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> a pivot column,
+consistent with some column free — are exhaustive and produce no
+solution, one solution, and infinitely many solutions respectively.</p><span class="qed">&#9633;</span></div></div>
+<div class="thmblock example" id="ex:no-solution"><div class="thmhead"><span class="env-kind">Example 2.9</span> <span class="env-name">(Inconsistent systems)</span><span class="permalink" title="label: ex:no-solution">&#182;</span></div><div class="thmbody"><p>For <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_1 + x_2 = 1</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mspace width="0.278em"></mspace><mn>2</mn><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mn>2</mn><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\;2x_1 + 2x_2 = 3</annotation></semantics></math></span>, the row operation
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mn>2</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">R_2 - 2R_1</annotation></semantics></math></span> gives the row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mn>0</mn><mo>∣</mo><mn>1</mn><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \; 0 \mid 1\,)</annotation></semantics></math></span>, i.e., the false
+equation <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 = 1</annotation></semantics></math></span>. By <a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">the existence
+theorem</a> the system is inconsistent — this is case (ii) of
+<a class="kref extern" href="lec01-linear-systems.html#ex:three-cases" title="Example 1.17 (Three systems in two variables) — in another lecture; opens that page">the opening example of Lecture 1</a>, parallel
+lines, seen through algebra: the left-hand sides are proportional but
+the right-hand sides are not.</p><p>The same principle decides bigger systems. Consider four equations in
+five unknowns with the augmented matrix below, and run
+<a class="kref" data-ref="thm:echelon-exists" href="#thm:echelon-exists">Gaussian elimination</a> column by column.
+<em>First column:</em> the top-left <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span> is the first pivot; clear
+everything below it.
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mi>A</mi><mo>∣</mo><mi>𝐛</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>3</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>5</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>6</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>2</mn></msub><mo>−</mo><msub><mi>R</mi><mn>1</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>−</mo><mn>2</mn><msub><mi>R</mi><mn>1</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>4</mn></msub><mo>−</mo><mn>3</mn><msub><mi>R</mi><mn>1</mn></msub></mrow></mtd></mtr></mtable></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mo>−</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(\,A \mid \mathbf{b}\,) =
+  \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1  \\ 
+                  1 &amp; 2 &amp; 3 &amp; 1 &amp; 1 &amp; 1  \\ 
+                  2 &amp; 3 &amp; 4 &amp; 2 &amp; 2 &amp; 3  \\ 
+                  3 &amp; 4 &amp; 5 &amp; 6 &amp; 1 &amp; 2 \end{pmatrix}
+  \xrightarrow{\substack{R_2 - R_1 \\ R_3 - 2R_1 \\ R_4 - 3R_1}}
+  \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1  \\ 
+                  0 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 0  \\ 
+                  0 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 1  \\ 
+                  0 &amp; 1 &amp; 2 &amp; 3 &amp; -2 &amp; -1 \end{pmatrix}</annotation></semantics></math></span>
+<em>Second column:</em> the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></span> in row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></span> is the next pivot; clear below
+it.
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mo>→</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub></mrow></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mrow><msub><mi>R</mi><mn>4</mn></msub><mo>−</mo><msub><mi>R</mi><mn>2</mn></msub></mrow></mtd></mtr></mtable></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>3</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>2</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mo>−</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\xrightarrow{\substack{R_3 - R_2 \\ R_4 - R_2}}
+  \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1  \\ 
+                  0 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 0  \\ 
+                  0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1  \\ 
+                  0 &amp; 0 &amp; 0 &amp; 3 &amp; -2 &amp; -1 \end{pmatrix}</annotation></semantics></math></span>
+<em>Stop right here.</em> We are only halfway to echelon form — rows <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span>
+and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math></span> would still need a swap — but row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span> already reads
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mo>∣</mo><mn>1</mn><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \;\, 0 \;\, 0 \;\, 0 \;\, 0 \mid 1\,)</annotation></semantics></math></span>, the impossible equation
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 = 1</annotation></semantics></math></span>. By <a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">part (1) of the theorem</a>
+the system is inconsistent, and no amount of further elimination can
+change that. This early exit is worth remembering: the moment a row
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.167em"></mspace><mi>⋯</mi><mspace width="0.167em"></mspace><mn>0</mn><mo>∣</mo><mi>c</mi><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \, \cdots \, 0 \mid c\,)</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">c \neq 0</annotation></semantics></math></span> appears, the system has
+no solution, and the computation is over.</p></div></div>
+<div class="thmblock example" id="ex:hk"><div class="thmhead"><span class="env-kind">Example 2.10</span> <span class="env-name">(A consistency problem with parameters)</span><span class="permalink" title="label: ex:hk">&#182;</span></div><div class="thmbody"><p><em>For which values of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span> is the following system
+consistent?</em>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>+</mo><mi>h</mi><mspace width="0.167em"></mspace><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>1</mn><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mn>2</mn><mo>,</mo><mspace width="2.0em"></mspace><msub><mi>x</mi><mn>1</mn></msub><mo>−</mo><msub><mi>x</mi><mn>2</mn></msub><mo>+</mo><msub><mi>x</mi><mn>3</mn></msub><mo>=</mo><mi>k</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">x_1 + h\,x_2 + x_3 = 1, \qquad
+  x_2 - x_3 = 2, \qquad
+  x_1 - x_2 + x_3 = k.</annotation></semantics></math></span>
+Row-reduce the augmented matrix, treating <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span> as unknown
+constants:
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mi>k</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mover><mo>→</mo><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>−</mo><msub><mi>R</mi><mn>1</mn></msub></mrow></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn><mo>−</mo><mi>h</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mi>k</mi><mo>−</mo><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; h &amp; 1 &amp; 1 \\  0 &amp; 1 &amp; -1 &amp; 2 \\  1 &amp; -1 &amp; 1 &amp; k \end{pmatrix}
+  \xrightarrow{R_3 - R_1}
+  \begin{pmatrix} 1 &amp; h &amp; 1 &amp; 1 \\  0 &amp; 1 &amp; -1 &amp; 2 \\  0 &amp; -1-h &amp; 0 &amp; k-1 \end{pmatrix}</annotation></semantics></math></span>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mo>→</mo><mrow><msub><mi>R</mi><mn>3</mn></msub><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>R</mi><mn>2</mn></msub></mrow></mover><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mi>h</mi></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="center" style="text-align: center; border-left: 0.07em solid currentcolor; padding-left: 0.45em"><mi>k</mi><mo>+</mo><mn>1</mn><mo>+</mo><mn>2</mn><mi>h</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\xrightarrow{R_3 + (1+h)R_2}
+  \begin{pmatrix} 1 &amp; h &amp; 1 &amp; 1 \\  0 &amp; 1 &amp; -1 &amp; 2 \\  0 &amp; 0 &amp; -(1+h) &amp; k+1+2h \end{pmatrix}</annotation></semantics></math></span>
+Now read the last row through
+<a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">the existence–uniqueness theorem</a>.</p><p><em>Case <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>≠</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h \neq -1</annotation></semantics></math></span>.</em> The entry <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>h</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">-(1+h)</annotation></semantics></math></span> is nonzero, so it is a third
+pivot, and there are no free variables: the system is consistent with a
+<em>unique</em> solution — for every value of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span>.</p><p><em>Case <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h = -1</annotation></semantics></math></span>.</em> The last row becomes
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mspace width="0.278em"></mspace><mspace width="0.167em"></mspace><mn>0</mn><mo>∣</mo><mi>k</mi><mo>−</mo><mn>1</mn><mspace width="0.167em"></mspace><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\,0 \;\, 0 \;\, 0 \mid k - 1\,)</annotation></semantics></math></span> (note <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>+</mo><mn>1</mn><mo>+</mo><mn>2</mn><mi>h</mi><mo>=</mo><mi>k</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k+1+2h = k-1</annotation></semantics></math></span> here). If
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>≠</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k \neq 1</annotation></semantics></math></span> this row says <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>=</mo><mi>k</mi><mo>−</mo><mn>1</mn><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">0 = k-1 \neq 0</annotation></semantics></math></span>: inconsistent. If <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k = 1</annotation></semantics></math></span> the
+row vanishes, leaving two pivots and one free variable: consistent with
+infinitely many solutions.</p><p><em>Conclusion.</em> The system is consistent exactly when <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>≠</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h \neq -1</annotation></semantics></math></span>
+(any <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span>; unique solution), or <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h = -1</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k = 1</annotation></semantics></math></span> (infinitely many
+solutions). Note how all three cases of
+<a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">the theorem</a> appear in a single family
+of systems as the parameters vary.</p></div></div>
+<div class="thmblock remark" id="rem:looking-ahead"><div class="thmhead"><span class="env-kind">Remark 2.11</span><span class="permalink" title="label: rem:looking-ahead">&#182;</span></div><div class="thmbody"><p>Gaussian elimination is the computational engine of everything that
+follows. Next week we look at the vectors <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐱</mi><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐛</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span>
+themselves — the geometry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ℝ</mi><mi>n</mi></msup><annotation encoding="application/x-tex">\mathbb{R}^n</annotation></semantics></math></span> — and re-interpret
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>𝐱</mi><mo>=</mo><mi>𝐛</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> in a way that explains <em>why</em> solution
+sets look like points, lines, and planes.</p></div></div>
+<div class="exercise" id="exr:s3-hk" data-type="numeric" data-answer="1" data-tol="0.001"><div class="exhead">Exercise 2.4 <span class="extag">auto-check</span></div><div class="exbody"><p>In <a class="kref" data-ref="ex:hk" href="#ex:hk">the parameter example</a>, suppose <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h = -1</annotation></semantics></math></span>. For which
+value of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span> is the system consistent?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Substitute <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h = -1</annotation></semantics></math></span> into the last row of the reduced matrix in the
+example.</p></div></div></div>
+<div class="exercise" id="exr:s3-cases" data-type="multichoice"><div class="exhead">Exercise 2.5 <span class="extag">auto-check</span></div><div class="exbody"><p>A linear system of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span> equations in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span> unknowns turns out to have the
+two distinct solutions <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 1 &amp; 0 &amp; 0 \end{pmatrix}^{T}</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 0 &amp; 1 &amp; 0 \end{pmatrix}^{T}</annotation></semantics></math></span>. What can you conclude?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:s3-cases"> This is impossible — a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> system has at most one solution</label></li><li><label><input type="radio" name="exr:s3-cases" data-correct="1"> The system has infinitely many solutions</label></li><li><label><input type="radio" name="exr:s3-cases"> The system has exactly two solutions</label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Apply the last sentence of
+<a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">the existence–uniqueness theorem</a>:
+which of the three cases allows two distinct solutions?</p></div></div></div>
+  <h2>Index of statements</h2>
+  <ol class="idx"><li><a class="kref" data-ref="def:echelon" href="#def:echelon">Definition 2.1 (Row echelon form, reduced row echelon form)</a></li><li><a class="kref" data-ref="thm:echelon-exists" href="#thm:echelon-exists">Theorem 2.2 (Gaussian elimination)</a></li><li><a class="kref" data-ref="rem:rref-unique" href="#rem:rref-unique">Remark 2.3</a></li><li><a class="kref" data-ref="ex:gauss" href="#ex:gauss">Example 2.4 (Elimination with a unique solution)</a></li><li><a class="kref" data-ref="def:free-var" href="#def:free-var">Definition 2.5 (Basic and free variables)</a></li><li><a class="kref" data-ref="ex:parametric" href="#ex:parametric">Example 2.6 (Parametric form and parametric vector form)</a></li><li><a class="kref" data-ref="rem:backward-substitution" href="#rem:backward-substitution">Remark 2.7 (Backward substitution)</a></li><li><a class="kref" data-ref="thm:existence-uniqueness" href="#thm:existence-uniqueness">Theorem 2.8 (Existence and uniqueness)</a></li><li><a class="kref" data-ref="ex:no-solution" href="#ex:no-solution">Example 2.9 (Inconsistent systems)</a></li><li><a class="kref" data-ref="ex:hk" href="#ex:hk">Example 2.10 (A consistency problem with parameters)</a></li><li><a class="kref" data-ref="rem:looking-ahead" href="#rem:looking-ahead">Remark 2.11</a></li></ol>
+  <footer>Generated from the lecture&rsquo;s LaTeX source.
+  Every cross-reference resolves to a stated definition or proved result.</footer>
+</main>
+<script>
+const LABELS = {"def:echelon": {"kind": "Definition", "number": "2.1", "name": "Row echelon form, reduced row echelon form"}, "thm:echelon-exists": {"kind": "Theorem", "number": "2.2", "name": "Gaussian elimination"}, "rem:rref-unique": {"kind": "Remark", "number": "2.3", "name": ""}, "ex:gauss": {"kind": "Example", "number": "2.4", "name": "Elimination with a unique solution"}, "def:free-var": {"kind": "Definition", "number": "2.5", "name": "Basic and free variables"}, "ex:parametric": {"kind": "Example", "number": "2.6", "name": "Parametric form and parametric vector form"}, "rem:backward-substitution": {"kind": "Remark", "number": "2.7", "name": "Backward substitution"}, "thm:existence-uniqueness": {"kind": "Theorem", "number": "2.8", "name": "Existence and uniqueness"}, "ex:no-solution": {"kind": "Example", "number": "2.9", "name": "Inconsistent systems"}, "ex:hk": {"kind": "Example", "number": "2.10", "name": "A consistency problem with parameters"}, "rem:looking-ahead": {"kind": "Remark", "number": "2.11", "name": ""}};
+document.addEventListener("DOMContentLoaded", () => {
+  // proofs
+  document.querySelectorAll(".proof-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const body = btn.parentElement.querySelector(".proof-body");
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      body.hidden = open;
+    });
+  });
+  // exercises
+  document.querySelectorAll(".hint-toggle").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const b = btn.parentElement.querySelector(".hint-body");
+      b.hidden = !b.hidden;
+    });
+  });
+  function parseNum(s) {
+    s = s.trim().replace(/\s+/g, "");
+    const frac = s.match(/^(-?\d+(?:\.\d+)?)\/(-?\d+(?:\.\d+)?)$/);
+    if (frac) return parseFloat(frac[1]) / parseFloat(frac[2]);
+    const sq = s.match(/^sqrt\((-?\d+(?:\.\d+)?)\)$/i);
+    if (sq) return Math.sqrt(parseFloat(sq[1]));
+    const v = parseFloat(s);
+    return isNaN(v) ? null : v;
+  }
+  document.querySelectorAll(".excheck").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const ex = btn.closest(".exercise");
+      const fb = ex.querySelector(".exfb");
+      let ok = false;
+      if (ex.dataset.type === "numeric") {
+        const v = parseNum(ex.querySelector(".exinput").value);
+        if (v === null) {
+          fb.textContent =
+            "Enter a number (fractions like 3/4 and sqrt(2) work too).";
+          fb.className = "exfb neutral"; return;
+        }
+        ok = Math.abs(v - parseFloat(ex.dataset.answer))
+             <= parseFloat(ex.dataset.tol || "0.001");
+      } else {
+        const sel = ex.querySelector("input[type=radio]:checked");
+        if (!sel) { fb.textContent = "Select an option first.";
+                    fb.className = "exfb neutral"; return; }
+        ok = sel.hasAttribute("data-correct");
+      }
+      fb.textContent = ok ? "✓ Correct" : "✗ Not quite — try again";
+      fb.className = "exfb " + (ok ? "good" : "bad");
+    });
+  });
+  // knowls
+  document.querySelectorAll("a.kref[data-ref]").forEach(a => {
+    a.addEventListener("click", ev => {
+      ev.preventDefault();
+      const ref = a.dataset.ref;
+      const existing = a._knowl;
+      if (existing) { existing.remove(); a._knowl = null;
+        a.classList.remove("open"); return; }
+      const src = document.getElementById(ref);
+      if (!src) return;
+      const box = document.createElement("span");
+      box.className = "knowl";
+      box.innerHTML = src.querySelector(".thmhead").outerHTML
+                    + src.querySelector(".thmbody").outerHTML;
+      box.querySelectorAll(".permalink").forEach(x => x.remove());
+      box.querySelectorAll("a.kref[data-ref]").forEach(inner => {
+        inner.addEventListener("click", e2 => {
+          e2.preventDefault(); e2.stopPropagation();
+          const t = document.getElementById(inner.dataset.ref);
+          if (t) { t.scrollIntoView({behavior: "smooth", block: "center"});
+                   flash(t); }
+        });
+      });
+      const anchor = a.closest("p, li, .thmbody, h2") || a;
+      if (anchor.tagName === "LI" || anchor.tagName === "P") {
+        anchor.appendChild(box);
+      } else {
+        a.insertAdjacentElement("afterend", box);
+      }
+      a._knowl = box; a.classList.add("open");
+    });
+  });
+  function flash(el) {
+    el.style.transition = "box-shadow .3s";
+    el.style.boxShadow = "0 0 0 3px #93b4f8";
+    setTimeout(() => el.style.boxShadow = "", 900);
+  }
+});
+</script>
+</body>
+</html>
