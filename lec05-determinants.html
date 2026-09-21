@@ -1191,8 +1191,8 @@ z
 <div class="thmblock theorem" id="thm:det-map-volume"><div class="thmhead"><span class="env-kind">Theorem 5.32</span> <span class="env-name">(How a linear map changes volume)</span><span class="permalink" title="label: thm:det-map-volume">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">T(\mathbf{x}) = A\mathbf{x}</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> of size <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span>,
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math></span> or <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span>, and let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math></span> be the parallelogram (<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math></span>) or
 parallelepiped (<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n = 3</annotation></semantics></math></span>) spanned by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{v}_1, \dots, \mathbf{v}_n</annotation></semantics></math></span>.
-Then <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(P)</annotation></semantics></math></span> is the parallelogram or parallelepiped spanned by
-<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A\mathbf{v}_1, \dots, A\mathbf{v}_n</annotation></semantics></math></span>, and
+Then the image <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(P)</annotation></semantics></math></span> is the parallelogram (respectively
+parallelepiped) spanned by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mn>1</mn></msub><mo>,</mo><mi>…</mi><mo>,</mo><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A\mathbf{v}_1, \dots, A\mathbf{v}_n</annotation></semantics></math></span>, and
 <span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>vol</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>⋅</mo><mo>vol</mo><mi>P</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">\operatorname{vol} T(P) = |\det A| \cdot \operatorname{vol} P .</annotation></semantics></math></span></p></div></div>
 <div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>By <a class="kref extern" href="lec03-independence-linear-maps.html#def:linear-map" title="Definition 3.10 (Linear map) — in another lecture; opens that page">linearity</a>,
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>s</mi><mn>1</mn></msub><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>s</mi><mi>n</mi></msub><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mi>n</mi></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>s</mi><mn>1</mn></msub><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mn>1</mn></msub><mo>+</mo><mi>⋯</mi><mo>+</mo><msub><mi>s</mi><mi>n</mi></msub><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐯</mi></mstyle><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">T(s_1\mathbf{v}_1 + \cdots + s_n\mathbf{v}_n) = s_1 A\mathbf{v}_1 + \cdots + s_n A\mathbf{v}_n</annotation></semantics></math></span>,
@@ -1201,11 +1201,1545 @@ With <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Ma
 columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>V</mi></mrow><annotation encoding="application/x-tex">AV</annotation></semantics></math></span>, so by <a class="kref" data-ref="thm:det-volume" href="#thm:det-volume">the volume theorem</a> and
 <a class="kref" data-ref="thm:det-product" href="#thm:det-product">the product rule</a>
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>vol</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>P</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mo stretchy="false" form="prefix">(</mo><mi>A</mi><mi>V</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>V</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>vol</mo><mi>P</mi></mrow><annotation encoding="application/x-tex">\operatorname{vol} T(P) = |\det(AV)| = |\det A|\,|\det V| = |\det A| \operatorname{vol} P</annotation></semantics></math></span>.</p><span class="qed">&#9633;</span></div></div>
-<div class="thmblock remark" id="rem:det-orientation"><div class="thmhead"><span class="env-kind">Remark 5.33</span> <span class="env-name">(Scaling factor and orientation)</span><span class="permalink" title="label: rem:det-orientation">&#182;</span></div><div class="thmbody"><p>A region of any shape can be approximated by many small squares or
-cubes, and each one is scaled by the same factor <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|\det A|</annotation></semantics></math></span>. So a linear
-map multiplies <em>every</em> area (or volume) by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|\det A|</annotation></semantics></math></span>. For example
-<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>3</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} 3 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}</annotation></semantics></math></span> sends the unit disk,
-of area <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span>, to an ellipse of area <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">5\pi</annotation></semantics></math></span>. A map with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A = 0</annotation></semantics></math></span>
+<div class="thmblock theorem" id="thm:det-region"><div class="thmhead"><span class="env-kind">Theorem 5.33</span> <span class="env-name">(The scaling factor for an arbitrary region)</span><span class="permalink" title="label: thm:det-region">&#182;</span></div><div class="thmbody"><p>The same factor works for regions of any shape. Let
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">T(\mathbf{x}) = A\mathbf{x}</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> of size <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math></span> or
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math></span>, and let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>⊆</mo><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">S \subseteq \mathbb{R}^n</annotation></semantics></math></span> be any region that has an area
+(for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n = 2</annotation></semantics></math></span>) or a volume (for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n = 3</annotation></semantics></math></span>). Then <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(S)</annotation></semantics></math></span> has one too, and
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>vol</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>⋅</mo><mo>vol</mo><mi>S</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">\operatorname{vol} T(S) = |\det A| \cdot \operatorname{vol} S .</annotation></semantics></math></span></p></div></div>
+<div class="proof"><button class="proof-toggle" aria-expanded="false"><span class="tri">&#9656;</span> Proof</button><div class="proof-body" hidden><p>We use the idea from calculus of measuring a region by filling it with
+small squares (or cubes). Recall how area is computed there: cover the
+plane by a grid of squares of side <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span>, add up the areas of the squares
+that fill the region — a sum of many easy pieces — and then let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span>
+tend to <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span>. The sums approach a single number, and that number
+<em>is</em> the area of the region. (This is the same limit of sums that
+defines the integral: the region under a graph is filled by thin
+rectangles, their areas are added, and the widths are sent to <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></span>.) To be
+precise we add up in two ways, over the squares lying <em>inside</em> the
+region and over all squares <em>meeting</em> it; the first total is at most
+the area and the second at least it, and as <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h \to 0</annotation></semantics></math></span> both tend to the
+same limit, the area. We take that fact from calculus and use it here for
+both <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math></span> and its image <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(S)</annotation></semantics></math></span>.</p><p>The point of the proof is that the grid does the work. A square <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Q</mi><annotation encoding="application/x-tex">Q</annotation></semantics></math></span> of
+the grid is a translate of the square spanned by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><msub><mstyle mathvariant="bold"><mi>𝐞</mi></mstyle><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">h\mathbf{e}_1</annotation></semantics></math></span> and
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><msub><mstyle mathvariant="bold"><mi>𝐞</mi></mstyle><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">h\mathbf{e}_2</annotation></semantics></math></span>, so its image under the linear map <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math></span> is a translate of
+the parallelogram spanned by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐞</mi></mstyle><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">hA\mathbf{e}_1</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>A</mi><msub><mstyle mathvariant="bold"><mi>𝐞</mi></mstyle><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">hA\mathbf{e}_2</annotation></semantics></math></span>, the
+columns of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">hA</annotation></semantics></math></span>. Moving a set does not change its area, so by
+<a class="kref" data-ref="thm:det-map-volume" href="#thm:det-map-volume">the previous theorem</a>
+<span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>area</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>Q</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mo stretchy="false" form="prefix">(</mo><mi>h</mi><mi>A</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">|</mo><mo>=</mo><msup><mi>h</mi><mn>2</mn></msup><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>⋅</mo><mo>area</mo><mi>Q</mi><mo>,</mo></mrow><annotation encoding="application/x-tex">\operatorname{area} T(Q) = |\det(hA)| = h^2|\det A|
+  = |\det A| \cdot \operatorname{area} Q ,</annotation></semantics></math></span>
+the same factor for every square of the grid, however small <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span> is.
+Hence each term of the sum for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">T(S)</annotation></semantics></math></span> is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|\det A|</annotation></semantics></math></span> times the
+corresponding term of the sum for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math></span>; adding up and letting <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo>→</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">h \to 0</annotation></semantics></math></span>
+gives <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>area</mo><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mi>S</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mo>⋅</mo><mo>area</mo><mi>S</mi></mrow><annotation encoding="application/x-tex">\operatorname{area} T(S) = |\det A| \cdot \operatorname{area} S</annotation></semantics></math></span>.
+The case <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n = 3</annotation></semantics></math></span> is the same with cubes of side <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span>, each carried to a
+parallelepiped of volume <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><msup><mi>h</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">|\det A| h^3</annotation></semantics></math></span>.</p><span class="qed">&#9633;</span></div></div>
+<figure class="fig"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="586.85295pt" height="243.602938pt" viewBox="0 0 586.85295 243.602938" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-21T15:52:36.366477</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 243.602938 
+L 586.85295 243.602938 
+L 586.85295 0 
+L 0 0 
+L 0 243.602938 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 193.769202 112.899694 
+L 194.027548 111.574958 
+L 194.224853 110.24397 
+L 194.360836 108.908673 
+L 194.43536 107.571018 
+L 194.448435 106.232952 
+L 194.400216 104.896412 
+L 194.291003 103.563323 
+L 194.121235 102.235581 
+L 193.891495 100.915056 
+L 193.6025 99.603578 
+L 193.255102 98.302934 
+L 192.850281 97.014861 
+L 192.389144 95.74104 
+L 191.872919 94.483087 
+L 191.302949 93.242551 
+L 190.680687 92.020908 
+L 190.007691 90.819556 
+L 189.285616 89.639807 
+L 188.516209 88.482886 
+L 187.701304 87.349929 
+L 186.842808 86.241974 
+L 185.942702 85.159961 
+L 185.003027 84.10473 
+L 184.025882 83.077016 
+L 183.01341 82.07745 
+L 181.967794 81.106555 
+L 180.891248 80.164747 
+L 179.786009 79.252334 
+L 178.654328 78.369515 
+L 177.498463 77.516381 
+L 176.320669 76.692916 
+L 175.123193 75.898998 
+L 173.908263 75.134401 
+L 172.678082 74.398796 
+L 171.434821 73.691755 
+L 170.180609 73.012754 
+L 168.917527 72.361173 
+L 167.647603 71.736306 
+L 166.372804 71.137359 
+L 165.095027 70.563457 
+L 163.816097 70.013649 
+L 162.537759 69.486913 
+L 161.261676 68.982161 
+L 159.989417 68.498243 
+L 158.722461 68.033957 
+L 157.462187 67.588049 
+L 156.209874 67.159226 
+L 154.966693 66.746156 
+L 153.733711 66.34748 
+L 152.511885 65.961815 
+L 151.302057 65.587762 
+L 150.104961 65.223913 
+L 148.921215 64.868856 
+L 147.751324 64.521184 
+L 146.595678 64.179501 
+L 145.454556 63.84243 
+L 144.328126 63.508614 
+L 143.216443 63.176731 
+L 142.119456 62.845494 
+L 141.037009 62.513659 
+L 139.968844 62.18003 
+L 138.914602 61.843468 
+L 137.87383 61.502893 
+L 136.845985 61.157291 
+L 135.830436 60.805718 
+L 134.826473 60.447304 
+L 133.833307 60.08126 
+L 132.850081 59.706881 
+L 131.875871 59.323546 
+L 130.909697 58.930727 
+L 129.950524 58.527986 
+L 128.997274 58.114985 
+L 128.048828 57.691478 
+L 127.104035 57.257323 
+L 126.161719 56.812474 
+L 125.220687 56.356988 
+L 124.279732 55.891024 
+L 123.337645 55.414841 
+L 122.393221 54.9288 
+L 121.445261 54.433359 
+L 120.492587 53.929076 
+L 119.534043 53.416606 
+L 118.568504 52.896698 
+L 117.594881 52.370191 
+L 116.612131 51.838013 
+L 115.619258 51.301179 
+L 114.615324 50.760783 
+L 113.599449 50.217998 
+L 112.570824 49.674067 
+L 111.528707 49.130305 
+L 110.472437 48.588085 
+L 109.401429 48.048841 
+L 108.315187 47.514059 
+L 107.2133 46.985268 
+L 106.09545 46.464039 
+L 104.961414 45.951977 
+L 103.811064 45.450714 
+L 102.64437 44.961903 
+L 101.461405 44.487211 
+L 100.262338 44.028312 
+L 99.047445 43.586882 
+L 97.817097 43.16459 
+L 96.571772 42.763093 
+L 95.312044 42.384029 
+L 94.038587 42.029009 
+L 92.752173 41.699612 
+L 91.453667 41.397378 
+L 90.144026 41.123801 
+L 88.824297 40.880326 
+L 87.495611 40.668337 
+L 86.159183 40.489157 
+L 84.816301 40.34404 
+L 83.468329 40.234168 
+L 82.116697 40.160642 
+L 80.762896 40.12448 
+L 79.408476 40.126614 
+L 78.055034 40.167883 
+L 76.704214 40.249032 
+L 75.357697 40.370708 
+L 74.017195 40.533455 
+L 72.684445 40.737716 
+L 71.3612 40.983828 
+L 70.049224 41.27202 
+L 68.750286 41.602413 
+L 67.46615 41.975021 
+L 66.198567 42.389746 
+L 64.949272 42.846383 
+L 63.719974 43.344619 
+L 62.512348 43.884031 
+L 61.328032 44.464093 
+L 60.168614 45.084174 
+L 59.035631 45.74354 
+L 57.930559 46.441359 
+L 56.854809 47.176704 
+L 55.809719 47.948553 
+L 54.796548 48.755799 
+L 53.816472 49.597246 
+L 52.870578 50.471622 
+L 51.95986 51.377579 
+L 51.085212 52.313697 
+L 50.247427 53.278494 
+L 49.44719 54.270429 
+L 48.685078 55.287907 
+L 47.961555 56.329288 
+L 47.27697 57.392889 
+L 46.631556 58.476997 
+L 46.025425 59.579868 
+L 45.458573 60.699739 
+L 44.930873 61.834835 
+L 44.442079 62.98337 
+L 43.991827 64.143563 
+L 43.57963 65.313636 
+L 43.204888 66.491825 
+L 42.866883 67.67639 
+L 42.564785 68.865613 
+L 42.297652 70.057814 
+L 42.064438 71.251349 
+L 41.86399 72.444625 
+L 41.695058 73.636098 
+L 41.556298 74.824282 
+L 41.446275 76.007757 
+L 41.363471 77.18517 
+L 41.306288 78.355243 
+L 41.273059 79.516776 
+L 41.262046 80.668653 
+L 41.271458 81.809845 
+L 41.299447 82.939413 
+L 41.344121 84.056512 
+L 41.403553 85.160395 
+L 41.475784 86.250412 
+L 41.558834 87.326016 
+L 41.650707 88.386762 
+L 41.749402 89.432311 
+L 41.852922 90.462426 
+L 41.959277 91.476977 
+L 42.066497 92.475937 
+L 42.172636 93.459384 
+L 42.275786 94.4275 
+L 42.374077 95.380567 
+L 42.465692 96.318968 
+L 42.54887 97.243181 
+L 42.621915 98.153781 
+L 42.683204 99.051433 
+L 42.731193 99.936888 
+L 42.764422 100.810983 
+L 42.781524 101.674631 
+L 42.781233 102.528823 
+L 42.762382 103.374616 
+L 42.723916 104.213132 
+L 42.664894 105.045551 
+L 42.584492 105.873106 
+L 42.48201 106.697075 
+L 42.356873 107.518775 
+L 42.208636 108.339558 
+L 42.036983 109.1608 
+L 41.841735 109.983896 
+L 41.622847 110.810256 
+L 41.38041 111.641291 
+L 41.114651 112.478413 
+L 40.825937 113.323022 
+L 40.514767 114.176504 
+L 40.181777 115.040219 
+L 39.827739 115.915496 
+L 39.453553 116.803628 
+L 39.060249 117.705861 
+L 38.648982 118.623389 
+L 38.22103 119.55735 
+L 37.777789 120.508815 
+L 37.320766 121.478786 
+L 36.851578 122.468185 
+L 36.371945 123.477855 
+L 35.883681 124.508549 
+L 35.388693 125.560929 
+L 34.888971 126.635558 
+L 34.386579 127.732898 
+L 33.883654 128.853305 
+L 33.382392 129.997027 
+L 32.885042 131.164197 
+L 32.393901 132.354838 
+L 31.911301 133.568851 
+L 31.439603 134.806021 
+L 30.981186 136.066014 
+L 30.538443 137.348372 
+L 30.113768 138.652519 
+L 29.709546 139.977757 
+L 29.328149 141.323267 
+L 28.971923 142.688112 
+L 28.643181 144.071238 
+L 28.344193 145.471475 
+L 28.077178 146.887541 
+L 27.844296 148.318042 
+L 27.647642 149.761481 
+L 27.48923 151.216257 
+L 27.370996 152.680672 
+L 27.294782 154.152935 
+L 27.262332 155.631165 
+L 27.275288 157.113402 
+L 27.335176 158.597608 
+L 27.44341 160.081675 
+L 27.601277 161.56343 
+L 27.809938 163.040647 
+L 28.07042 164.511048 
+L 28.383614 165.972311 
+L 28.750269 167.422084 
+L 29.170991 168.857986 
+L 29.646238 170.277615 
+L 30.17632 171.678561 
+L 30.761397 173.058412 
+L 31.401477 174.414758 
+L 32.096414 175.745207 
+L 32.845913 177.047385 
+L 33.649525 178.318951 
+L 34.506653 179.557602 
+L 35.41655 180.761081 
+L 36.378323 181.927185 
+L 37.390937 183.053775 
+L 38.453214 184.138779 
+L 39.563843 185.180205 
+L 40.72138 186.176144 
+L 41.924253 187.124778 
+L 43.17077 188.024389 
+L 44.459124 188.87336 
+L 45.787396 189.670187 
+L 47.153565 190.413479 
+L 48.555516 191.101968 
+L 49.991043 191.734511 
+L 51.45786 192.310094 
+L 52.953609 192.827839 
+L 54.475867 193.287002 
+L 56.022154 193.686982 
+L 57.589944 194.027319 
+L 59.176671 194.307699 
+L 60.779741 194.527953 
+L 62.396539 194.688059 
+L 64.024437 194.788144 
+L 65.660809 194.82848 
+L 67.303032 194.809487 
+L 68.948501 194.731732 
+L 70.594637 194.595923 
+L 72.238895 194.402912 
+L 73.878772 194.153689 
+L 75.511819 193.849381 
+L 77.135647 193.491246 
+L 78.747933 193.080673 
+L 80.346434 192.619171 
+L 81.928989 192.10837 
+L 83.49353 191.550013 
+L 85.038086 190.945949 
+L 86.560791 190.298131 
+L 88.059892 189.608603 
+L 89.533751 188.8795 
+L 90.980854 188.113036 
+L 92.399812 187.311498 
+L 93.789369 186.477239 
+L 95.148403 185.612668 
+L 96.47593 184.720244 
+L 97.771109 183.802467 
+L 99.03324 182.861869 
+L 100.26177 181.901005 
+L 101.45629 180.922448 
+L 102.616539 179.928774 
+L 103.742401 178.922557 
+L 104.833906 177.906363 
+L 105.89123 176.882735 
+L 106.914691 175.85419 
+L 107.904746 174.823208 
+L 108.861991 173.792223 
+L 109.787158 172.763617 
+L 110.681105 171.739712 
+L 111.54482 170.722761 
+L 112.37941 169.71494 
+L 113.186097 168.718343 
+L 113.966216 167.734976 
+L 114.721203 166.766745 
+L 115.452592 165.815459 
+L 116.162006 164.882814 
+L 116.851151 163.970397 
+L 117.521811 163.079674 
+L 118.175833 162.211993 
+L 118.815124 161.368571 
+L 119.441644 160.550498 
+L 120.057391 159.758731 
+L 120.6644 158.994093 
+L 121.264726 158.257269 
+L 121.860443 157.548805 
+L 122.453628 156.86911 
+L 123.046358 156.21845 
+L 123.640696 155.596954 
+L 124.238685 155.004611 
+L 124.842337 154.441273 
+L 125.453625 153.906655 
+L 126.074477 153.400338 
+L 126.706763 152.921772 
+L 127.352289 152.470279 
+L 128.01279 152.045055 
+L 128.689921 151.645178 
+L 129.385249 151.269607 
+L 130.100246 150.917192 
+L 130.836286 150.586676 
+L 131.594633 150.276701 
+L 132.376439 149.985817 
+L 133.182736 149.712485 
+L 134.014433 149.455083 
+L 134.872313 149.211918 
+L 135.757025 148.981228 
+L 136.66908 148.761192 
+L 137.608856 148.549936 
+L 138.576583 148.345543 
+L 139.572355 148.146059 
+L 140.596116 147.949503 
+L 141.647667 147.753872 
+L 142.726666 147.557152 
+L 143.832621 147.357325 
+L 144.964899 147.152377 
+L 146.122724 146.940307 
+L 147.305179 146.719133 
+L 148.511208 146.486903 
+L 149.739622 146.2417 
+L 150.989096 145.98165 
+L 152.258183 145.704931 
+L 153.545309 145.409779 
+L 154.848784 145.094495 
+L 156.166804 144.75745 
+L 157.49746 144.397096 
+L 158.838742 144.011965 
+L 160.188548 143.600683 
+L 161.544687 143.161966 
+L 162.904892 142.694634 
+L 164.266822 142.197609 
+L 165.628074 141.669921 
+L 166.986191 141.110713 
+L 168.338666 140.519241 
+L 169.682957 139.89488 
+L 171.016493 139.237127 
+L 172.336679 138.545595 
+L 173.640912 137.820026 
+L 174.926584 137.060282 
+L 176.191095 136.266351 
+L 177.43186 135.438342 
+L 178.646317 134.57649 
+L 179.831939 133.68115 
+L 180.986238 132.7528 
+L 182.10678 131.792034 
+L 183.191186 130.799562 
+L 184.237146 129.776207 
+L 185.242422 128.722902 
+L 186.20486 127.640685 
+L 187.122396 126.530696 
+L 187.993059 125.39417 
+L 188.814984 124.232436 
+L 189.586414 123.046909 
+L 190.305705 121.839083 
+L 190.971335 120.610528 
+L 191.581906 119.362885 
+L 192.136149 118.097855 
+L 192.632929 116.817194 
+L 193.071247 115.522709 
+L 193.450244 114.216248 
+L 193.769202 112.899694 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #f3f6fc; stroke: #1a1a24; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 43.265076 174.018121 
+L 62.364585 174.018121 
+L 62.364585 154.918613 
+L 43.265076 154.918613 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 43.265076 154.918613 
+L 62.364585 154.918613 
+L 62.364585 135.819104 
+L 43.265076 135.819104 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 43.265076 135.819104 
+L 62.364585 135.819104 
+L 62.364585 116.719596 
+L 43.265076 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 43.265076 116.719596 
+L 62.364585 116.719596 
+L 62.364585 97.620088 
+L 43.265076 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 43.265076 97.620088 
+L 62.364585 97.620088 
+L 62.364585 78.520579 
+L 43.265076 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 62.364585 174.018121 
+L 81.464093 174.018121 
+L 81.464093 154.918613 
+L 62.364585 154.918613 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 62.364585 154.918613 
+L 81.464093 154.918613 
+L 81.464093 135.819104 
+L 62.364585 135.819104 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 62.364585 135.819104 
+L 81.464093 135.819104 
+L 81.464093 116.719596 
+L 62.364585 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 62.364585 116.719596 
+L 81.464093 116.719596 
+L 81.464093 97.620088 
+L 62.364585 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 62.364585 97.620088 
+L 81.464093 97.620088 
+L 81.464093 78.520579 
+L 62.364585 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 62.364585 78.520579 
+L 81.464093 78.520579 
+L 81.464093 59.421071 
+L 62.364585 59.421071 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 81.464093 174.018121 
+L 100.563601 174.018121 
+L 100.563601 154.918613 
+L 81.464093 154.918613 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 81.464093 154.918613 
+L 100.563601 154.918613 
+L 100.563601 135.819104 
+L 81.464093 135.819104 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 81.464093 135.819104 
+L 100.563601 135.819104 
+L 100.563601 116.719596 
+L 81.464093 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 81.464093 116.719596 
+L 100.563601 116.719596 
+L 100.563601 97.620088 
+L 81.464093 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 81.464093 97.620088 
+L 100.563601 97.620088 
+L 100.563601 78.520579 
+L 81.464093 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 81.464093 78.520579 
+L 100.563601 78.520579 
+L 100.563601 59.421071 
+L 81.464093 59.421071 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 100.563601 154.918613 
+L 119.66311 154.918613 
+L 119.66311 135.819104 
+L 100.563601 135.819104 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 100.563601 135.819104 
+L 119.66311 135.819104 
+L 119.66311 116.719596 
+L 100.563601 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 100.563601 116.719596 
+L 119.66311 116.719596 
+L 119.66311 97.620088 
+L 100.563601 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 100.563601 97.620088 
+L 119.66311 97.620088 
+L 119.66311 78.520579 
+L 100.563601 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 100.563601 78.520579 
+L 119.66311 78.520579 
+L 119.66311 59.421071 
+L 100.563601 59.421071 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 119.66311 135.819104 
+L 138.762618 135.819104 
+L 138.762618 116.719596 
+L 119.66311 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 119.66311 116.719596 
+L 138.762618 116.719596 
+L 138.762618 97.620088 
+L 119.66311 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 119.66311 97.620088 
+L 138.762618 97.620088 
+L 138.762618 78.520579 
+L 119.66311 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 138.762618 135.819104 
+L 157.862126 135.819104 
+L 157.862126 116.719596 
+L 138.762618 116.719596 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 138.762618 116.719596 
+L 157.862126 116.719596 
+L 157.862126 97.620088 
+L 138.762618 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 138.762618 97.620088 
+L 157.862126 97.620088 
+L 157.862126 78.520579 
+L 138.762618 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 157.862126 116.719596 
+L 176.961635 116.719596 
+L 176.961635 97.620088 
+L 157.862126 97.620088 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_32">
+    <path d="M 157.862126 97.620088 
+L 176.961635 97.620088 
+L 176.961635 78.520579 
+L 157.862126 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 81.464093 97.620088 
+L 100.563601 97.620088 
+L 100.563601 78.520579 
+L 81.464093 78.520579 
+z
+" clip-path="url(#pbc167b2d76)" style="fill: #f6dcd9; stroke: #b3261e; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <!-- each square has area $h^2$ -->
+    <g style="fill: #1a1a24" transform="translate(49.205384 234.002938)">
+     <text>
+      <tspan x="0" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="5.917969" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="11.879883" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">c</tspan>
+      <tspan x="17.480469" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">h</tspan>
+      <tspan x="23.920898" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="27.099609" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="32.231445" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">q</tspan>
+      <tspan x="38.632812" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">u</tspan>
+      <tspan x="45.073242" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="51.035156" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="55.81543" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="61.733398" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="64.912109" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">h</tspan>
+      <tspan x="71.352539" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="77.314453" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="82.446289" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="85.625" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="91.586914" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="96.367188" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="102.285156" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="108.24707" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="111.425781" y="-0.976562" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">h</tspan>
+      <tspan x="118.507786" y="-4.804688" style="font-size: 7px; font-family: 'DejaVu Sans'; fill: #1a1a24">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_2">
+    <!-- $S$ covered by small squares -->
+    <g style="fill: #1a1a24" transform="translate(34.845384 15.56)">
+     <text>
+      <tspan x="0" y="-0.640625" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #1a1a24">S</tspan>
+      <tspan x="6.982422" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="10.479004" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">c</tspan>
+      <tspan x="16.639648" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">o</tspan>
+      <tspan x="23.262207" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">v</tspan>
+      <tspan x="29.476562" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="35.986328" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="41.244629" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="47.754395" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">d</tspan>
+      <tspan x="54.795898" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="58.29248" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">b</tspan>
+      <tspan x="65.333984" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">y</tspan>
+      <tspan x="71.54834" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="75.044922" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="80.689941" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">m</tspan>
+      <tspan x="91.120605" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="97.678711" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">l</tspan>
+      <tspan x="101.196777" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">l</tspan>
+      <tspan x="104.714844" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="108.211426" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="113.856445" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">q</tspan>
+      <tspan x="120.897949" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">u</tspan>
+      <tspan x="127.982422" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="134.540527" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="139.798828" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="146.308594" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_34">
+    <path d="M 543.423875 78.535109 
+L 544.485484 77.205942 
+L 545.480316 75.888448 
+L 546.406924 74.584552 
+L 547.264029 73.296137 
+L 548.050518 72.025046 
+L 548.765454 70.773069 
+L 549.408072 69.541942 
+L 549.977787 68.333335 
+L 550.474191 67.14885 
+L 550.897057 65.990016 
+L 551.246336 64.858277 
+L 551.522158 63.754998 
+L 551.724831 62.68145 
+L 551.854836 61.63881 
+L 551.912831 60.62816 
+L 551.899639 59.650478 
+L 551.816252 58.706637 
+L 551.663821 57.797404 
+L 551.443655 56.923438 
+L 551.157212 56.085283 
+L 550.806094 55.283373 
+L 550.392042 54.518028 
+L 549.916927 53.789455 
+L 549.382743 53.097745 
+L 548.791599 52.442879 
+L 548.145709 51.824721 
+L 547.447387 51.243029 
+L 546.699035 50.697448 
+L 545.903133 50.187519 
+L 545.062232 49.712677 
+L 544.178942 49.272256 
+L 543.255924 48.865493 
+L 542.295877 48.491532 
+L 541.301532 48.149427 
+L 540.275636 47.838146 
+L 539.220949 47.556579 
+L 538.140226 47.30354 
+L 537.036214 47.077774 
+L 535.911637 46.877963 
+L 534.769187 46.702731 
+L 533.611517 46.550652 
+L 532.44123 46.420255 
+L 531.260867 46.310029 
+L 530.072903 46.218433 
+L 528.879736 46.143902 
+L 527.683678 46.084852 
+L 526.486948 46.039689 
+L 525.291667 46.006814 
+L 524.099848 45.984632 
+L 522.913389 45.971557 
+L 521.734072 45.966021 
+L 520.563552 45.96648 
+L 519.403355 45.971418 
+L 518.254876 45.979357 
+L 517.119369 45.988862 
+L 515.997951 45.998547 
+L 514.891595 46.007082 
+L 513.801129 46.013196 
+L 512.727236 46.015686 
+L 511.670453 46.013417 
+L 510.631171 46.005333 
+L 509.609633 45.990458 
+L 508.605941 45.967899 
+L 507.620052 45.936853 
+L 506.651784 45.896606 
+L 505.700817 45.846541 
+L 504.766698 45.786137 
+L 503.848846 45.714973 
+L 502.946554 45.632728 
+L 502.058994 45.539183 
+L 501.185227 45.434224 
+L 500.324205 45.317839 
+L 499.474778 45.190119 
+L 498.635702 45.051261 
+L 497.805648 44.90156 
+L 496.983205 44.741415 
+L 496.166893 44.571324 
+L 495.355168 44.39188 
+L 494.54643 44.203772 
+L 493.739035 44.007781 
+L 492.931301 43.804775 
+L 492.12152 43.595706 
+L 491.307961 43.381609 
+L 490.488886 43.163592 
+L 489.662556 42.942835 
+L 488.827239 42.720586 
+L 487.98122 42.498152 
+L 487.122812 42.276897 
+L 486.250362 42.058233 
+L 485.36226 41.843616 
+L 484.456948 41.634541 
+L 483.532929 41.432533 
+L 482.588771 41.239141 
+L 481.62312 41.055934 
+L 480.634705 40.88449 
+L 479.622341 40.726395 
+L 478.58494 40.583231 
+L 477.521517 40.456571 
+L 476.431192 40.347973 
+L 475.313197 40.258975 
+L 474.166882 40.191085 
+L 472.991715 40.145776 
+L 471.787289 40.12448 
+L 470.553324 40.128582 
+L 469.289668 40.159415 
+L 467.996298 40.218251 
+L 466.673327 40.3063 
+L 465.320996 40.4247 
+L 463.939679 40.574518 
+L 462.529883 40.75674 
+L 461.092244 40.972268 
+L 459.627526 41.221919 
+L 458.13662 41.506418 
+L 456.62054 41.826396 
+L 455.080419 42.182388 
+L 453.517505 42.57483 
+L 451.933157 43.004056 
+L 450.328842 43.470298 
+L 448.706123 43.973683 
+L 447.066662 44.514235 
+L 445.412204 45.091871 
+L 443.74458 45.706406 
+L 442.06569 46.357547 
+L 440.377503 47.0449 
+L 438.682045 47.767968 
+L 436.981392 48.526156 
+L 435.277663 49.318769 
+L 433.573009 50.145016 
+L 431.869605 51.004016 
+L 430.169642 51.894797 
+L 428.475317 52.816304 
+L 426.788823 53.767399 
+L 425.112343 54.746869 
+L 423.448037 55.753428 
+L 421.798038 56.785724 
+L 420.164436 57.842343 
+L 418.549275 58.921817 
+L 416.954544 60.022625 
+L 415.382165 61.143203 
+L 413.833987 62.281952 
+L 412.311778 63.437238 
+L 410.817219 64.607402 
+L 409.351894 65.79077 
+L 407.917282 66.985653 
+L 406.514756 68.190357 
+L 405.145573 69.403193 
+L 403.810868 70.622476 
+L 402.51165 71.846538 
+L 401.248799 73.073734 
+L 400.02306 74.302444 
+L 398.83504 75.531086 
+L 397.685203 76.758115 
+L 396.573872 77.982035 
+L 395.501226 79.201403 
+L 394.467295 80.414834 
+L 393.471964 81.621005 
+L 392.514971 82.818664 
+L 391.595909 84.006631 
+L 390.714226 85.183806 
+L 389.869228 86.349169 
+L 389.060079 87.501788 
+L 388.285809 88.640819 
+L 387.545313 89.765513 
+L 386.837358 90.875215 
+L 386.160588 91.969366 
+L 385.513527 93.04751 
+L 384.894587 94.109289 
+L 384.302075 95.154449 
+L 383.734199 96.182837 
+L 383.189073 97.194403 
+L 382.664731 98.1892 
+L 382.159128 99.167382 
+L 381.670154 100.129202 
+L 381.19564 101.075014 
+L 380.733367 102.005268 
+L 380.28108 102.920505 
+L 379.836492 103.821362 
+L 379.397294 104.70856 
+L 378.96117 105.582905 
+L 378.525804 106.445283 
+L 378.088888 107.296657 
+L 377.648138 108.138057 
+L 377.201298 108.970583 
+L 376.746153 109.79539 
+L 376.280539 110.613693 
+L 375.802354 111.42675 
+L 375.309564 112.235864 
+L 374.800217 113.042373 
+L 374.272449 113.847645 
+L 373.724494 114.653067 
+L 373.154692 115.460046 
+L 372.561498 116.269992 
+L 371.94349 117.084321 
+L 371.299376 117.904439 
+L 370.627999 118.731741 
+L 369.928346 119.567602 
+L 369.199554 120.413367 
+L 368.440914 121.270349 
+L 367.651876 122.139819 
+L 366.832051 123.022998 
+L 365.981219 123.921052 
+L 365.09933 124.835089 
+L 364.186505 125.766144 
+L 363.243038 126.715181 
+L 362.269398 127.683085 
+L 361.266228 128.670654 
+L 360.234347 129.678597 
+L 359.174745 130.707525 
+L 358.088584 131.757952 
+L 356.977195 132.830288 
+L 355.842076 133.924834 
+L 354.684886 135.041781 
+L 353.50744 136.181205 
+L 352.311707 137.343066 
+L 351.099805 138.527207 
+L 349.873988 139.733349 
+L 348.636648 140.961094 
+L 347.390301 142.20992 
+L 346.137581 143.479186 
+L 344.881235 144.768126 
+L 343.624108 146.075858 
+L 342.369138 147.401375 
+L 341.119347 148.743558 
+L 339.877826 150.10117 
+L 338.647729 151.472862 
+L 337.432263 152.857175 
+L 336.234673 154.252545 
+L 335.058233 155.657307 
+L 333.906235 157.069698 
+L 332.781978 158.487864 
+L 331.688757 159.909864 
+L 330.629846 161.333675 
+L 329.608495 162.7572 
+L 328.627912 164.178273 
+L 327.691256 165.594665 
+L 326.80162 167.004095 
+L 325.962028 168.404231 
+L 325.175417 169.792703 
+L 324.444628 171.167107 
+L 323.772401 172.525016 
+L 323.161357 173.863984 
+L 322.613994 175.181558 
+L 322.132677 176.475284 
+L 321.719626 177.742716 
+L 321.376913 178.981424 
+L 321.10645 180.189004 
+L 320.909985 181.363082 
+L 320.789092 182.501327 
+L 320.745169 183.601456 
+L 320.779429 184.661243 
+L 320.892898 185.678526 
+L 321.086409 186.651217 
+L 321.360602 187.577307 
+L 321.715916 188.454874 
+L 322.152592 189.282088 
+L 322.670669 190.057221 
+L 323.269984 190.778652 
+L 323.950173 191.444871 
+L 324.710672 192.054487 
+L 325.550717 192.60623 
+L 326.469348 193.098961 
+L 327.465411 193.53167 
+L 328.537564 193.903484 
+L 329.684276 194.213671 
+L 330.90384 194.461637 
+L 332.194373 194.646937 
+L 333.553821 194.769269 
+L 334.979974 194.82848 
+L 336.470466 194.824566 
+L 338.022783 194.757671 
+L 339.634279 194.628088 
+L 341.302176 194.436259 
+L 343.02358 194.182772 
+L 344.795488 193.868361 
+L 346.6148 193.493901 
+L 348.478326 193.060409 
+L 350.382804 192.569039 
+L 352.324902 192.021077 
+L 354.301237 191.417938 
+L 356.308385 190.761163 
+L 358.342889 190.05241 
+L 360.401275 189.293454 
+L 362.480062 188.486175 
+L 364.575774 187.632556 
+L 366.684951 186.734675 
+L 368.804164 185.794698 
+L 370.930023 184.814872 
+L 373.059189 183.797517 
+L 375.188386 182.745018 
+L 377.314412 181.65982 
+L 379.43415 180.544415 
+L 381.544576 179.401337 
+L 383.642772 178.233153 
+L 385.725931 177.042451 
+L 387.791371 175.83184 
+L 389.836541 174.60393 
+L 391.859029 173.361332 
+L 393.856568 172.106645 
+L 395.827048 170.842451 
+L 397.768514 169.571302 
+L 399.679179 168.295714 
+L 401.557426 167.018159 
+L 403.401811 165.741058 
+L 405.211071 164.466769 
+L 406.984119 163.197584 
+L 408.720055 161.935719 
+L 410.418162 160.68331 
+L 412.07791 159.442402 
+L 413.69895 158.214945 
+L 415.281124 157.002788 
+L 416.824451 155.807675 
+L 418.329136 154.631236 
+L 419.795559 153.474984 
+L 421.224278 152.340315 
+L 422.616018 151.228495 
+L 423.971674 150.140666 
+L 425.2923 149.077838 
+L 426.579102 148.040886 
+L 427.833437 147.030553 
+L 429.056802 146.047443 
+L 430.250827 145.092023 
+L 431.417265 144.164624 
+L 432.557986 143.265439 
+L 433.674968 142.394523 
+L 434.770285 141.551796 
+L 435.846098 140.737047 
+L 436.904646 139.949929 
+L 437.948235 139.189969 
+L 438.979226 138.45657 
+L 440.000025 137.749009 
+L 441.013072 137.066448 
+L 442.02083 136.407935 
+L 443.025772 135.772411 
+L 444.030374 135.158711 
+L 445.037097 134.565575 
+L 446.048382 133.991652 
+L 447.066636 133.435505 
+L 448.09422 132.895619 
+L 449.133441 132.370409 
+L 450.18654 131.858224 
+L 451.255682 131.357359 
+L 452.342944 130.866057 
+L 453.45031 130.382521 
+L 454.579657 129.904923 
+L 455.73275 129.431405 
+L 456.911229 128.960096 
+L 458.116607 128.489112 
+L 459.350259 128.016572 
+L 460.613416 127.540597 
+L 461.907158 127.059327 
+L 463.232409 126.570922 
+L 464.589936 126.073574 
+L 465.980335 125.565513 
+L 467.404038 125.045013 
+L 468.861304 124.510404 
+L 470.352216 123.960073 
+L 471.876685 123.392475 
+L 473.434442 122.806137 
+L 475.025043 122.199667 
+L 476.647867 121.571756 
+L 478.302117 120.921186 
+L 479.986825 120.246835 
+L 481.700849 119.547682 
+L 483.442881 118.822808 
+L 485.21145 118.071406 
+L 487.004923 117.292777 
+L 488.821514 116.48634 
+L 490.659291 115.651627 
+L 492.516175 114.788295 
+L 494.389956 113.896115 
+L 496.278292 112.974986 
+L 498.178725 112.024925 
+L 500.088682 111.046074 
+L 502.005489 110.038695 
+L 503.926377 109.003173 
+L 505.848493 107.940011 
+L 507.768911 106.849831 
+L 509.68464 105.733371 
+L 511.592634 104.59148 
+L 513.489806 103.425119 
+L 515.373036 102.235353 
+L 517.239181 101.02335 
+L 519.085092 99.790376 
+L 520.907615 98.537789 
+L 522.703613 97.267034 
+L 524.469969 95.97964 
+L 526.2036 94.677211 
+L 527.901467 93.361421 
+L 529.560589 92.03401 
+L 531.178046 90.696771 
+L 532.750998 89.351553 
+L 534.276689 88.000245 
+L 535.752457 86.644772 
+L 537.175745 85.287091 
+L 538.54411 83.929179 
+L 539.855229 82.573027 
+L 541.10691 81.220634 
+L 542.297096 79.873998 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #f3f6fc; stroke: #1a1a24; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 334.652891 179.806025 
+L 356.675146 174.300461 
+L 367.686274 156.210751 
+L 345.664018 161.716315 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 345.664018 161.716315 
+L 367.686274 156.210751 
+L 378.697402 138.121041 
+L 356.675146 143.626605 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 356.675146 143.626605 
+L 378.697402 138.121041 
+L 389.70853 120.031331 
+L 367.686274 125.536895 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 367.686274 125.536895 
+L 389.70853 120.031331 
+L 400.719658 101.941621 
+L 378.697402 107.447185 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 378.697402 107.447185 
+L 400.719658 101.941621 
+L 411.730786 83.85191 
+L 389.70853 89.357474 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_40">
+    <path d="M 356.675146 174.300461 
+L 378.697402 168.794897 
+L 389.70853 150.705187 
+L 367.686274 156.210751 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 367.686274 156.210751 
+L 389.70853 150.705187 
+L 400.719658 132.615477 
+L 378.697402 138.121041 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_42">
+    <path d="M 378.697402 138.121041 
+L 400.719658 132.615477 
+L 411.730786 114.525767 
+L 389.70853 120.031331 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_43">
+    <path d="M 389.70853 120.031331 
+L 411.730786 114.525767 
+L 422.741914 96.436057 
+L 400.719658 101.941621 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_44">
+    <path d="M 400.719658 101.941621 
+L 422.741914 96.436057 
+L 433.753042 78.346347 
+L 411.730786 83.85191 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_45">
+    <path d="M 411.730786 83.85191 
+L 433.753042 78.346347 
+L 444.764169 60.256636 
+L 422.741914 65.7622 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_46">
+    <path d="M 378.697402 168.794897 
+L 400.719658 163.289333 
+L 411.730786 145.199623 
+L 389.70853 150.705187 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_47">
+    <path d="M 389.70853 150.705187 
+L 411.730786 145.199623 
+L 422.741914 127.109913 
+L 400.719658 132.615477 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_48">
+    <path d="M 400.719658 132.615477 
+L 422.741914 127.109913 
+L 433.753042 109.020203 
+L 411.730786 114.525767 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_49">
+    <path d="M 411.730786 114.525767 
+L 433.753042 109.020203 
+L 444.764169 90.930493 
+L 422.741914 96.436057 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_50">
+    <path d="M 422.741914 96.436057 
+L 444.764169 90.930493 
+L 455.775297 72.840783 
+L 433.753042 78.346347 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_51">
+    <path d="M 433.753042 78.346347 
+L 455.775297 72.840783 
+L 466.786425 54.751073 
+L 444.764169 60.256636 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_52">
+    <path d="M 411.730786 145.199623 
+L 433.753042 139.694059 
+L 444.764169 121.604349 
+L 422.741914 127.109913 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_53">
+    <path d="M 422.741914 127.109913 
+L 444.764169 121.604349 
+L 455.775297 103.514639 
+L 433.753042 109.020203 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_54">
+    <path d="M 433.753042 109.020203 
+L 455.775297 103.514639 
+L 466.786425 85.424929 
+L 444.764169 90.930493 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_55">
+    <path d="M 444.764169 90.930493 
+L 466.786425 85.424929 
+L 477.797553 67.335219 
+L 455.775297 72.840783 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_56">
+    <path d="M 455.775297 72.840783 
+L 477.797553 67.335219 
+L 488.808681 49.245509 
+L 466.786425 54.751073 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_57">
+    <path d="M 444.764169 121.604349 
+L 466.786425 116.098785 
+L 477.797553 98.009075 
+L 455.775297 103.514639 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_58">
+    <path d="M 455.775297 103.514639 
+L 477.797553 98.009075 
+L 488.808681 79.919365 
+L 466.786425 85.424929 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_59">
+    <path d="M 466.786425 85.424929 
+L 488.808681 79.919365 
+L 499.819809 61.829655 
+L 477.797553 67.335219 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_60">
+    <path d="M 466.786425 116.098785 
+L 488.808681 110.593221 
+L 499.819809 92.503511 
+L 477.797553 98.009075 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_61">
+    <path d="M 477.797553 98.009075 
+L 499.819809 92.503511 
+L 510.830937 74.413801 
+L 488.808681 79.919365 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_62">
+    <path d="M 488.808681 79.919365 
+L 510.830937 74.413801 
+L 521.842065 56.324091 
+L 499.819809 61.829655 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_63">
+    <path d="M 499.819809 92.503511 
+L 521.842065 86.997947 
+L 532.853193 68.908237 
+L 510.830937 74.413801 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_64">
+    <path d="M 510.830937 74.413801 
+L 532.853193 68.908237 
+L 543.86432 50.818527 
+L 521.842065 56.324091 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #dbe6fb; stroke: #8aa6e0; stroke-width: 0.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_65">
+    <path d="M 422.741914 96.436057 
+L 444.764169 90.930493 
+L 455.775297 72.840783 
+L 433.753042 78.346347 
+z
+" clip-path="url(#p58a5a6a35d)" style="fill: #f6dcd9; stroke: #b3261e; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_3">
+    <!-- each image has area $|\det A|\,h^2$ -->
+    <g style="fill: #1a1a24" transform="translate(359.879 234.002938)">
+     <text>
+      <tspan x="0" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="5.917969" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="11.879883" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">c</tspan>
+      <tspan x="17.480469" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">h</tspan>
+      <tspan x="23.920898" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="27.099609" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">i</tspan>
+      <tspan x="30.297852" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">m</tspan>
+      <tspan x="39.780273" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="45.742188" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">g</tspan>
+      <tspan x="52.143555" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="58.061523" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="61.240234" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">h</tspan>
+      <tspan x="67.680664" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="73.642578" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="78.774414" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="81.953125" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="87.915039" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="92.695312" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="98.613281" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="104.575195" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="107.753906" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">|</tspan>
+      <tspan x="111.123047" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">d</tspan>
+      <tspan x="117.470703" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">e</tspan>
+      <tspan x="123.623047" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">t</tspan>
+      <tspan x="136.008333" y="-0.976562" style="font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">|</tspan>
+      <tspan x="129.167513" y="-0.976562" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">A</tspan>
+      <tspan x="141.001042" y="-0.976562" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #1a1a24">h</tspan>
+      <tspan x="148.083047" y="-4.804688" style="font-size: 7px; font-family: 'DejaVu Sans'; fill: #1a1a24">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- $T(S)$, one parallelogram per square -->
+    <g style="fill: #1a1a24" transform="translate(338.649 15.56)">
+     <text>
+      <tspan x="0" y="-0.640625" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #1a1a24">T</tspan>
+      <tspan x="11.010742" y="-0.640625" style="font-style: oblique; font-size: 11px; font-family: 'DejaVu Sans'; fill: #1a1a24">S</tspan>
+      <tspan x="6.719238" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #1a1a24">(</tspan>
+      <tspan x="17.993164" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Sans'; fill: #1a1a24">)</tspan>
+      <tspan x="22.284668" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">,</tspan>
+      <tspan x="25.78125" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="29.277832" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">o</tspan>
+      <tspan x="35.900391" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">n</tspan>
+      <tspan x="42.984863" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="49.494629" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="52.991211" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">p</tspan>
+      <tspan x="60.032715" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="66.59082" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="71.849121" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="78.407227" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">l</tspan>
+      <tspan x="81.925293" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">l</tspan>
+      <tspan x="85.443359" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="91.953125" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">l</tspan>
+      <tspan x="95.471191" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">o</tspan>
+      <tspan x="102.09375" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">g</tspan>
+      <tspan x="109.135254" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="114.393555" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="120.95166" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">m</tspan>
+      <tspan x="131.382324" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="134.878906" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">p</tspan>
+      <tspan x="141.92041" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+      <tspan x="148.430176" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="153.688477" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24"> </tspan>
+      <tspan x="157.185059" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">s</tspan>
+      <tspan x="162.830078" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">q</tspan>
+      <tspan x="169.871582" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">u</tspan>
+      <tspan x="176.956055" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">a</tspan>
+      <tspan x="183.51416" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">r</tspan>
+      <tspan x="188.772461" y="-0.640625" style="font-size: 11px; font-family: 'DejaVu Serif'; fill: #1a1a24">e</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+  <g id="text_5">
+   <!-- $\longrightarrow$ -->
+   <g style="fill: #1a1a24" transform="translate(257.122192 107.648)">
+    <text>
+     <tspan x="3.506836" y="-0.5" style="font-size: 18px; font-family: 'DejaVu Sans'; fill: #1a1a24">⟶</tspan>
+    </text>
+   </g>
+  </g>
+  <g id="text_6">
+   <!-- $T$ -->
+   <g style="fill: #1a1a24" transform="translate(269.562192 86.912)">
+    <text>
+     <tspan x="0" y="-0.515625" style="font-style: oblique; font-size: 13px; font-family: 'DejaVu Sans'; fill: #1a1a24">T</tspan>
+    </text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pbc167b2d76">
+   <rect x="7.2" y="21.56" width="207.310767" height="191.83296"/>
+  </clipPath>
+  <clipPath id="p58a5a6a35d">
+   <rect x="293.005049" y="21.56" width="286.647901" height="191.83296"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>A region <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>S</mi><annotation encoding="application/x-tex">S</annotation></semantics></math></span> filled with small squares of side <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math></span>, and its image under a linear map <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math></span>. Every square of the grid becomes a parallelogram of area <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo><mspace width="0.167em"></mspace><msup><mi>h</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">|\det A|\,h^2</annotation></semantics></math></span> (one is shaded in both pictures), so the whole region has its area multiplied by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="prefix">|</mo></mrow><annotation encoding="application/x-tex">|\det A|</annotation></semantics></math></span>.</figcaption></figure>
+<div class="thmblock remark" id="rem:det-orientation"><div class="thmhead"><span class="env-kind">Remark 5.34</span> <span class="env-name">(Scaling factor and orientation)</span><span class="permalink" title="label: rem:det-orientation">&#182;</span></div><div class="thmbody"><p>For example <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>3</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} 3 &amp; 1 \\ 1 &amp; 2 \end{pmatrix}</annotation></semantics></math></span> sends the
+unit disk, of area <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math></span>, to an ellipse of area <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">5\pi</annotation></semantics></math></span>. (In multivariable
+calculus this factor reappears for <em>non-linear</em> maps as well: near
+each point a differentiable map looks like a linear one, and the
+determinant of that linear part — the Jacobian determinant — is the
+local scaling factor in the change-of-variables formula.) A map with
+<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A = 0</annotation></semantics></math></span>
 flattens space and cannot be undone, in agreement with
 <a class="kref" data-ref="thm:det-elimination" href="#thm:det-elimination">the invertibility test</a>. The sign of
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">\det A</annotation></semantics></math></span> also has a meaning: it is positive when <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math></span> preserves
@@ -1225,7 +2759,7 @@ formula of Lecture 4. Neither formula is a good way to compute with
 large matrices, since elimination is far cheaper, but both are exact
 formulas, and exact formulas are what one needs to reason about how the
 solution depends on the entries.</p></div>
-<div class="thmblock theorem" id="thm:cramer"><div class="thmhead"><span class="env-kind">Theorem 5.34</span> <span class="env-name">(Cramer's rule)</span><span class="permalink" title="label: thm:cramer">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> be an invertible <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo>∈</mo><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{b} \in \mathbb{R}^n</annotation></semantics></math></span>.
+<div class="thmblock theorem" id="thm:cramer"><div class="thmhead"><span class="env-kind">Theorem 5.35</span> <span class="env-name">(Cramer's rule)</span><span class="permalink" title="label: thm:cramer">&#182;</span></div><div class="thmbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> be an invertible <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo>∈</mo><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{b} \in \mathbb{R}^n</annotation></semantics></math></span>.
 For each <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span>, let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">A_i(\mathbf{b})</annotation></semantics></math></span> be the matrix obtained from <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> by
 replacing column <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math></span>. Then the unique solution of
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> is given by
@@ -1238,7 +2772,7 @@ in position <span class="imath"><math display="inline" xmlns="http://www.w3.org/
 the corresponding minor is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msub><annotation encoding="application/x-tex">I_{n-1}</annotation></semantics></math></span>; expanding along row <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></span> gives
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><msub><mi>I</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msub><mi>x</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\det I_i(\mathbf{x}) = x_i</annotation></semantics></math></span>. By <a class="kref" data-ref="thm:det-product" href="#thm:det-product">the product rule</a>,
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>⋅</mo><msub><mi>x</mi><mi>i</mi></msub><mo>=</mo><mo>det</mo><msub><mi>A</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">\det A \cdot x_i = \det A_i(\mathbf{b})</annotation></semantics></math></span>, and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A \neq 0</annotation></semantics></math></span>.</p><span class="qed">&#9633;</span></div></div>
-<div class="thmblock definition" id="def:adjugate"><div class="thmhead"><span class="env-kind">Definition 5.35</span> <span class="env-name">(Adjugate)</span><span class="permalink" title="label: def:adjugate">&#182;</span></div><div class="thmbody"><p>The <strong>adjugate</strong> (or the <strong>adjoint</strong>) of an
+<div class="thmblock definition" id="def:adjugate"><div class="thmhead"><span class="env-kind">Definition 5.36</span> <span class="env-name">(Adjugate)</span><span class="permalink" title="label: def:adjugate">&#182;</span></div><div class="thmbody"><p>The <strong>adjugate</strong> (or the <strong>adjoint</strong>) of an
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mo>*</mo></msup><annotation encoding="application/x-tex">A^{*}</annotation></semantics></math></span> whose
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo>,</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span> entry is the cofactor <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>C</mi><mrow><mi>j</mi><mi>i</mi></mrow></msub><annotation encoding="application/x-tex">C_{ji}</annotation></semantics></math></span>:
 <span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>*</mo></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><msub><mi>C</mi><mn>11</mn></msub></mtd><mtd columnalign="center"><msub><mi>C</mi><mn>21</mn></msub></mtd><mtd columnalign="center"><mi>⋯</mi></mtd><mtd columnalign="center"><msub><mi>C</mi><mrow><mi>n</mi><mn>1</mn></mrow></msub></mtd></mtr><mtr><mtd columnalign="center"><msub><mi>C</mi><mn>12</mn></msub></mtd><mtd columnalign="center"><msub><mi>C</mi><mn>22</mn></msub></mtd><mtd columnalign="center"><mi>⋯</mi></mtd><mtd columnalign="center"><msub><mi>C</mi><mrow><mi>n</mi><mn>2</mn></mrow></msub></mtd></mtr><mtr><mtd columnalign="center"><mi>⋮</mi></mtd><mtd columnalign="center"><mi>⋮</mi></mtd><mtd columnalign="center"></mtd><mtd columnalign="center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center"><msub><mi>C</mi><mrow><mn>1</mn><mi>n</mi></mrow></msub></mtd><mtd columnalign="center"><msub><mi>C</mi><mrow><mn>2</mn><mi>n</mi></mrow></msub></mtd><mtd columnalign="center"><mi>⋯</mi></mtd><mtd columnalign="center"><msub><mi>C</mi><mrow><mi>n</mi><mi>n</mi></mrow></msub></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">A^{*} = \begin{pmatrix}
@@ -1249,7 +2783,7 @@ the corresponding minor is <span class="imath"><math display="inline" xmlns="htt
   \end{pmatrix},</annotation></semantics></math></span>
 the <em>transpose</em> of the matrix of cofactors. Note the order of the
 indices.</p></div></div>
-<div class="thmblock theorem" id="thm:adjugate"><div class="thmhead"><span class="env-kind">Theorem 5.36</span> <span class="env-name">(The adjugate formula)</span><span class="permalink" title="label: thm:adjugate">&#182;</span></div><div class="thmbody"><p>For every <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> (<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n \ge 2</annotation></semantics></math></span>),
+<div class="thmblock theorem" id="thm:adjugate"><div class="thmhead"><span class="env-kind">Theorem 5.37</span> <span class="env-name">(The adjugate formula)</span><span class="permalink" title="label: thm:adjugate">&#182;</span></div><div class="thmbody"><p>For every <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span> matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> (<span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>≥</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n \ge 2</annotation></semantics></math></span>),
 <span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mspace width="0.167em"></mspace><msup><mi>A</mi><mo>*</mo></msup><mo>=</mo><msup><mi>A</mi><mo>*</mo></msup><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msub><mi>I</mi><mi>n</mi></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">A\,A^{*} = A^{*} A = (\det A)\, I_n .</annotation></semantics></math></span>
 Consequently, if <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A \neq 0</annotation></semantics></math></span>, then
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mstyle displaystyle="true"><mfrac><mn>1</mn><mrow><mo>det</mo><mi>A</mi></mrow></mfrac></mstyle><mspace width="0.167em"></mspace><msup><mi>A</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">A^{-1} = \dfrac{1}{\det A}\, A^{*}</annotation></semantics></math></span>.</p></div></div>
@@ -1265,14 +2799,14 @@ So <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math
 and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mi>T</mi></msup><mo stretchy="false" form="prefix">(</mo><msup><mi>A</mi><mo>*</mo></msup><msup><mo stretchy="false" form="postfix">)</mo><mi>T</mi></msup><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mo>det</mo><msup><mi>A</mi><mi>T</mi></msup><mo stretchy="false" form="postfix">)</mo><msub><mi>I</mi><mi>n</mi></msub><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="postfix">)</mo><msub><mi>I</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A^{T} (A^{*})^{T} = (\det A^{T}) I_n = (\det A) I_n</annotation></semantics></math></span>. Transposing
 both sides gives <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>*</mo></msup><mi>A</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mo>det</mo><mi>A</mi><mo stretchy="false" form="postfix">)</mo><msub><mi>I</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A^{*} A = (\det A) I_n</annotation></semantics></math></span>. If <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A \neq 0</annotation></semantics></math></span>, dividing
 by <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi></mrow><annotation encoding="application/x-tex">\det A</annotation></semantics></math></span> exhibits a two-sided inverse.</p><span class="qed">&#9633;</span></div></div>
-<div class="thmblock example" id="ex:adjugate-2x2"><div class="thmhead"><span class="env-kind">Example 5.37</span> <span class="env-name">(Revisiting the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> inverse)</span><span class="permalink" title="label: ex:adjugate-2x2">&#182;</span></div><div class="thmbody"><p>For <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mi>a</mi></mtd><mtd columnalign="center"><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>c</mi></mtd><mtd columnalign="center"><mi>d</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}</annotation></semantics></math></span> the cofactors are
+<div class="thmblock example" id="ex:adjugate-2x2"><div class="thmhead"><span class="env-kind">Example 5.38</span> <span class="env-name">(Revisiting the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> inverse)</span><span class="permalink" title="label: ex:adjugate-2x2">&#182;</span></div><div class="thmbody"><p>For <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mi>a</mi></mtd><mtd columnalign="center"><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mi>c</mi></mtd><mtd columnalign="center"><mi>d</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}</annotation></semantics></math></span> the cofactors are
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>11</mn></msub><mo>=</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">C_{11} = d</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>12</mn></msub><mo>=</mo><mo>−</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">C_{12} = -c</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>21</mn></msub><mo>=</mo><mo>−</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">C_{21} = -b</annotation></semantics></math></span>, <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>22</mn></msub><mo>=</mo><mi>a</mi></mrow><annotation encoding="application/x-tex">C_{22} = a</annotation></semantics></math></span>. So
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>*</mo></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mi>d</mi></mtd><mtd columnalign="center"><mo>−</mo><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mo>−</mo><mi>c</mi></mtd><mtd columnalign="center"><mi>a</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A^{*} = \begin{pmatrix} d &amp; -b \\ -c &amp; a \end{pmatrix}</annotation></semantics></math></span> and the theorem
 gives
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>a</mi><mi>d</mi><mo>−</mo><mi>b</mi><mi>c</mi></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mi>d</mi></mtd><mtd columnalign="center"><mo>−</mo><mi>b</mi></mtd></mtr><mtr><mtd columnalign="center"><mo>−</mo><mi>c</mi></mtd><mtd columnalign="center"><mi>a</mi></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A^{-1} = \frac{1}{ad - bc}\begin{pmatrix} d &amp; -b \\ -c &amp; a \end{pmatrix}</annotation></semantics></math></span>,
 which is <a class="kref extern" href="lec04-matrix-operations.html#ex:2x2-inverse" title="Example 4.34 (The 2  2 formula) — in another lecture; opens that page">the formula of Lecture 4</a>, now with a
 proof of where it comes from.</p></div></div>
-<div class="thmblock example" id="ex:cramer3"><div class="thmhead"><span class="env-kind">Example 5.38</span> <span class="env-name">(Cramer's rule and the adjugate for a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> system)</span><span class="permalink" title="label: ex:cramer3">&#182;</span></div><div class="thmbody"><p>Take the matrix of <a class="kref extern" href="lec04-matrix-operations.html#ex:inverse-3x3" title="Example 4.29 (Inverting a 3  3 matrix) — in another lecture; opens that page">the inversion example</a> in
+<div class="thmblock example" id="ex:cramer3"><div class="thmhead"><span class="env-kind">Example 5.39</span> <span class="env-name">(Cramer's rule and the adjugate for a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> system)</span><span class="permalink" title="label: ex:cramer3">&#182;</span></div><div class="thmbody"><p>Take the matrix of <a class="kref extern" href="lec04-matrix-operations.html#ex:inverse-3x3" title="Example 4.29 (Inverting a 3  3 matrix) — in another lecture; opens that page">the inversion example</a> in
 Lecture 4 and solve
 <span class="dmath"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo>,</mo><mspace width="2.0em"></mspace><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>1</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="2.0em"></mspace><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>4</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>3</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b},
   \qquad
@@ -1303,7 +2837,7 @@ What is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>5</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>1</mn></mtd><mtd columnalign="center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\det \begin{pmatrix} 2 &amp; 5 \\ 1 &amp; 5 \end{pmatrix} = 5</annotation></semantics></math></span>.</p></div></div></div>
 <div class="exercise" id="exr:s6-adjugate" data-type="numeric" data-answer="-7" data-tol="0.001"><div class="exhead">Exercise 5.12 <span class="extag">auto-check</span></div><div class="exbody"><p>Let <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>4</mn></mtd><mtd columnalign="center"><mn>7</mn></mtd></mtr><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>6</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">A = \begin{pmatrix} 4 &amp; 7 \\ 2 &amp; 6 \end{pmatrix}</annotation></semantics></math></span>. What is the
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1,2)</annotation></semantics></math></span> entry of the adjugate <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mo>*</mo></msup><annotation encoding="application/x-tex">A^{*}</annotation></semantics></math></span>?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1,2)</annotation></semantics></math></span> entry of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>A</mi><mo>*</mo></msup><annotation encoding="application/x-tex">A^{*}</annotation></semantics></math></span> is the cofactor <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mn>21</mn></msub><mo>=</mo><mo>−</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">C_{21} = -7</annotation></semantics></math></span>.</p></div></div></div>
-<div class="thmblock remark" id="rem:looking-ahead-l5"><div class="thmhead"><span class="env-kind">Remark 5.39</span> <span class="env-name">(Looking ahead)</span><span class="permalink" title="label: rem:looking-ahead-l5">&#182;</span></div><div class="thmbody"><p>The invertibility theorem of Lecture 4 gains a sixth condition: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is
+<div class="thmblock remark" id="rem:looking-ahead-l5"><div class="thmhead"><span class="env-kind">Remark 5.40</span> <span class="env-name">(Looking ahead)</span><span class="permalink" title="label: rem:looking-ahead-l5">&#182;</span></div><div class="thmbody"><p>The invertibility theorem of Lecture 4 gains a sixth condition: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span> is
 invertible if and only if <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>det</mo><mi>A</mi><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\det A \neq 0</annotation></semantics></math></span>. And
 <a class="kref" data-ref="ex:det-lambda" href="#ex:det-lambda">the example with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>−</mo><mi>λ</mi><msub><mi>I</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A - \lambda I_n</annotation></semantics></math></span></a> points to the
 next topic. A nonzero vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span> with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mi>λ</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \lambda\mathbf{x}</annotation></semantics></math></span>
@@ -1312,12 +2846,12 @@ nonzero solution, that is, exactly when <span class="imath"><math display="inlin
 Such numbers <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></span> are the <em>eigenvalues</em> of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math></span>, and the
 determinant is how we will find them.</p></div></div>
   <h2>Index of statements</h2>
-  <ol class="idx"><li><a class="kref" data-ref="ex:det2-elim" href="#ex:det2-elim">Example 5.1 (Eliminating a general <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> matrix)</a></li><li><a class="kref" data-ref="def:det2" href="#def:det2">Definition 5.2 (Determinant of a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> matrix)</a></li><li><a class="kref" data-ref="thm:det2-invertible" href="#thm:det2-invertible">Theorem 5.3 (The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> determinant detects invertibility)</a></li><li><a class="kref" data-ref="prop:det2-rowops" href="#prop:det2-rowops">Proposition 5.4 (Row operations and the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> determinant)</a></li><li><a class="kref" data-ref="rem:det2-pivots" href="#rem:det2-pivots">Remark 5.5 (What the properties buy)</a></li><li><a class="kref" data-ref="rem:induction" href="#rem:induction">Remark 5.6 (Mathematical induction)</a></li><li><a class="kref" data-ref="def:minor" href="#def:minor">Definition 5.7 (Minor)</a></li><li><a class="kref" data-ref="def:det" href="#def:det">Definition 5.8 (Determinant)</a></li><li><a class="kref" data-ref="ex:det-small" href="#ex:det-small">Example 5.9 (Small cases)</a></li><li><a class="kref" data-ref="ex:det3-general" href="#ex:det3-general">Example 5.10 (The general <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> determinant)</a></li><li><a class="kref" data-ref="thm:det-basic" href="#thm:det-basic">Theorem 5.11 (The three basic properties)</a></li><li><a class="kref" data-ref="cor:det-rowops" href="#cor:det-rowops">Corollary 5.12 (All row operations)</a></li><li><a class="kref" data-ref="def:cofactor" href="#def:cofactor">Definition 5.13 (Cofactor)</a></li><li><a class="kref" data-ref="thm:row-expansion" href="#thm:row-expansion">Theorem 5.14 (Cofactor expansion along any row)</a></li><li><a class="kref" data-ref="lem:det-triangular" href="#lem:det-triangular">Lemma 5.15 (Triangular matrices)</a></li><li><a class="kref" data-ref="thm:det-elimination" href="#thm:det-elimination">Theorem 5.16 (Determinant by elimination)</a></li><li><a class="kref" data-ref="ex:det4-elim" href="#ex:det4-elim">Example 5.17 (A <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>×</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">4 \times 4</annotation></semantics></math></span> determinant with two swaps)</a></li><li><a class="kref" data-ref="ex:det-dependent" href="#ex:det-dependent">Example 5.18 (Dependent rows)</a></li><li><a class="kref" data-ref="ex:vandermonde" href="#ex:vandermonde">Example 5.19 (A determinant with letters: the Vandermonde matrix)</a></li><li><a class="kref" data-ref="ex:det-lambda" href="#ex:det-lambda">Example 5.20 (The matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>−</mo><mi>λ</mi><msub><mi>I</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A - \lambda I_n</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="lem:det-elementary" href="#lem:det-elementary">Lemma 5.21 (Determinants of elementary matrices)</a></li><li><a class="kref" data-ref="thm:det-product" href="#thm:det-product">Theorem 5.22 (The product rule)</a></li><li><a class="kref" data-ref="ex:det-product" href="#ex:det-product">Example 5.23 (The product rule, and what is not true)</a></li><li><a class="kref" data-ref="cor:det-inverse" href="#cor:det-inverse">Corollary 5.24 (Inverses and powers)</a></li><li><a class="kref" data-ref="thm:det-transpose" href="#thm:det-transpose">Theorem 5.25 (The transpose)</a></li><li><a class="kref" data-ref="rem:det-columns" href="#rem:det-columns">Remark 5.26 (Columns behave like rows)</a></li><li><a class="kref" data-ref="thm:cofactor-expansion" href="#thm:cofactor-expansion">Theorem 5.27 (Cofactor expansion along any column)</a></li><li><a class="kref" data-ref="ex:cofactor-choice" href="#ex:cofactor-choice">Example 5.28 (Choosing a good row)</a></li><li><a class="kref" data-ref="def:parallelepiped" href="#def:parallelepiped">Definition 5.29 (Parallelogram and parallelepiped)</a></li><li><a class="kref" data-ref="thm:det-volume" href="#thm:det-volume">Theorem 5.30 (Area and volume)</a></li><li><a class="kref" data-ref="ex:det-volume" href="#ex:det-volume">Example 5.31 (An area and a volume)</a></li><li><a class="kref" data-ref="thm:det-map-volume" href="#thm:det-map-volume">Theorem 5.32 (How a linear map changes volume)</a></li><li><a class="kref" data-ref="rem:det-orientation" href="#rem:det-orientation">Remark 5.33 (Scaling factor and orientation)</a></li><li><a class="kref" data-ref="thm:cramer" href="#thm:cramer">Theorem 5.34 (Cramer's rule)</a></li><li><a class="kref" data-ref="def:adjugate" href="#def:adjugate">Definition 5.35 (Adjugate)</a></li><li><a class="kref" data-ref="thm:adjugate" href="#thm:adjugate">Theorem 5.36 (The adjugate formula)</a></li><li><a class="kref" data-ref="ex:adjugate-2x2" href="#ex:adjugate-2x2">Example 5.37 (Revisiting the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> inverse)</a></li><li><a class="kref" data-ref="ex:cramer3" href="#ex:cramer3">Example 5.38 (Cramer's rule and the adjugate for a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> system)</a></li><li><a class="kref" data-ref="rem:looking-ahead-l5" href="#rem:looking-ahead-l5">Remark 5.39 (Looking ahead)</a></li></ol>
+  <ol class="idx"><li><a class="kref" data-ref="ex:det2-elim" href="#ex:det2-elim">Example 5.1 (Eliminating a general <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> matrix)</a></li><li><a class="kref" data-ref="def:det2" href="#def:det2">Definition 5.2 (Determinant of a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> matrix)</a></li><li><a class="kref" data-ref="thm:det2-invertible" href="#thm:det2-invertible">Theorem 5.3 (The <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> determinant detects invertibility)</a></li><li><a class="kref" data-ref="prop:det2-rowops" href="#prop:det2-rowops">Proposition 5.4 (Row operations and the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> determinant)</a></li><li><a class="kref" data-ref="rem:det2-pivots" href="#rem:det2-pivots">Remark 5.5 (What the properties buy)</a></li><li><a class="kref" data-ref="rem:induction" href="#rem:induction">Remark 5.6 (Mathematical induction)</a></li><li><a class="kref" data-ref="def:minor" href="#def:minor">Definition 5.7 (Minor)</a></li><li><a class="kref" data-ref="def:det" href="#def:det">Definition 5.8 (Determinant)</a></li><li><a class="kref" data-ref="ex:det-small" href="#ex:det-small">Example 5.9 (Small cases)</a></li><li><a class="kref" data-ref="ex:det3-general" href="#ex:det3-general">Example 5.10 (The general <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> determinant)</a></li><li><a class="kref" data-ref="thm:det-basic" href="#thm:det-basic">Theorem 5.11 (The three basic properties)</a></li><li><a class="kref" data-ref="cor:det-rowops" href="#cor:det-rowops">Corollary 5.12 (All row operations)</a></li><li><a class="kref" data-ref="def:cofactor" href="#def:cofactor">Definition 5.13 (Cofactor)</a></li><li><a class="kref" data-ref="thm:row-expansion" href="#thm:row-expansion">Theorem 5.14 (Cofactor expansion along any row)</a></li><li><a class="kref" data-ref="lem:det-triangular" href="#lem:det-triangular">Lemma 5.15 (Triangular matrices)</a></li><li><a class="kref" data-ref="thm:det-elimination" href="#thm:det-elimination">Theorem 5.16 (Determinant by elimination)</a></li><li><a class="kref" data-ref="ex:det4-elim" href="#ex:det4-elim">Example 5.17 (A <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn><mo>×</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">4 \times 4</annotation></semantics></math></span> determinant with two swaps)</a></li><li><a class="kref" data-ref="ex:det-dependent" href="#ex:det-dependent">Example 5.18 (Dependent rows)</a></li><li><a class="kref" data-ref="ex:vandermonde" href="#ex:vandermonde">Example 5.19 (A determinant with letters: the Vandermonde matrix)</a></li><li><a class="kref" data-ref="ex:det-lambda" href="#ex:det-lambda">Example 5.20 (The matrix <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>−</mo><mi>λ</mi><msub><mi>I</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">A - \lambda I_n</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="lem:det-elementary" href="#lem:det-elementary">Lemma 5.21 (Determinants of elementary matrices)</a></li><li><a class="kref" data-ref="thm:det-product" href="#thm:det-product">Theorem 5.22 (The product rule)</a></li><li><a class="kref" data-ref="ex:det-product" href="#ex:det-product">Example 5.23 (The product rule, and what is not true)</a></li><li><a class="kref" data-ref="cor:det-inverse" href="#cor:det-inverse">Corollary 5.24 (Inverses and powers)</a></li><li><a class="kref" data-ref="thm:det-transpose" href="#thm:det-transpose">Theorem 5.25 (The transpose)</a></li><li><a class="kref" data-ref="rem:det-columns" href="#rem:det-columns">Remark 5.26 (Columns behave like rows)</a></li><li><a class="kref" data-ref="thm:cofactor-expansion" href="#thm:cofactor-expansion">Theorem 5.27 (Cofactor expansion along any column)</a></li><li><a class="kref" data-ref="ex:cofactor-choice" href="#ex:cofactor-choice">Example 5.28 (Choosing a good row)</a></li><li><a class="kref" data-ref="def:parallelepiped" href="#def:parallelepiped">Definition 5.29 (Parallelogram and parallelepiped)</a></li><li><a class="kref" data-ref="thm:det-volume" href="#thm:det-volume">Theorem 5.30 (Area and volume)</a></li><li><a class="kref" data-ref="ex:det-volume" href="#ex:det-volume">Example 5.31 (An area and a volume)</a></li><li><a class="kref" data-ref="thm:det-map-volume" href="#thm:det-map-volume">Theorem 5.32 (How a linear map changes volume)</a></li><li><a class="kref" data-ref="thm:det-region" href="#thm:det-region">Theorem 5.33 (The scaling factor for an arbitrary region)</a></li><li><a class="kref" data-ref="rem:det-orientation" href="#rem:det-orientation">Remark 5.34 (Scaling factor and orientation)</a></li><li><a class="kref" data-ref="thm:cramer" href="#thm:cramer">Theorem 5.35 (Cramer's rule)</a></li><li><a class="kref" data-ref="def:adjugate" href="#def:adjugate">Definition 5.36 (Adjugate)</a></li><li><a class="kref" data-ref="thm:adjugate" href="#thm:adjugate">Theorem 5.37 (The adjugate formula)</a></li><li><a class="kref" data-ref="ex:adjugate-2x2" href="#ex:adjugate-2x2">Example 5.38 (Revisiting the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math></span> inverse)</a></li><li><a class="kref" data-ref="ex:cramer3" href="#ex:cramer3">Example 5.39 (Cramer's rule and the adjugate for a <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><mo>×</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">3 \times 3</annotation></semantics></math></span> system)</a></li><li><a class="kref" data-ref="rem:looking-ahead-l5" href="#rem:looking-ahead-l5">Remark 5.40 (Looking ahead)</a></li></ol>
   <footer>Generated from the lecture&rsquo;s LaTeX source.
   Every cross-reference resolves to a stated definition or proved result.</footer>
 </main>
 <script>
-const LABELS = {"ex:det2-elim": {"kind": "Example", "number": "5.1", "name": "Eliminating a general 2  2 matrix"}, "def:det2": {"kind": "Definition", "number": "5.2", "name": "Determinant of a 2  2 matrix"}, "thm:det2-invertible": {"kind": "Theorem", "number": "5.3", "name": "The 2  2 determinant detects invertibility"}, "prop:det2-rowops": {"kind": "Proposition", "number": "5.4", "name": "Row operations and the 2  2 determinant"}, "rem:det2-pivots": {"kind": "Remark", "number": "5.5", "name": "What the properties buy"}, "rem:induction": {"kind": "Remark", "number": "5.6", "name": "Mathematical induction"}, "def:minor": {"kind": "Definition", "number": "5.7", "name": "Minor"}, "def:det": {"kind": "Definition", "number": "5.8", "name": "Determinant"}, "ex:det-small": {"kind": "Example", "number": "5.9", "name": "Small cases"}, "ex:det3-general": {"kind": "Example", "number": "5.10", "name": "The general 3  3 determinant"}, "thm:det-basic": {"kind": "Theorem", "number": "5.11", "name": "The three basic properties"}, "cor:det-rowops": {"kind": "Corollary", "number": "5.12", "name": "All row operations"}, "def:cofactor": {"kind": "Definition", "number": "5.13", "name": "Cofactor"}, "thm:row-expansion": {"kind": "Theorem", "number": "5.14", "name": "Cofactor expansion along any row"}, "lem:det-triangular": {"kind": "Lemma", "number": "5.15", "name": "Triangular matrices"}, "thm:det-elimination": {"kind": "Theorem", "number": "5.16", "name": "Determinant by elimination"}, "ex:det4-elim": {"kind": "Example", "number": "5.17", "name": "A 4  4 determinant with two swaps"}, "ex:det-dependent": {"kind": "Example", "number": "5.18", "name": "Dependent rows"}, "ex:vandermonde": {"kind": "Example", "number": "5.19", "name": "A determinant with letters: the Vandermonde matrix"}, "ex:det-lambda": {"kind": "Example", "number": "5.20", "name": "The matrix A -  I_n"}, "lem:det-elementary": {"kind": "Lemma", "number": "5.21", "name": "Determinants of elementary matrices"}, "thm:det-product": {"kind": "Theorem", "number": "5.22", "name": "The product rule"}, "ex:det-product": {"kind": "Example", "number": "5.23", "name": "The product rule, and what is not true"}, "cor:det-inverse": {"kind": "Corollary", "number": "5.24", "name": "Inverses and powers"}, "thm:det-transpose": {"kind": "Theorem", "number": "5.25", "name": "The transpose"}, "rem:det-columns": {"kind": "Remark", "number": "5.26", "name": "Columns behave like rows"}, "thm:cofactor-expansion": {"kind": "Theorem", "number": "5.27", "name": "Cofactor expansion along any column"}, "ex:cofactor-choice": {"kind": "Example", "number": "5.28", "name": "Choosing a good row"}, "def:parallelepiped": {"kind": "Definition", "number": "5.29", "name": "Parallelogram and parallelepiped"}, "thm:det-volume": {"kind": "Theorem", "number": "5.30", "name": "Area and volume"}, "ex:det-volume": {"kind": "Example", "number": "5.31", "name": "An area and a volume"}, "thm:det-map-volume": {"kind": "Theorem", "number": "5.32", "name": "How a linear map changes volume"}, "rem:det-orientation": {"kind": "Remark", "number": "5.33", "name": "Scaling factor and orientation"}, "thm:cramer": {"kind": "Theorem", "number": "5.34", "name": "Cramer's rule"}, "def:adjugate": {"kind": "Definition", "number": "5.35", "name": "Adjugate"}, "thm:adjugate": {"kind": "Theorem", "number": "5.36", "name": "The adjugate formula"}, "ex:adjugate-2x2": {"kind": "Example", "number": "5.37", "name": "Revisiting the 2  2 inverse"}, "ex:cramer3": {"kind": "Example", "number": "5.38", "name": "Cramer's rule and the adjugate for a 3  3 system"}, "rem:looking-ahead-l5": {"kind": "Remark", "number": "5.39", "name": "Looking ahead"}};
+const LABELS = {"ex:det2-elim": {"kind": "Example", "number": "5.1", "name": "Eliminating a general 2  2 matrix"}, "def:det2": {"kind": "Definition", "number": "5.2", "name": "Determinant of a 2  2 matrix"}, "thm:det2-invertible": {"kind": "Theorem", "number": "5.3", "name": "The 2  2 determinant detects invertibility"}, "prop:det2-rowops": {"kind": "Proposition", "number": "5.4", "name": "Row operations and the 2  2 determinant"}, "rem:det2-pivots": {"kind": "Remark", "number": "5.5", "name": "What the properties buy"}, "rem:induction": {"kind": "Remark", "number": "5.6", "name": "Mathematical induction"}, "def:minor": {"kind": "Definition", "number": "5.7", "name": "Minor"}, "def:det": {"kind": "Definition", "number": "5.8", "name": "Determinant"}, "ex:det-small": {"kind": "Example", "number": "5.9", "name": "Small cases"}, "ex:det3-general": {"kind": "Example", "number": "5.10", "name": "The general 3  3 determinant"}, "thm:det-basic": {"kind": "Theorem", "number": "5.11", "name": "The three basic properties"}, "cor:det-rowops": {"kind": "Corollary", "number": "5.12", "name": "All row operations"}, "def:cofactor": {"kind": "Definition", "number": "5.13", "name": "Cofactor"}, "thm:row-expansion": {"kind": "Theorem", "number": "5.14", "name": "Cofactor expansion along any row"}, "lem:det-triangular": {"kind": "Lemma", "number": "5.15", "name": "Triangular matrices"}, "thm:det-elimination": {"kind": "Theorem", "number": "5.16", "name": "Determinant by elimination"}, "ex:det4-elim": {"kind": "Example", "number": "5.17", "name": "A 4  4 determinant with two swaps"}, "ex:det-dependent": {"kind": "Example", "number": "5.18", "name": "Dependent rows"}, "ex:vandermonde": {"kind": "Example", "number": "5.19", "name": "A determinant with letters: the Vandermonde matrix"}, "ex:det-lambda": {"kind": "Example", "number": "5.20", "name": "The matrix A -  I_n"}, "lem:det-elementary": {"kind": "Lemma", "number": "5.21", "name": "Determinants of elementary matrices"}, "thm:det-product": {"kind": "Theorem", "number": "5.22", "name": "The product rule"}, "ex:det-product": {"kind": "Example", "number": "5.23", "name": "The product rule, and what is not true"}, "cor:det-inverse": {"kind": "Corollary", "number": "5.24", "name": "Inverses and powers"}, "thm:det-transpose": {"kind": "Theorem", "number": "5.25", "name": "The transpose"}, "rem:det-columns": {"kind": "Remark", "number": "5.26", "name": "Columns behave like rows"}, "thm:cofactor-expansion": {"kind": "Theorem", "number": "5.27", "name": "Cofactor expansion along any column"}, "ex:cofactor-choice": {"kind": "Example", "number": "5.28", "name": "Choosing a good row"}, "def:parallelepiped": {"kind": "Definition", "number": "5.29", "name": "Parallelogram and parallelepiped"}, "thm:det-volume": {"kind": "Theorem", "number": "5.30", "name": "Area and volume"}, "ex:det-volume": {"kind": "Example", "number": "5.31", "name": "An area and a volume"}, "thm:det-map-volume": {"kind": "Theorem", "number": "5.32", "name": "How a linear map changes volume"}, "thm:det-region": {"kind": "Theorem", "number": "5.33", "name": "The scaling factor for an arbitrary region"}, "rem:det-orientation": {"kind": "Remark", "number": "5.34", "name": "Scaling factor and orientation"}, "thm:cramer": {"kind": "Theorem", "number": "5.35", "name": "Cramer's rule"}, "def:adjugate": {"kind": "Definition", "number": "5.36", "name": "Adjugate"}, "thm:adjugate": {"kind": "Theorem", "number": "5.37", "name": "The adjugate formula"}, "ex:adjugate-2x2": {"kind": "Example", "number": "5.38", "name": "Revisiting the 2  2 inverse"}, "ex:cramer3": {"kind": "Example", "number": "5.39", "name": "Cramer's rule and the adjugate for a 3  3 system"}, "rem:looking-ahead-l5": {"kind": "Remark", "number": "5.40", "name": "Looking ahead"}};
 document.addEventListener("DOMContentLoaded", () => {
   // proofs
   document.querySelectorAll(".proof-toggle").forEach(btn => {
