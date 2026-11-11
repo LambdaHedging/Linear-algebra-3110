@@ -119,6 +119,39 @@
   .hint { background: var(--accent-soft); border-radius: 6px;
     padding: .6rem .9rem; font-size: .92em; color: #33415c; }
   ol li, ul li { margin: .3rem 0; }
+  .dmath.eqn { position: relative; padding-right: 4em; }
+  .eqno { position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    font-style: normal; }
+  a.eqref { color: inherit; text-decoration: none;
+    border-bottom: 1px dotted currentcolor; }
+  details.lsec > summary { list-style: none; cursor: pointer; }
+  details.lsec > summary::-webkit-details-marker { display: none; }
+  details.lsec > summary h2 { display: flex; align-items: baseline; }
+  details.lsec > summary h2::before { content: "\25B8"; color: var(--accent);
+    font-size: .8em; width: 1.1em; flex: none; transition: transform .15s;
+    display: inline-block; }
+  details.lsec[open] > summary h2::before { transform: rotate(90deg); }
+  details.lsec > summary:hover h2 { color: var(--accent); }
+  details.lsec:not([open]) > summary h2 { margin: .9rem 0; }
+  .toc { margin: 1.2rem 0 1.6rem; padding: .7rem 1.05rem .5rem;
+    border: 1px solid var(--rule); border-radius: 6px; background: #fff; }
+  .toc-head { display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: .5rem; }
+  .toc-title { font-weight: 700; margin-right: auto; }
+  .toc-btn { font: inherit; font-size: .82em; padding: .1rem .6rem;
+    border: 1px solid var(--rule); border-radius: 4px; background: #fff;
+    color: var(--accent); cursor: pointer; }
+  .toc-btn:hover { background: var(--accent-soft); }
+  .toc-list { list-style: none; margin: .45rem 0 .2rem; padding: 0; }
+  .toc-list li { margin: .2rem 0; }
+  .toc-list a { color: var(--ink); text-decoration: none; display: flex; }
+  .toc-list a:hover { color: var(--accent); }
+  .toc-num { flex: none; min-width: 2.6em; color: var(--accent);
+    font-weight: 600; }
+  ol.alpha { list-style: none; counter-reset: alpha; padding-left: 2.4em; }
+  ol.alpha > li { counter-increment: alpha; position: relative; }
+  ol.alpha > li::before { content: "(" counter(alpha, lower-alpha) ")";
+    position: absolute; left: -2.4em; width: 2em; text-align: right; }
 </style>
 </head>
 <body>
@@ -126,12 +159,14 @@
   <div class="coursename">Linear Algebra &mdash; Lecture 3</div>
   <h1>Lecture 3: Homogeneous Systems, Independence, and Linear Maps</h1>
   <p class="byline">Shuhong Gao &nbsp;&middot;&nbsp; Clemson University</p>
-  <p class="hint">These notes are interactive: click any
+  <p class="hint">These notes are interactive: click a section title
+  to open it, click any
   <a class="kref" href="#" onclick="return false"
      style="pointer-events:none">dotted&nbsp;term</a> to unfold its exact
   definition or statement in place, click <em>&#9656; Proof</em> to expand
   a proof, and try the exercises &mdash; answers are checked instantly.</p>
-  <h2>3.1 &nbsp;Homogeneous systems and the structure of solution sets</h2>
+  
+  <details class="lsec" id="sec-3-1"><summary><h2>3.1 &nbsp;Homogeneous systems and the structure of solution sets</h2></summary><div class="lsec-body">
 <div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Among all right-hand sides, one is special: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mn>0</mn></mstyle></mrow><annotation encoding="application/x-tex">\mathbf{b} = \mathbf{0}</annotation></semantics></math></span>.
 A system with zero right-hand side can never be inconsistent — the
 zero vector always solves it — so the interesting question flips from
@@ -362,7 +397,8 @@ Compare with <a class="kref extern" href="lec02-gaussian-elimination.html#ex:par
 was not an accident; it is the structure theorem in action.</p></div></div>
 <div class="exercise" id="exr:h1-null" data-type="numeric" data-answer="-2" data-tol="0.001"><div class="exhead">Exercise 3.1 <span class="extag">auto-check</span></div><div class="exbody"><p>In <a class="kref" data-ref="ex:nullspace" href="#ex:nullspace">the homogeneous example</a>, consider the solution
 with <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">s = 1</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t = 0</annotation></semantics></math></span>. What is the value of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mn>1</mn></msub><annotation encoding="application/x-tex">x_1</annotation></semantics></math></span>?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Read the first entry of the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math></span>-direction vector.</p></div></div></div>
-<h2>3.2 &nbsp;Linear independence</h2>
+</div></details>
+<details class="lsec" id="sec-3-2"><summary><h2>3.2 &nbsp;Linear independence</h2></summary><div class="lsec-body">
 <div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>When does a collection of vectors contain redundancy — one vector
 expressible from the others? The <a class="kref extern" href="lec01-linear-systems.html#thm:ax-columns" title="Theorem 1.12 (Column view of Ax) — in another lecture; opens that page">column view</a>
 turns this qualitative question into a computation: pack the vectors as
@@ -416,7 +452,8 @@ solution with a nonzero entry.</p><span class="qed">&#9633;</span></div></div>
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>4</mn></msub><mo>=</mo><msub><mi>c</mi><mn>1</mn></msub><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>1</mn></msub><mo>+</mo><msub><mi>c</mi><mn>3</mn></msub><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{a}_4 = c_1 \mathbf{a}_1 + c_3 \mathbf{a}_3</annotation></semantics></math></span>. What is <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>1</mn></msub><annotation encoding="application/x-tex">c_1</annotation></semantics></math></span>?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Read the direction vector for <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></span>: its entries say
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>3</mn><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>1</mn></msub><mo>−</mo><mn>2</mn><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>3</mn></msub><mo>+</mo><msub><mstyle mathvariant="bold"><mi>𝐚</mi></mstyle><mn>4</mn></msub><mo>=</mo><mstyle mathvariant="bold"><mn>0</mn></mstyle></mrow><annotation encoding="application/x-tex">-3\mathbf{a}_1 - 2\mathbf{a}_3 + \mathbf{a}_4 = \mathbf{0}</annotation></semantics></math></span>.</p></div></div></div>
 <div class="exercise" id="exr:s3-many" data-type="multichoice"><div class="exhead">Exercise 3.3 <span class="extag">auto-check</span></div><div class="exbody"><p>Five vectors are given in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span>. What can you conclude?</p></div><ul class="exchoices"><li><label><input type="radio" name="exr:s3-many" data-correct="1"> They are linearly dependent</label></li><li><label><input type="radio" name="exr:s3-many"> They are linearly independent</label></li><li><label><input type="radio" name="exr:s3-many"> Nothing can be concluded without computing</label></li></ul><div class="exanswer"><button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>Apply <a class="kref" data-ref="cor:many-vectors" href="#cor:many-vectors">the corollary</a>: <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><mo>&gt;</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">5 &gt; 3</annotation></semantics></math></span>.</p></div></div></div>
-<h2>3.3 &nbsp;Linear maps and their matrices</h2>
+</div></details>
+<details class="lsec" id="sec-3-3"><summary><h2>3.3 &nbsp;Linear maps and their matrices</h2></summary><div class="lsec-body">
 <div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>A matrix does not just store a system — it <em>acts</em>: feed it a
 vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math></span>, receive a vector <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math></span>. Machines of this
 kind — functions sending vectors to vectors while respecting vector
@@ -1002,7 +1039,8 @@ send <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Ma
 <div class="exercise" id="exr:m3-flip" data-type="numeric" data-answer="-3" data-tol="0.001"><div class="exhead">Exercise 3.6 <span class="extag">auto-check</span></div><div class="exbody"><p>Apply <a class="kref" data-ref="ex:flip" href="#ex:flip">the flip around the <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math></span>-axis</a> to the vector
 <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mtable><mtr><mtd columnalign="center"><mn>2</mn></mtd><mtd columnalign="center"><mn>3</mn></mtd><mtd columnalign="center"><mn>5</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><annotation encoding="application/x-tex">\begin{pmatrix} 2 &amp; 3 &amp; 5 \end{pmatrix}^{T}</annotation></semantics></math></span>. What is the
 <em>second</em> entry of the result?</p></div><div class="exanswer">Answer: <input class="exinput" size="12"> <button class="excheck">Check</button> <span class="exfb"></span></div><div class="exhint"><button class="hint-toggle">Hint &#9662;</button><div class="hint-body" hidden><p>The flip negates the first two entries and keeps the third.</p></div></div></div>
-<h2>3.4 &nbsp;Injective, surjective, and bijective maps</h2>
+</div></details>
+<details class="lsec" id="sec-3-4"><summary><h2>3.4 &nbsp;Injective, surjective, and bijective maps</h2></summary><div class="lsec-body">
 <div class="intuition"><div class="intuition-head">&#128161; Intuition</div><p>Two questions can be asked of <em>any</em> function: does it ever send
 two different inputs to the same output, and does it reach every
 possible output? For a linear map <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false" form="prefix">(</mo><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">T(\mathbf{x}) = A\mathbf{x}</annotation></semantics></math></span> these
@@ -1105,14 +1143,46 @@ week we exploit this dictionary: composing maps will give us matrix
 multiplication, and undoing a map — possible for exactly the
 bijective maps characterized above — will give us the inverse
 matrix.</p></div></div>
-  <h2>Index of statements</h2>
-  <ol class="idx"><li><a class="kref" data-ref="def:homogeneous" href="#def:homogeneous">Definition 3.1 (Homogeneous system)</a></li><li><a class="kref" data-ref="ex:nullspace" href="#ex:nullspace">Example 3.2 (Solving a homogeneous system)</a></li><li><a class="kref" data-ref="thm:structure" href="#thm:structure">Theorem 3.3 (Solution sets of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mn>0</mn></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{0}</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="ex:translate" href="#ex:translate">Example 3.4 (Translation in action)</a></li><li><a class="kref" data-ref="def:independence" href="#def:independence">Definition 3.5 (Linear independence)</a></li><li><a class="kref" data-ref="prop:indep-matrix" href="#prop:indep-matrix">Proposition 3.6 (Independence as a homogeneous system)</a></li><li><a class="kref" data-ref="ex:dependence" href="#ex:dependence">Example 3.7 (Reading dependence off the null space)</a></li><li><a class="kref" data-ref="thm:wide" href="#thm:wide">Theorem 3.8 (Wide matrices have nonzero null solutions)</a></li><li><a class="kref" data-ref="cor:many-vectors" href="#cor:many-vectors">Corollary 3.9 (Too many vectors are dependent)</a></li><li><a class="kref" data-ref="def:linear-map" href="#def:linear-map">Definition 3.10 (Linear map)</a></li><li><a class="kref" data-ref="ex:matrix-map" href="#ex:matrix-map">Example 3.11 (Every matrix gives a linear map)</a></li><li><a class="kref" data-ref="ex:rotation" href="#ex:rotation">Example 3.12 (Rotation of the plane)</a></li><li><a class="kref" data-ref="ex:flip" href="#ex:flip">Example 3.13 (Flipping around a line in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="def:standard-basis" href="#def:standard-basis">Definition 3.14 (Standard basis vectors)</a></li><li><a class="kref" data-ref="thm:matrix-of-map" href="#thm:matrix-of-map">Theorem 3.15 (The matrix of a linear map)</a></li><li><a class="kref" data-ref="cor:correspondence" href="#cor:correspondence">Corollary 3.16 (Matrices <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↔</mo><annotation encoding="application/x-tex">\leftrightarrow</annotation></semantics></math></span> linear maps)</a></li><li><a class="kref" data-ref="ex:rotation-matrix" href="#ex:rotation-matrix">Example 3.17 (The rotation matrix, by the recipe)</a></li><li><a class="kref" data-ref="ex:flip-matrix" href="#ex:flip-matrix">Example 3.18 (The flip matrix)</a></li><li><a class="kref" data-ref="def:inj-surj-bij" href="#def:inj-surj-bij">Definition 3.19 (Injective, surjective, bijective)</a></li><li><a class="kref" data-ref="thm:inj-surj-bij" href="#thm:inj-surj-bij">Theorem 3.20 (Injectivity and surjectivity through the matrix)</a></li><li><a class="kref" data-ref="ex:inj-surj-bij" href="#ex:inj-surj-bij">Example 3.21 (The three properties, read off three matrices)</a></li><li><a class="kref" data-ref="rem:looking-ahead-l3" href="#rem:looking-ahead-l3">Remark 3.22 (Looking ahead)</a></li></ol>
+</div></details>
+  <details class="lsec" id="index-of-statements"><summary><h2>Index of statements</h2></summary><div class="lsec-body">
+  <ol class="idx"><li><a class="kref" data-ref="def:homogeneous" href="#def:homogeneous">Definition 3.1 (Homogeneous system)</a></li><li><a class="kref" data-ref="ex:nullspace" href="#ex:nullspace">Example 3.2 (Solving a homogeneous system)</a></li><li><a class="kref" data-ref="thm:structure" href="#thm:structure">Theorem 3.3 (Solution sets of <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math></span> and <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mn>0</mn></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{0}</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="ex:translate" href="#ex:translate">Example 3.4 (Translation in action)</a></li><li><a class="kref" data-ref="def:independence" href="#def:independence">Definition 3.5 (Linear independence)</a></li><li><a class="kref" data-ref="prop:indep-matrix" href="#prop:indep-matrix">Proposition 3.6 (Independence as a homogeneous system)</a></li><li><a class="kref" data-ref="ex:dependence" href="#ex:dependence">Example 3.7 (Reading dependence off the null space)</a></li><li><a class="kref" data-ref="thm:wide" href="#thm:wide">Theorem 3.8 (Wide matrices have nonzero null solutions)</a></li><li><a class="kref" data-ref="cor:many-vectors" href="#cor:many-vectors">Corollary 3.9 (Too many vectors are dependent)</a></li><li><a class="kref" data-ref="def:linear-map" href="#def:linear-map">Definition 3.10 (Linear map)</a></li><li><a class="kref" data-ref="ex:matrix-map" href="#ex:matrix-map">Example 3.11 (Every matrix gives a linear map)</a></li><li><a class="kref" data-ref="ex:rotation" href="#ex:rotation">Example 3.12 (Rotation of the plane)</a></li><li><a class="kref" data-ref="ex:flip" href="#ex:flip">Example 3.13 (Flipping around a line in <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mstyle mathvariant="double-struck"><mi>ℝ</mi></mstyle><mn>3</mn></msup><annotation encoding="application/x-tex">\mathbb{R}^3</annotation></semantics></math></span>)</a></li><li><a class="kref" data-ref="def:standard-basis" href="#def:standard-basis">Definition 3.14 (Standard basis vectors)</a></li><li><a class="kref" data-ref="thm:matrix-of-map" href="#thm:matrix-of-map">Theorem 3.15 (The matrix of a linear map)</a></li><li><a class="kref" data-ref="cor:correspondence" href="#cor:correspondence">Corollary 3.16 (Matrices <span class="imath"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>↔</mo><annotation encoding="application/x-tex">\leftrightarrow</annotation></semantics></math></span> linear maps)</a></li><li><a class="kref" data-ref="ex:rotation-matrix" href="#ex:rotation-matrix">Example 3.17 (The rotation matrix, by the recipe)</a></li><li><a class="kref" data-ref="ex:flip-matrix" href="#ex:flip-matrix">Example 3.18 (The flip matrix)</a></li><li><a class="kref" data-ref="def:inj-surj-bij" href="#def:inj-surj-bij">Definition 3.19 (Injective, surjective, bijective)</a></li><li><a class="kref" data-ref="thm:inj-surj-bij" href="#thm:inj-surj-bij">Theorem 3.20 (Injectivity and surjectivity through the matrix)</a></li><li><a class="kref" data-ref="ex:inj-surj-bij" href="#ex:inj-surj-bij">Example 3.21 (The three properties, read off three matrices)</a></li><li><a class="kref" data-ref="rem:looking-ahead-l3" href="#rem:looking-ahead-l3">Remark 3.22 (Looking ahead)</a></li></ol></div></details>
   <footer>Generated from the lecture&rsquo;s LaTeX source.
   Every cross-reference resolves to a stated definition or proved result.</footer>
 </main>
 <script>
 const LABELS = {"def:homogeneous": {"kind": "Definition", "number": "3.1", "name": "Homogeneous system"}, "ex:nullspace": {"kind": "Example", "number": "3.2", "name": "Solving a homogeneous system"}, "thm:structure": {"kind": "Theorem", "number": "3.3", "name": "Solution sets of Ax = b and Ax = 0"}, "ex:translate": {"kind": "Example", "number": "3.4", "name": "Translation in action"}, "def:independence": {"kind": "Definition", "number": "3.5", "name": "Linear independence"}, "prop:indep-matrix": {"kind": "Proposition", "number": "3.6", "name": "Independence as a homogeneous system"}, "ex:dependence": {"kind": "Example", "number": "3.7", "name": "Reading dependence off the null space"}, "thm:wide": {"kind": "Theorem", "number": "3.8", "name": "Wide matrices have nonzero null solutions"}, "cor:many-vectors": {"kind": "Corollary", "number": "3.9", "name": "Too many vectors are dependent"}, "def:linear-map": {"kind": "Definition", "number": "3.10", "name": "Linear map"}, "ex:matrix-map": {"kind": "Example", "number": "3.11", "name": "Every matrix gives a linear map"}, "ex:rotation": {"kind": "Example", "number": "3.12", "name": "Rotation of the plane"}, "ex:flip": {"kind": "Example", "number": "3.13", "name": "Flipping around a line in R^3"}, "def:standard-basis": {"kind": "Definition", "number": "3.14", "name": "Standard basis vectors"}, "thm:matrix-of-map": {"kind": "Theorem", "number": "3.15", "name": "The matrix of a linear map"}, "cor:correspondence": {"kind": "Corollary", "number": "3.16", "name": "Matrices  linear maps"}, "ex:rotation-matrix": {"kind": "Example", "number": "3.17", "name": "The rotation matrix, by the recipe"}, "ex:flip-matrix": {"kind": "Example", "number": "3.18", "name": "The flip matrix"}, "def:inj-surj-bij": {"kind": "Definition", "number": "3.19", "name": "Injective, surjective, bijective"}, "thm:inj-surj-bij": {"kind": "Theorem", "number": "3.20", "name": "Injectivity and surjectivity through the matrix"}, "ex:inj-surj-bij": {"kind": "Example", "number": "3.21", "name": "The three properties, read off three matrices"}, "rem:looking-ahead-l3": {"kind": "Remark", "number": "3.22", "name": "Looking ahead"}};
+// open every collapsed section that contains el, so links into a
+// collapsed section still land on their target
+function revealEl(el) {
+  for (let d = el && el.closest ? el.closest("details") : null; d;
+       d = d.parentElement ? d.parentElement.closest("details") : null) {
+    d.open = true;
+  }
+}
+function revealHash() {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (el) { revealEl(el); el.scrollIntoView({block: "start"}); }
+}
+window.addEventListener("hashchange", revealHash);
+window.addEventListener("beforeprint", () =>
+  document.querySelectorAll("details.lsec").forEach(d => d.open = true));
 document.addEventListener("DOMContentLoaded", () => {
+  // sections: expand / collapse all, links into collapsed sections
+  document.querySelectorAll(".toc-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const open = btn.dataset.act === "open";
+      document.querySelectorAll("details.lsec").forEach(d => d.open = open);
+    });
+  });
+  document.addEventListener("click", ev => {
+    const a = ev.target.closest ? ev.target.closest('a[href^="#"]') : null;
+    if (!a || a.matches("a.kref[data-ref]")) return;
+    const el = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+    if (el) revealEl(el);
+  }, true);
+  if (location.hash) revealHash();
   // proofs
   document.querySelectorAll(".proof-toggle").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -1181,6 +1251,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inner.addEventListener("click", e2 => {
           e2.preventDefault(); e2.stopPropagation();
           const t = document.getElementById(inner.dataset.ref);
+          if (t) revealEl(t);
           if (t) { t.scrollIntoView({behavior: "smooth", block: "center"});
                    flash(t); }
         });

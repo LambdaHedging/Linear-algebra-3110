@@ -28,6 +28,19 @@
               text-decoration: none; }
   .lectitle:hover { text-decoration: underline; }
   .blurb { margin: .35rem 0 0; color: #444; font-size: .96em; }
+  details.secs { margin: .45rem 0 0; font-size: .95em; }
+  details.secs > summary { cursor: pointer; color: var(--accent);
+    list-style: none; width: max-content; }
+  details.secs > summary::-webkit-details-marker { display: none; }
+  details.secs > summary::before { content: "\25B8"; display: inline-block;
+    width: 1em; transition: transform .15s; }
+  details.secs[open] > summary::before { transform: rotate(90deg); }
+  details.secs ol { list-style: none; margin: .3rem 0 .1rem; padding: 0 0 0 1em; }
+  details.secs li { margin: .15rem 0; }
+  details.secs li a { color: var(--ink); text-decoration: none; display: flex; }
+  details.secs li a:hover { color: var(--accent); text-decoration: underline; }
+  .secnum { flex: none; min-width: 2.6em; color: var(--accent);
+    font-weight: bold; }
   footer { margin-top: 3rem; padding-top: 1rem; color: #777;
            border-top: 1px solid var(--rule); font-size: .9em; }
   a { color: var(--accent); }
@@ -43,49 +56,135 @@
   dotted term to unfold its exact definition or statement right where you
   are reading &mdash; no scrolling back. Click <em>&#9656; Proof</em> to
   expand a proof, and answer the self-check exercises inline: they are
-  graded instantly in your browser, and nothing is recorded.</p>
+  graded instantly in your browser, and nothing is recorded. Click
+  <em>&#9656; Sections</em> under a lecture to jump straight to one of its
+  sections; inside a lecture, each section heading folds and unfolds.</p>
 
   <h2>Lectures</h2>
   <ol class="lectures">
   <li class="lec">
     <a class="lectitle" href="lec01-linear-systems.html">Lecture 1: Vectors, Matrices, and Systems of Linear Equations</a>
     <p class="blurb">Vector arithmetic, the product Ax read by rows and by columns, linear systems, elementary operations, and the matrix equation Ax = b.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec01-linear-systems.html#sec-1-1"><span class="secnum">1.1</span> Vectors and their operations</a></li>
+        <li><a href="lec01-linear-systems.html#sec-1-2"><span class="secnum">1.2</span> Matrices and the product <i>A</i><b>x</b></a></li>
+        <li><a href="lec01-linear-systems.html#sec-1-3"><span class="secnum">1.3</span> Systems of linear equations and their solutions</a></li>
+        <li><a href="lec01-linear-systems.html#sec-1-4"><span class="secnum">1.4</span> Equivalent systems and elementary operations</a></li>
+        <li><a href="lec01-linear-systems.html#sec-1-5"><span class="secnum">1.5</span> The matrix equation <i>A</i><b>x</b> = <b>b</b></a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec02-gaussian-elimination.html">Lecture 2: Gaussian Elimination and Solution Sets</a>
     <p class="blurb">Echelon forms, the elimination algorithm, free variables, the parametric vector form, and the existence&ndash;uniqueness theorem.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec02-gaussian-elimination.html#sec-2-1"><span class="secnum">2.1</span> Echelon forms and Gaussian elimination</a></li>
+        <li><a href="lec02-gaussian-elimination.html#sec-2-2"><span class="secnum">2.2</span> Solution sets: parametric form</a></li>
+        <li><a href="lec02-gaussian-elimination.html#sec-2-3"><span class="secnum">2.3</span> Existence and uniqueness</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec03-independence-linear-maps.html">Lecture 3: Homogeneous Systems, Independence, and Linear Maps</a>
     <p class="blurb">Homogeneous systems and the structure of solution sets, linear independence, linear maps (rotations, flips), the one-to-one correspondence between matrices and linear maps, and injective, surjective and bijective maps.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec03-independence-linear-maps.html#sec-3-1"><span class="secnum">3.1</span> Homogeneous systems and the structure of solution sets</a></li>
+        <li><a href="lec03-independence-linear-maps.html#sec-3-2"><span class="secnum">3.2</span> Linear independence</a></li>
+        <li><a href="lec03-independence-linear-maps.html#sec-3-3"><span class="secnum">3.3</span> Linear maps and their matrices</a></li>
+        <li><a href="lec03-independence-linear-maps.html#sec-3-4"><span class="secnum">3.4</span> Injective, surjective, and bijective maps</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec04-matrix-operations.html">Lecture 4: Operations on Linear Maps and Matrices</a>
     <p class="blurb">Sums and scalar multiples, composition of linear maps and the matrix product, the algebra of products, powers of a square matrix, inverses of square matrices, matrix equations AX = B, and elementary matrices.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec04-matrix-operations.html#sec-4-1"><span class="secnum">4.1</span> Sums and scalar multiples</a></li>
+        <li><a href="lec04-matrix-operations.html#sec-4-2"><span class="secnum">4.2</span> Composition and the matrix product</a></li>
+        <li><a href="lec04-matrix-operations.html#sec-4-3"><span class="secnum">4.3</span> Inverses and elementary matrices</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec05-determinants.html">Lecture 5: The Determinant and Its Properties</a>
     <p class="blurb">The 2&times;2 determinant from elimination, mathematical induction and the recursive definition, row properties and cofactor expansion, computing by elimination (A &minus; &lambda;I), the product rule, transposes and column operations (Vandermonde), area and volume, Cramer's rule and the adjugate.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec05-determinants.html#sec-5-1"><span class="secnum">5.1</span> The 2 &times; 2 determinant, found by elimination</a></li>
+        <li><a href="lec05-determinants.html#sec-5-2"><span class="secnum">5.2</span> The <i>n</i> &times; <i>n</i> determinant and its row properties</a></li>
+        <li><a href="lec05-determinants.html#sec-5-3"><span class="secnum">5.3</span> Computing determinants by elimination</a></li>
+        <li><a href="lec05-determinants.html#sec-5-4"><span class="secnum">5.4</span> Products, inverses, and transposes</a></li>
+        <li><a href="lec05-determinants.html#sec-5-5"><span class="secnum">5.5</span> Determinants and volume</a></li>
+        <li><a href="lec05-determinants.html#sec-5-6"><span class="secnum">5.6</span> Cramer's rule and the adjugate</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec06-vector-spaces.html">Lecture 6: Vector Spaces, Subspaces, Bases, and Dimension</a>
     <p class="blurb">Vector spaces (&#8477;<sup>n</sup>, matrices, polynomials, functions), subspaces and span, the null space, column space and row space of a matrix, linear independence, bases and coordinates, and dimension.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec06-vector-spaces.html#sec-6-1"><span class="secnum">6.1</span> Vector spaces</a></li>
+        <li><a href="lec06-vector-spaces.html#sec-6-2"><span class="secnum">6.2</span> Subspaces and span</a></li>
+        <li><a href="lec06-vector-spaces.html#sec-6-3"><span class="secnum">6.3</span> The null space, column space, and row space of a matrix</a></li>
+        <li><a href="lec06-vector-spaces.html#sec-6-4"><span class="secnum">6.4</span> Linear independence, bases, and coordinates</a></li>
+        <li><a href="lec06-vector-spaces.html#sec-6-5"><span class="secnum">6.5</span> Dimension</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec07-rank-linear-maps.html">Lecture 7: Rank, Linear Maps, and Change of Basis</a>
     <p class="blurb">Bases of the null, column and row spaces, rank and the rank theorem, uniqueness of the reduced echelon form, linear maps between vector spaces, kernel and image, the matrix of a linear map relative to bases, change of basis, and similar matrices.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec07-rank-linear-maps.html#sec-7-1"><span class="secnum">7.1</span> Bases for the null space, column space, and row space</a></li>
+        <li><a href="lec07-rank-linear-maps.html#sec-7-2"><span class="secnum">7.2</span> Rank and the rank theorem</a></li>
+        <li><a href="lec07-rank-linear-maps.html#sec-7-3"><span class="secnum">7.3</span> Linear maps between vector spaces</a></li>
+        <li><a href="lec07-rank-linear-maps.html#sec-7-4"><span class="secnum">7.4</span> The matrix of a linear map</a></li>
+        <li><a href="lec07-rank-linear-maps.html#sec-7-5"><span class="secnum">7.5</span> Change of basis and similar matrices</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec08-eigenvalues.html">Lecture 8: Eigenvalues, Eigenvectors, and Diagonalization</a>
     <p class="blurb">Eigenvalues and eigenvectors of matrices and linear maps, independence of eigenvectors for distinct eigenvalues, the characteristic equation, multiplicities, and diagonalization: the criterion, examples and non-examples.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec08-eigenvalues.html#sec-8-1"><span class="secnum">8.1</span> Eigenvalues and eigenvectors</a></li>
+        <li><a href="lec08-eigenvalues.html#sec-8-2"><span class="secnum">8.2</span> The characteristic equation</a></li>
+        <li><a href="lec08-eigenvalues.html#sec-8-3"><span class="secnum">8.3</span> Diagonalization</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec09-least-squares.html">Lecture 9: Orthogonal Projection and the Least Squares Method</a>
     <p class="blurb">Inconsistent systems from noisy data, the inner product and length, orthogonal sets and column orthonormal matrices, the orthogonal complement, the orthogonal projection theorem and distance to a subspace, the Gram&ndash;Schmidt process and the QR factorization, and least-squares solutions by Gram&ndash;Schmidt, QR and the normal equations.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec09-least-squares.html#sec-9-1"><span class="secnum">9.1</span> When <i>A</i><b>x</b> = <b>b</b> has no solution</a></li>
+        <li><a href="lec09-least-squares.html#sec-9-2"><span class="secnum">9.2</span> Inner product, length, and orthogonality</a></li>
+        <li><a href="lec09-least-squares.html#sec-9-3"><span class="secnum">9.3</span> The orthogonal complement and the projection theorem</a></li>
+        <li><a href="lec09-least-squares.html#sec-9-4"><span class="secnum">9.4</span> Distance to a subspace and the projection formula</a></li>
+        <li><a href="lec09-least-squares.html#sec-9-5"><span class="secnum">9.5</span> The Gram&ndash;Schmidt process and the QR factorization</a></li>
+        <li><a href="lec09-least-squares.html#sec-9-6"><span class="secnum">9.6</span> Least-squares solutions</a></li>
+      </ol>
+    </details>
   </li>
   <li class="lec">
     <a class="lectitle" href="lec10-spectral-svd.html">Lecture 10: The Spectral Theorem and the Singular Value Decomposition</a>
     <p class="blurb">Symmetric matrices and the spectral theorem, quadratic forms, principal axes and definiteness, maximum and minimum of a quadratic form on the unit sphere, the singular value decomposition and what it tells about a matrix, the pseudoinverse and the shortest least-squares solution, and best approximation by matrices of low rank (Eckart&ndash;Young), with image compression and principal components.</p>
+    <details class="secs"><summary>Sections</summary>
+      <ol>
+        <li><a href="lec10-spectral-svd.html#sec-10-1"><span class="secnum">10.1</span> Symmetric matrices, the spectral theorem, and quadratic forms</a></li>
+        <li><a href="lec10-spectral-svd.html#sec-10-2"><span class="secnum">10.2</span> The singular value decomposition (SVD)</a></li>
+        <li><a href="lec10-spectral-svd.html#sec-10-3"><span class="secnum">10.3</span> The pseudoinverse and least squares</a></li>
+        <li><a href="lec10-spectral-svd.html#sec-10-4"><span class="secnum">10.4</span> Best approximation by matrices of low rank</a></li>
+      </ol>
+    </details>
   </li>
   </ol>
 
