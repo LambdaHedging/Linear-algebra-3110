@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ability, Understanding, and Proof &middot; MATH 3110</title>
+<style>
+  :root {
+    --ink: #1a1a24; --paper: #fdfdfa; --accent: #1d4ed8;
+    --accent-soft: #eff4ff; --rule: #d8d8d2; --def: #0e7490;
+    --wrong: #a33a2b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Georgia", "STIX Two Text", serif;
+    font-size: 17px; line-height: 1.65;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 2.5rem 1.25rem 6rem; }
+  .coursename { color: #666; font-variant: small-caps; letter-spacing: .06em; }
+  .back { font-size: .9em; }
+  .back a { color: var(--accent); text-decoration: none; }
+  .back a:hover { text-decoration: underline; }
+  h1 { font-size: 1.7rem; margin: .4rem 0 .2rem; }
+  .subtitle { margin: 0 0 .4rem; font-style: italic; color: #33415c;
+    font-size: 1.1rem; }
+  .byline { margin: .1rem 0 1.6rem; color: #4a5568; font-size: 1.02rem; }
+  h2 { font-size: 1.25rem; margin-top: 2.4rem;
+    border-bottom: 1px solid var(--rule); padding-bottom: .25rem; }
+  p { margin: .8rem 0; text-align: justify; hyphens: auto; }
+  ol li, ul li { margin: .35rem 0; }
+  .box { margin: 1.3rem 0; padding: .7rem 1.05rem .45rem;
+    border: 1px solid var(--rule); border-left: 4px solid var(--def);
+    border-radius: 6px; background: #fff; }
+  .box.wrong { border-left-color: var(--wrong); }
+  .boxhead { font-weight: 700; }
+  .box p { margin: .4rem 0; }
+  .dmath { display: block; overflow-x: auto; padding: .3rem 0;
+    text-align: center; }
+  @font-face {
+    font-family: "Latin Modern Math";
+    src: url("fonts/latinmodern-math.otf") format("opentype");
+  }
+  math { font-size: 1.06em;
+    font-family: "Latin Modern Math", "STIX Two Math", math; }
+  a { color: var(--accent); }
+  h2 { scroll-margin-top: 1rem; }
+  .refs { margin-top: 2.5rem; font-size: .9em; color: #444; }
+  .refs p { text-align: left; }
+  footer { margin-top: 3.5rem; border-top: 1px solid var(--rule);
+    padding-top: 1rem; color: #777; font-size: .85em; }
+</style>
+</head>
+<body>
+<main>
+  <div class="back"><a href="index.html">&larr; All lectures</a></div>
+  <div class="coursename">MATH 3110 &middot; Linear Algebra</div>
+  <h1>Ability, Understanding, and Proof</h1>
+  <p class="subtitle">What to learn in linear algebra when AI can do the homework</p>
+  <p class="byline">Shuhong Gao &nbsp;&middot;&nbsp; Clemson University</p>
+<p>Type any exercise from this course into ChatGPT or Claude and you will get a fluent answer in seconds: a row reduction, an eigenvalue computation, even a proof. Most of the time the answer is right. So it is fair to ask what this course is for, and why it asks you to work problems and write proofs by hand. This essay gives my answer in four parts: what is worth learning now, how to learn with AI tools and the Math 3110 Tutor, what it means to understand linear algebra, and how to do proofs, which in the end is the same thing as learning to reason under given rules.</p>
+<h2 id="sec-1" class="unnumbered">1. What to learn when AI can answer: ability, not just knowledge</h2>
+<p>It helps to separate two things that school often blurs.</p>
+<p><strong>Knowledge</strong> is what can be written down and looked up: the definition of a basis, the formula for a <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">2 \times 2</annotation></semantics></math> determinant, the steps of Gram–Schmidt. AI has almost all of it, instantly, and so does a good search engine.</p>
+<p><strong>Ability</strong> is what you can <em>do</em> with knowledge on your own: recognize which idea applies to a problem you have never seen, set the problem up, carry it out, judge whether an answer is right, and explain why. Ability cannot be looked up, because it is not a fact; it is a capacity that lives in you, and it is built only by exercising it.</p>
+<p>For most of history, knowledge was scarce and ability was the way to get it, so the two grew together. AI has broken that link. You can now have the knowledge of a correct solution on your screen without the ability that produced it. That is a new situation, and it changes what you should spend your time on.</p>
+<p><strong>Why ability matters more, not less.</strong></p>
+<ul>
+<li><p><em>AI is fluent, not always right.</em> It makes confident mistakes, especially in proofs: a step that sounds right but is not justified, or a correct answer reached by a wrong argument. Only someone with the ability to check can tell the difference.</p></li>
+<li><p><em>You have to know what to ask.</em> To use any tool well you must know what you need and recognize when you have got it. A person who cannot set up a problem cannot delegate it either.</p></li>
+<li><p><em>Text is not understanding.</em> Long before AI, researchers in mathematics education described students who write text with the outward form of the teacher’s argument while the symbols refer to nothing in their minds; they called it the <em>obstacle of formalism</em> (Dorier, 2000). A polished AI argument that you cannot reproduce is the same obstacle with a new instrument.</p></li>
+<li><p><em>Your future work needs judgment.</em> In engineering, computing and science, the routine computations were handed to machines long ago; no one has row-reduced a large matrix by hand in decades. What employers and later courses need is the person who knows which computation to run, whether its assumptions hold, and whether to trust the output.</p></li>
+</ul>
+<p><strong>How ability is built.</strong> Following a finished solution <em>feels</em> like understanding, but following an argument and producing one are different skills. The research on learning is consistent here: we remember and understand what we <em>retrieve and generate</em> ourselves, not what we reread (Roediger and Karpicke, 2006). Ability grows only from your own work; <a href="#sec-2">Section&nbsp;2</a> says how to make AI tools serve that work instead of replacing it.</p>
+<h2 id="sec-2" class="unnumbered">2. How to learn with AI tools and the Math 3110 Tutor</h2>
+<div class="box remark"><div class="boxhead">The main point.</div>
+<p>What counts is what you can do alone. Any help you use, including AI, should leave you able to redo the work on a blank page.</p>
+</div>
+<p>Some students score much higher on take-home quizzes than on closed-book exams. Whatever the help was, AI, classmates or the notes, the gap says the same thing: the quiz measured what they could do <em>with</em> help, the exam what they can do <em>alone</em>, and every later course measures the second. Used well, an AI tool is a patient tutor available at 2 a.m.; used badly, it does the thinking for you, and the thinking is the part that produces learning.</p>
+<p><strong>With any AI tool.</strong> Use it as a coach, not as a substitute.</p>
+<ol>
+<li><p><strong>Struggle first.</strong> Work on a problem for a real stretch of time, with the notes, and write down exactly where you are stuck. “I don’t know what the first line should be” is a good question to bring to the tool; pasting the whole problem and asking for the solution is not.</p></li>
+<li><p><strong>Ask for hints, not solutions.</strong> “Don’t solve this. What definition should I start from?” “Here is my proof; tell me the first step that fails, but don’t fix it.”</p></li>
+<li><p><strong>Make it test you.</strong> “Give me a problem like this one with different numbers”, and then solve it without help.</p></li>
+<li><p><strong>Explain it back.</strong> After you understand a solution, explain it in your own words and ask what is missing. If you cannot say why each step is there, you do not own it yet.</p></li>
+<li><p><strong>Check the AI</strong> against the definitions and theorems in the notes, and ask it for a quick way to check its answer (a <em>certificate</em>, <a href="#sec-3">Section&nbsp;3</a>). Treat its output as a classmate’s draft, not as the answer key.</p></li>
+<li><p><strong>Redo it from a blank page</strong> the next day. If you can, you have learned it; if you cannot, that is what to work on.</p></li>
+</ol>
+<p><strong>With the Math 3110 Tutor.</strong> The Math 3110 Tutor is an AI tutor for this course that works in Claude and in ChatGPT; the tutor guide on Canvas explains how to install it. It is built on our lecture notes and differs from a general AI tool in four ways.</p>
+<ul>
+<li><p><em>It uses our notes.</em> It states definitions and theorems as the notes do, with their numbers and notation, and every citation is a link that opens the notes at that statement.</p></li>
+<li><p><em>It coaches proofs instead of writing them.</em> It first asks what you must show, written as a definition, then goes one step at a time and waits for your answer. Ask for a complete proof only when you want to study one from the notes.</p></li>
+<li><p><em>It holds answers to the standards of rigor</em> of <a href="#sec-4">Section&nbsp;4</a>: terms defined, hypotheses stated, every step justified, computations checked.</p></li>
+<li><p><em>It knows its limits.</em> It labels material that goes beyond the notes (for transformers and AI models, it uses the enrichment <a href="further01-transformers.html">Lecture&nbsp;11</a>). It does not know our quiz or homework problems, so tell it when a problem is graded work (“this is a quiz problem”): then it gives hints and checks your steps, not solutions.</p></li>
+</ul>
+<p>Questions that work well with the tutor:</p>
+<ul>
+<li><p>“What does the definition of a subspace say, in plain words? Give me an example and a non-example.”</p></li>
+<li><p>“Why does this theorem need this hypothesis? Show me what goes wrong without it.”</p></li>
+<li><p>“Walk me through this proof in the notes one step at a time, and ask me questions along the way.”</p></li>
+<li><p>“Here is my proof. Is it correct? Show me the first step that fails.”</p></li>
+<li><p>“Check my row reduction of this matrix and tell me the first mistake.”</p></li>
+<li><p>“Quiz me on Lecture 2, one question at a time.”</p></li>
+</ul>
+<p>The tutor is still an AI, and it can make mistakes: if an answer disagrees with the notes, the notes are right, and please tell me. Exams are closed book, with no AI; the tutor is for the work that prepares you for them.</p>
+<h2 id="sec-3" class="unnumbered">3. What it means to understand linear algebra</h2>
+<p>Linear algebra is the language in which much of science and engineering is written: circuits and structures, computer graphics, signal processing, statistics, machine learning, and the large language models behind AI tools themselves. Understanding it means more than being able to compute. Three things matter most.</p>
+<p><strong>Exact definitions.</strong> In this subject the words carry the content. Terms such as <em>linearly independent</em>, <em>basis</em> and <em>eigenvalue</em> will sound familiar long before you understand them, but each one is a precise condition, and every question about it is answered by going back to that condition. You understand a definition when you can state it exactly, give an example and a non-example, and test a new object against it.</p>
+<p><strong>One problem, several views.</strong> A system of linear equations can be read as equations, as a question about combining the columns of a matrix, or as a picture of lines and planes meeting. Much of understanding is translation: moving a question to the view in which it becomes easy.</p>
+<p><strong>Checking is cheaper than producing.</strong> Many answers in linear algebra come with a quick check. If someone hands you a solution <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><annotation encoding="application/x-tex">\mathbf{x}</annotation></semantics></math> of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle><mo>=</mo><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x} = \mathbf{b}</annotation></semantics></math>, you do not need to redo their work: compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mstyle mathvariant="bold"><mi>𝐱</mi></mstyle></mrow><annotation encoding="application/x-tex">A\mathbf{x}</annotation></semantics></math> and compare with <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mstyle mathvariant="bold"><mi>𝐛</mi></mstyle><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math>. If someone claims <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> is the inverse of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math>, compute <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">AB</annotation></semantics></math>. Such a piece of evidence is called a <em>certificate</em>, and you will meet many of them in this course. When an AI hands you an answer, ask for its certificate and check it yourself. Some claims have no short certificate, most importantly statements about <em>all</em> vectors or <em>all</em> matrices; for those the only check is a proof, the subject of <a href="#sec-4">Section&nbsp;4</a>.</p>
+<div class="box remark"><div class="boxhead">A self-test for understanding.</div>
+<p>You understand a concept when you can (1) state its definition exactly, (2) give an example and a non-example, (3) say what it is used for, (4) express it in another view (equations, columns, pictures), and (5) check a claim about it.</p>
+</div>
+<h2 id="sec-4" class="unnumbered">4. How to do proofs: reasoning under given rules</h2>
+<p>A proof is reasoning under given rules. Think of a game such as chess: the rules say which moves are legal, and a win is a sequence of legal moves that reaches the goal. In mathematics the rules are the definitions, the results already proved, and the laws of algebra and logic; the goal is the statement to be proved; and a proof is a sequence of steps, each one justified by a rule you can name. Nothing else counts: not how plausible a step sounds, not how confident its author is, human or AI. This is what makes a proof checkable.</p>
+<p>I do not claim that proofs make you smarter in general; the evidence for that kind of broad transfer is weak. The claim is narrower. Working under exact rules, where every step must be justified, is exactly the ability you need to check an argument, your own or a machine’s, and to know what follows from what. Four habits will carry you a long way.</p>
+<ol>
+<li><p><strong>Start from the definition of what you must prove.</strong> Write the conclusion out as its definition; it usually tells you the first and the last line of the proof.</p></li>
+<li><p><strong>Use every hypothesis.</strong> The hypotheses are your tools. If one was never used, something is probably wrong.</p></li>
+<li><p><strong>Examples show why, not that.</strong> An example can show you <em>why</em> a statement is true, but checking a few cases never proves a statement about <em>all</em> objects. To show a statement is false, one counterexample, checked completely, is enough.</p></li>
+<li><p><strong>Justify every step.</strong> Each step should be a definition, a result we have proved, or algebra, and you should be able to say which.</p></li>
+</ol>
+<p>Apply the same habits to any proof an AI gives you; it is the fastest way to find its mistakes, and the best practice for finding your own.</p>
+<p>A good proof at this level is a short paragraph of clear reasoning in complete sentences, not a wall of symbols. If you can explain to a classmate why something must be true, and every step of your explanation is a definition, a result we have proved, or algebra, you have written a proof.</p>
+<h2 id="sec-course" class="unnumbered">How the course is built around these goals</h2>
+<ul>
+<li><p><strong>Intuition first.</strong> Every section of the notes opens with the idea in plain language, usually with a picture, before any formal statement.</p></li>
+<li><p><strong>Proofs when you want them.</strong> In the online notes every proof is folded behind a <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>▸</mo><annotation encoding="application/x-tex">\blacktriangleright</annotation></semantics></math> <em>Proof</em> button: skim past it on a first reading, open it when you review or wonder why.</p></li>
+<li><p><strong>Definitions in your head.</strong> Exams are closed book, so the definitions must be known exactly. You cannot see that a theorem applies if you have to look up what its words mean.</p></li>
+<li><p><strong>Proofs on exams are close relatives of proofs in the notes and the quizzes.</strong> Nothing exotic: the habits above are what they test.</p></li>
+</ul>
+<div class="box remark"><div class="boxhead">In one sentence.</div>
+<p>Knowledge is now cheap; what this course builds is the ability to understand, to check, and to reason under exact rules, and proofs are where that ability is built.</p>
+</div>
+<div class="refs">
+<p><strong>References.</strong></p>
+<p>J.-L. Dorier (ed.), <em>On the Teaching of Linear Algebra</em>, Kluwer, 2000.</p>
+<p>H. L. Roediger and J. D. Karpicke, Test-enhanced learning: taking memory tests improves long-term retention, <em>Psychological Science</em> <strong>17</strong> (2006), 249–255.</p>
+</div>
+
+  <footer>Shuhong Gao, Clemson University. Also available as a
+  <a href="why-proofs.pdf">PDF</a>.</footer>
+</main>
+</body>
+</html>
